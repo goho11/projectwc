@@ -1,5 +1,6 @@
 package com.metacoding.projectwc._core.config;
 
+import com.metacoding.projectwc.user.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,9 +33,9 @@ public class SecurityConfig {
                                 .loginProcessingUrl("/login")
                                 //.defaultSuccessUrl("/")
                                 .successHandler((request, response, authentication) -> {
-//                                    User user = (User) authentication.getPrincipal();
+                                    User user = (User) authentication.getPrincipal();
                                     HttpSession session = request.getSession();
-//                                    session.setAttribute("sessionUser", user);
+                                    session.setAttribute("sessionUser", user);
 
                                     response.sendRedirect("/");
                                 }));
