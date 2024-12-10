@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>내가 만든 월드컵</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- main과 mine은 css 공유합니다. -->
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+{{> layout/navbar}}
+<!-- main 화면 전체 -->
+<div class="container mt-2">
+
+    <!-- 상단 검색 바 -->
+    <div id="top-bar" class="mb-2">
+        <div class="d-flex align-items-center" id="top-bar">
+            <div class="btn-group">
+                <button type="button" class="btn common-color-primary text-white">인기순</button>
+                <button type="button" class="btn border-1 border border-start-0">최신순</button>
+            </div>
+            <div class="ms-4 d-flex align-items-center flex-grow-1">
+                <input type="text" class="form-control flex-grow-1" id="search-text"
+                       placeholder="월드컵 제목 또는 인물 이름으로 검색하세요." name="search-text">
+                <button type="submit" class="btn border-0 common-color-primary text-white"
+                        style="white-space: nowrap;">검색
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 카드 리스트 -->
+    <div class="main-card-list" id="main-card-list">
+
+        <div class="card main-card">
+            <div class="d-flex">
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/horizolong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림
+                        설명 1그림 설명 1그림 설명 1
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/vertlong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 2</div>
+                </div>
+            </div>
+            <div class="p-2">
+                <h5 class="card-title main-card-title fw-bold">라면wqerwqefasdefasdfasdfasfdafawef</h5>
+                <p class="card-text main-card-text">맛있 </p>
+            </div>
+            <div class="ms-2 mb-2 main-btn-container">
+                <button class="btn hover-coler btn-outline-danger btn-sm">시작하기</button>
+                <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
+
+                <button class="btn hover-coler btn-outline-info btn-sm mt-1">수정하기</button>
+                <button class="btn hover-coler btn-outline-success btn-sm mt-1">삭제하기</button>
+            </div>
+        </div>
+
+
+        <div class="card main-card">
+            <div class="d-flex">
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/horizolong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림
+                        설명 1그림 설명 1그림 설명 1
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/vertlong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 2</div>
+                </div>
+            </div>
+            <div class="p-2">
+                <h5 class="card-title main-card-title fw-bold">라면wqerwqefasdefasdfasdfasfdafawef</h5>
+                <p class="card-text main-card-text">맛있 </p>
+            </div>
+            <div class="ms-2 mb-2 main-btn-container">
+                <button class="btn hover-coler btn-outline-danger btn-sm">시작하기</button>
+                <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
+
+                <button class="btn hover-coler btn-outline-info btn-sm mt-1">수정하기</button>
+                <button class="btn hover-coler btn-outline-success btn-sm mt-1">삭제하기</button>
+            </div>
+        </div>
+
+
+        <div class="card main-card">
+            <div class="d-flex">
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/horizolong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림
+                        설명 1그림 설명 1그림 설명 1
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/vertlong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 2</div>
+                </div>
+            </div>
+            <div class="p-2">
+                <h5 class="card-title main-card-title fw-bold">라면wqerwqefasdefasdfasdfasfdafawef</h5>
+                <p class="card-text main-card-text">맛있 </p>
+            </div>
+            <div class="ms-2 mb-2 main-btn-container">
+                <button class="btn hover-coler btn-outline-danger btn-sm">시작하기</button>
+                <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
+
+                <button class="btn hover-coler btn-outline-info btn-sm mt-1">수정하기</button>
+                <button class="btn hover-coler btn-outline-success btn-sm mt-1">삭제하기</button>
+            </div>
+        </div>
+
+
+        <div class="card main-card">
+            <div class="d-flex">
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/horizolong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림
+                        설명 1그림 설명 1그림 설명 1
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/vertlong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 2</div>
+                </div>
+            </div>
+            <div class="p-2">
+                <h5 class="card-title main-card-title fw-bold">라면wqerwqefasdefasdfasdfasfdafawef</h5>
+                <p class="card-text main-card-text">맛있 </p>
+            </div>
+            <div class="ms-2 mb-2 main-btn-container">
+                <button class="btn hover-coler btn-outline-danger btn-sm">시작하기</button>
+                <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
+
+                <button class="btn hover-coler btn-outline-info btn-sm mt-1">수정하기</button>
+                <button class="btn hover-coler btn-outline-success btn-sm mt-1">삭제하기</button>
+            </div>
+        </div>
+
+
+        <div class="card main-card">
+            <div class="d-flex">
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/horizolong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림
+                        설명 1그림 설명 1그림 설명 1
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/vertlong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 2</div>
+                </div>
+            </div>
+            <div class="p-2">
+                <h5 class="card-title main-card-title fw-bold">라면wqerwqefasdefasdfasdfasfdafawef</h5>
+                <p class="card-text main-card-text">맛있 </p>
+            </div>
+            <div class="ms-2 mb-2 main-btn-container">
+                <button class="btn hover-coler btn-outline-danger btn-sm">시작하기</button>
+                <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
+
+                <button class="btn hover-coler btn-outline-info btn-sm mt-1">수정하기</button>
+                <button class="btn hover-coler btn-outline-success btn-sm mt-1">삭제하기</button>
+            </div>
+        </div>
+
+
+        <div class="card main-card">
+            <div class="d-flex">
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/horizolong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림
+                        설명 1그림 설명 1그림 설명 1
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/vertlong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 2</div>
+                </div>
+            </div>
+            <div class="p-2">
+                <h5 class="card-title main-card-title fw-bold">라면wqerwqefasdefasdfasdfasfdafawef</h5>
+                <p class="card-text main-card-text">맛있 </p>
+            </div>
+            <div class="ms-2 mb-2 main-btn-container">
+                <button class="btn hover-coler btn-outline-danger btn-sm">시작하기</button>
+                <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
+
+                <button class="btn hover-coler btn-outline-info btn-sm mt-1">수정하기</button>
+                <button class="btn hover-coler btn-outline-success btn-sm mt-1">삭제하기</button>
+            </div>
+        </div>
+
+
+        <div class="card main-card">
+            <div class="d-flex">
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/horizolong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림
+                        설명 1그림 설명 1그림 설명 1
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/vertlong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 2</div>
+                </div>
+            </div>
+            <div class="p-2">
+                <h5 class="card-title main-card-title fw-bold">라면wqerwqefasdefasdfasdfasfdafawef</h5>
+                <p class="card-text main-card-text">맛있 </p>
+            </div>
+            <div class="ms-2 mb-2 main-btn-container">
+                <button class="btn hover-coler btn-outline-danger btn-sm">시작하기</button>
+                <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
+
+                <button class="btn hover-coler btn-outline-info btn-sm mt-1">수정하기</button>
+                <button class="btn hover-coler btn-outline-success btn-sm mt-1">삭제하기</button>
+            </div>
+        </div>
+
+
+        <div class="card main-card">
+            <div class="d-flex">
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/horizolong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림
+                        설명 1그림 설명 1그림 설명 1
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/vertlong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 2</div>
+                </div>
+            </div>
+            <div class="p-2">
+                <h5 class="card-title main-card-title fw-bold">라면wqerwqefasdefasdfasdfasfdafawef</h5>
+                <p class="card-text main-card-text">맛있 </p>
+            </div>
+            <div class="ms-2 mb-2 main-btn-container">
+                <button class="btn hover-coler btn-outline-danger btn-sm">시작하기</button>
+                <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
+
+                <button class="btn hover-coler btn-outline-info btn-sm mt-1">수정하기</button>
+                <button class="btn hover-coler btn-outline-success btn-sm mt-1">삭제하기</button>
+            </div>
+        </div>
+
+
+        <div class="card main-card">
+            <div class="d-flex">
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/horizolong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림
+                        설명 1그림 설명 1그림 설명 1
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/vertlong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 2</div>
+                </div>
+            </div>
+            <div class="p-2">
+                <h5 class="card-title main-card-title fw-bold">라면wqerwqefasdefasdfasdfasfdafawef</h5>
+                <p class="card-text main-card-text">맛있 </p>
+            </div>
+            <div class="ms-2 mb-2 main-btn-container">
+                <button class="btn hover-coler btn-outline-danger btn-sm">시작하기</button>
+                <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
+
+                <button class="btn hover-coler btn-outline-info btn-sm mt-1">수정하기</button>
+                <button class="btn hover-coler btn-outline-success btn-sm mt-1">삭제하기</button>
+            </div>
+        </div>
+
+
+        <div class="card main-card">
+            <div class="d-flex">
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/horizolong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림 설명 1그림
+                        설명 1그림 설명 1그림 설명 1
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="common-img-container" style="height:120px;">
+                        <img src="/img/vertlong.png" alt="Card image">
+                    </div>
+                    <div class="text-center main-ellipsis-image-text">그림 설명 2</div>
+                </div>
+            </div>
+            <div class="p-2">
+                <h5 class="card-title main-card-title fw-bold">라면wqerwqefasdefasdfasdfasfdafawef</h5>
+                <p class="card-text main-card-text">맛있 </p>
+            </div>
+            <div class="ms-2 mb-2 main-btn-container">
+                <button class="btn hover-coler btn-outline-danger btn-sm">시작하기</button>
+                <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
+
+                <button class="btn hover-coler btn-outline-info btn-sm mt-1">수정하기</button>
+                <button class="btn hover-coler btn-outline-success btn-sm mt-1">삭제하기</button>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn common-color-primary text-white w-100 mt-2">더 보기 버튼</button>
+</div>
+</body>
+
+</html>

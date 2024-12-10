@@ -1,0 +1,68 @@
+body {
+    overflow-x: hidden;
+    background-color: #f3f3f3 !important;
+}
+
+.common-color-primary {
+    background-color: #56CCF2 !important;
+    /*에너제틱 블루*/
+}
+
+.common-none-outline-button {
+    outline: none !important;
+}
+
+.common-none-outline-button:hover {
+    background-color: #54b5f2 !important;
+}
+
+.common-img-container {
+    overflow: hidden;
+}
+
+.common-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 이미지가 컨테이너를 완전히 덮도록 */
+    object-position: center;
+}
+
+.common-tbody td {
+    height: 100px;
+    vertical-align: middle;
+    text-align: center;
+    padding: 0;
+}
+
+.common-progress-size {
+    height: 30px;
+    width: 90%;
+}
+
+.common-middle-box {
+    max-width: 400px;
+    z-index: 100;
+    margin: 0 auto;
+    padding-top: 60px;
+    width: 300px;
+}
+
+.common-hover-primary:hover {
+    color: #56CCF2 !important;
+}
+
+.common-delete-comment {
+    margin-top: auto;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.common-comment-textarea{
+    resize: none; /* 텍스트 영역 크기 조절 비활성화 */
+    overflow-y: auto; /* 세로 스크롤 가능 */
+}
+
+.common-color-weak{
+    color: #c0c0c0; /* 회색 글씨 */
+}
