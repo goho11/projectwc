@@ -11,6 +11,10 @@ import java.util.Optional;
 public class WorldcupRepository {
     private final EntityManager entityManager;
 
+    public void save(Worldcup worldcup) {
+        entityManager.persist(worldcup);
+    }
+
     public Optional<Worldcup> findById(int id) {
         return Optional.ofNullable(entityManager.find(Worldcup.class, id));
     }

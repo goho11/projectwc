@@ -17,6 +17,11 @@ public class WorldcupController {
     private final WorldcupItemService worldcupItemService;
     private final WorldcupService worldcupService;
 
+    @GetMapping("/wc-form")
+    public String wcForm() {
+        return "wc-form";
+    }
+
     @GetMapping("/worldcups/start-form/{id}")
     public String startForm(@PathVariable("id") int id, Model model) {
         List<Integer> round = worldcupItemService.countAll(id);
