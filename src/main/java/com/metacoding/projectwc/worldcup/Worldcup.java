@@ -40,7 +40,7 @@ public class Worldcup {
 
     // 논리 삭제
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
     @Builder
     public Worldcup(Integer id, String title, String description, Integer visibility, User user, Integer gamesCompleted, Timestamp createdAt, boolean isDeleted) {
@@ -52,5 +52,17 @@ public class Worldcup {
         this.gamesCompleted = gamesCompleted;
         this.createdAt = createdAt;
         this.isDeleted = isDeleted;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (title == null)
+            title = "새로운 월드컵";
+        if (visibility == null)
+            visibility = 0;
+        if (gamesCompleted == null)
+            gamesCompleted = 0;
+        if (isDeleted == null)
+            isDeleted = false;
     }
 }

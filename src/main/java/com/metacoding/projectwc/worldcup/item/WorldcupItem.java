@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.parameters.P;
 
 @NoArgsConstructor
 @Getter
@@ -43,5 +44,15 @@ public class WorldcupItem {
         this.winCount = winCount;
         this.totalCount = totalCount;
         this.worldcup = worldcup;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (championCount == null)
+            championCount = 0;
+        if (winCount == null)
+            winCount = 0;
+        if (totalCount == null)
+            totalCount = 0;
     }
 }

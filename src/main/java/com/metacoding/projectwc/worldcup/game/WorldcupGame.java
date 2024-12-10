@@ -29,7 +29,7 @@ public class WorldcupGame {
     private String anonymity;
 
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
-    private Integer isCompleted;
+    private Boolean isCompleted;
 
     @Column(nullable = false)
     private Integer startRound;
@@ -39,7 +39,7 @@ public class WorldcupGame {
     private Timestamp createdAt;
 
     @Builder
-    public WorldcupGame(Integer id, Worldcup worldcup, User user, String anonymity, Integer isCompleted, Integer startRound, Timestamp createdAt) {
+    public WorldcupGame(Integer id, Worldcup worldcup, User user, String anonymity, Boolean isCompleted, Integer startRound, Timestamp createdAt) {
         this.id = id;
         this.worldcup = worldcup;
         this.user = user;
@@ -47,5 +47,11 @@ public class WorldcupGame {
         this.isCompleted = isCompleted;
         this.startRound = startRound;
         this.createdAt = createdAt;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (isCompleted == null)
+            isCompleted = false;
     }
 }

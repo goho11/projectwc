@@ -40,7 +40,7 @@ public class Comment {
 
     // 논리 삭제
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
     @Builder
     public Comment(Integer id, String content, String winnername, Timestamp createdAt, User user, Worldcup worldcup, String nickname, boolean isDeleted) {
@@ -52,5 +52,11 @@ public class Comment {
         this.worldcup = worldcup;
         this.nickname = nickname;
         this.isDeleted = isDeleted;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (isDeleted == null)
+            isDeleted = false;
     }
 }
