@@ -15,12 +15,12 @@ public class WorldcupRepositoryTest {
     @Test
     public void save_test() {
         // given
-        Worldcup worldcup = Worldcup.builder().user(User.builder().id(1).build()).build();
+        User user=User.builder().id(1).build();
         // when
-        worldcupRepository.save(worldcup);
+        Worldcup worldcupPS = worldcupRepository.save(user);
         // then
-        System.out.println(worldcup.getId());
-        System.out.println(worldcup.getTitle());
+        System.out.println(worldcupPS.getId());
+        System.out.println(worldcupPS.getTitle());
     }
     @Test
     public void findById_test() {
