@@ -12,8 +12,9 @@ public class WorldcupService {
     private final WorldcupRepository worldcupRepository;
 
     @Transactional
-    public int saveWorldcup(User user) {
-        Worldcup worldcupPS = worldcupRepository.save(user);
+    public int save(User user) {
+        Worldcup worldcup = Worldcup.builder().user(user).build();
+        Worldcup worldcupPS = worldcupRepository.save(worldcup);
         return worldcupPS.getId();
     }
 

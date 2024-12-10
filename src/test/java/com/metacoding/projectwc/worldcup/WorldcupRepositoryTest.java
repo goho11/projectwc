@@ -16,8 +16,9 @@ public class WorldcupRepositoryTest {
     public void save_test() {
         // given
         User user=User.builder().id(1).build();
+        Worldcup worldcup = Worldcup.builder().user(user).build();
         // when
-        Worldcup worldcupPS = worldcupRepository.save(user);
+        Worldcup worldcupPS = worldcupRepository.save(worldcup);
         // then
         System.out.println(worldcupPS.getId());
         System.out.println(worldcupPS.getTitle());

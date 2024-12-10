@@ -12,8 +12,7 @@ import java.util.Optional;
 public class WorldcupRepository {
     private final EntityManager entityManager;
 
-    public Worldcup save(User user) {
-        Worldcup worldcup = Worldcup.builder().user(user).build();
+    public Worldcup save(Worldcup worldcup) {
         entityManager.persist(worldcup);
         return worldcup;
     }

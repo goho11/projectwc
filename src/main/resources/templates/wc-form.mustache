@@ -198,11 +198,13 @@
     let dropIndex = 0;
     // Dropzone has been added as a global variable.
     const dropzone = new Dropzone(".dropzone", {
-        url: "http://localhost:8080/test",
+        url: "/worldcups/{{id}}/items",
         method: "post",
+        // autoProcessQueue: false,
         success(file, response) {
-            renderList(file, response);
-        },
+            // renderList(file, response);
+        }
+
     });
 
     function renderList(file, response) {
@@ -244,7 +246,7 @@
             item.innerHTML = dom;
             tbody.append(item);
             let newDropzone = new Dropzone(".my-dropzone-" + dropIndex, {
-                url: "http://localhost:8080/test",
+                url: "/worldcups/{{id}}/items",
                 method: "put",
             });
             dropIndex++;
