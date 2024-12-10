@@ -38,7 +38,7 @@ public class User implements UserDetails {
 
     // 논리 삭제
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
     @Builder
     public User(Integer id, String email, String password, String nickname, Timestamp createdAt, boolean isDeleted) {
@@ -48,6 +48,12 @@ public class User implements UserDetails {
         this.nickname = nickname;
         this.createdAt = createdAt;
         this.isDeleted = isDeleted;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (isDeleted == null)
+            isDeleted = false;
     }
 
     @Override
