@@ -1,14 +1,20 @@
 package com.metacoding.projectwc.worldcup;
 
+
 import com.metacoding.projectwc.user.User;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
+import java.util.List;
+
+
 @Import(WorldcupRepository.class)
 @DataJpaTest
 public class WorldcupRepositoryTest {
+
     @Autowired
     private WorldcupRepository worldcupRepository;
 
@@ -36,5 +42,21 @@ public class WorldcupRepositoryTest {
         System.out.println(worldcup.getUser());
         System.out.println(worldcup.getTitle());
         System.out.println(worldcup.getVisibility());
+    }
+
+    @Test
+    public void findAll_test() {
+        // given -> 더미데이터
+        // when
+        List<Worldcup> worldcupList = worldcupRepository.findAll();
+
+        // then
+        for (Worldcup wc : worldcupList) {
+            System.out.println(wc);
+        }
+
+//        Assertions.assertThat(worldcupList).isNull();
+        Assertions.assertThat(worldcupList).isNotNull();
+
     }
 }
