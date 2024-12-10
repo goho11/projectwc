@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class WorldcupItemRepository {
     private final EntityManager entityManager;
+    public WorldcupItem save(WorldcupItem worldcupItem) {
+        entityManager.persist(worldcupItem);
+        return worldcupItem;
+    }
 
     public int countAll(int id) {
         String sql = """
