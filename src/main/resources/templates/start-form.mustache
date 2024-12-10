@@ -14,7 +14,7 @@
 {{> layout/navbar}}
 <div class="common-middle-box text-center">
     <h1>{{worldcup.title}}</h1>
-    <h3>{{worldcup.description  }}</h3>
+    <h3>{{#worldcup.description}}{{worldcup.description}}{{/worldcup.description}}</h3>
 
     <div class="d-flex justify-content-center">
         <img src="/img/test.png" style="width: 250px; height: 250px;">

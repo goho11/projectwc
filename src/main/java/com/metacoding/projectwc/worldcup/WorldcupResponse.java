@@ -13,11 +13,7 @@ public class WorldcupResponse {
         public findByIDDTO(Worldcup worldcup) {
             this.id = worldcup.getId();
             this.title = worldcup.getTitle();
-            if (worldcup.getDescription() != null) {
-                this.description = worldcup.getDescription();
-            } else {
-                this.description = "";
-            }
+            this.description = worldcup.getDescription();
         }
     }
 }
