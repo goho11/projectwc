@@ -35,8 +35,12 @@ public class WorldcupItem {
     @JoinColumn(nullable = false)
     private Worldcup worldcup;
 
+    // 논리 삭제
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    private Boolean isDeleted;
+
     @Builder
-    public WorldcupItem(Integer id, String itemname, String imgUrl, Integer championCount, Integer winCount, Integer totalCount, Worldcup worldcup) {
+    public WorldcupItem(Integer id, String itemname, String imgUrl, Integer championCount, Integer winCount, Integer totalCount, Worldcup worldcup, Boolean isDeleted) {
         this.id = id;
         this.itemname = itemname;
         this.imgUrl = imgUrl;
@@ -44,7 +48,9 @@ public class WorldcupItem {
         this.winCount = winCount;
         this.totalCount = totalCount;
         this.worldcup = worldcup;
+        this.isDeleted = isDeleted;
     }
+
 
     @PrePersist
     public void prePersist() {
@@ -54,5 +60,7 @@ public class WorldcupItem {
             winCount = 0;
         if (totalCount == null)
             totalCount = 0;
+        if (isDeleted == null)
+            isDeleted = false;
     }
 }

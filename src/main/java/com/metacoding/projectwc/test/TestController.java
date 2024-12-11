@@ -55,8 +55,8 @@ public class TestController {
         return "user-form";
     }
 
-    @GetMapping("wc-form")
-    public String wcForm() {
-        return "wc-form";
-    }
+//    @GetMapping("wc-form")
+//    public String wcForm() {
+//        return "wc-form";
+//    }
 }

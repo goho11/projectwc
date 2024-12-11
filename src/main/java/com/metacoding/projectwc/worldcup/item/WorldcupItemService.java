@@ -1,7 +1,10 @@
 package com.metacoding.projectwc.worldcup.item;
 
+import com.metacoding.projectwc._core.util.FileUtil;
+import com.metacoding.projectwc.worldcup.Worldcup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +14,12 @@ import java.util.List;
 @Service
 public class WorldcupItemService {
     private final WorldcupItemRepository worldcupItemRepository;
+
+    @Transactional
+    public void save(WorldcupItemRequest.SaveDTO saveDTO, Worldcup worldcup) {
+        String imgUrl = FileUtil.fileSave(saveDTO.getFile());
+        worldcupItemRepository.save(saveDTO.toEntity(imgUrl, worldcup));
+    }
 
     public List<Integer> countAll(int id) {
         int countAll = worldcupItemRepository.countAll(id); // item 갯수만 받아오기

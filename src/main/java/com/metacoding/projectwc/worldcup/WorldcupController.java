@@ -1,7 +1,13 @@
 package com.metacoding.projectwc.worldcup;
 
+import com.metacoding.projectwc._core.util.Resp;
+import com.metacoding.projectwc.user.User;
+import com.metacoding.projectwc.worldcup.item.WorldcupItemRequest;
 import com.metacoding.projectwc.worldcup.item.WorldcupItemService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +20,28 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class WorldcupController {
-    private final WorldcupItemService worldcupItemService;
     private final WorldcupService worldcupService;
+    private final WorldcupItemService worldcupItemService;
+    private final HttpSession session;
+
+    @GetMapping("/worldcups/new-worldcup")
+    public String saveWorldcup() {
+        User user = User.builder().id(1).build();
+        // TODO 로그인 기능 구현 시 수정 필요
+//        User seesionUser = (User) session.getAttribute("sessionUser");
+        int id = worldcupService.save(user);
+//        int id = worldcupService.saveWorldcup(sessionUser);
+        return "redirect:/worldcups/wc-form/" + id;
+    }
+
+    @GetMapping("/worldcups/wc-form/{id}")
+    public String wcFormById(@PathVariable int id, Model model) {
+        // TODO 유저의 월드컵 id가 맞는지 체크
+        // User seesionUser = (User) session.getAttribute("sessionUser");
+        // worldcupService.findById(id).getUser() 같은지 확인
+        model.addAttribute("id", id);
+        return "wc-form";
+    }
 
     @GetMapping("/worldcups/start-form/{id}")
     public String startForm(@PathVariable("id") int id, Model model) {
@@ -32,5 +58,15 @@ public class WorldcupController {
         System.out.println(round);
 
         return "redirect:/game";
+    }
+
+    @PostMapping("/worldcups/{id}/items")
+    public ResponseEntity<?> save(WorldcupItemRequest.SaveDTO saveDTO, @PathVariable int id) {
+        // TODO 유저의 월드컵 id가 맞는지 체크
+        // User seesionUser = (User) session.getAttribute("sessionUser");
+        // worldcupService.findById(id).getUser() 같은지 확인
+        Worldcup worldcup = Worldcup.builder().id(id).build();
+        worldcupItemService.save(saveDTO, worldcup);
+        return new ResponseEntity(Resp.ok("일단 됨"), HttpStatus.CREATED);
     }
 }
