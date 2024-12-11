@@ -18,18 +18,20 @@
     </div>
     <h3>Register to WC</h3>
     <p>이메일 주소만으로 간단히 계정 생성이 가능합니다.</p>
-    <form role="form" id="form1">
+    <form action="/signup" method="POST" id="signup-form">
         <div class="form-group mb-3">
-            <input type="text" class="form-control" placeholder="닉네임" required="" id="user_nickname">
+            <input type="text" class="form-control" placeholder="닉네임" required="" id="user-nickname" name="nickname">
         </div>
         <div class="form-group mb-3">
-            <input type="email" class="form-control" placeholder="이메일" required="" id="user_email">
+            <input type="email" class="form-control" placeholder="이메일" required="" id="user-email" name="email">
         </div>
         <div class="form-group mb-3">
-            <input type="password" class="form-control" placeholder="비밀번호" required="" id="user_password">
+            <input type="password" class="form-control" placeholder="비밀번호" required="" id="user-password"
+                   name="password">
         </div>
         <div class="form-group mb-3">
-            <input type="password" class="form-control" placeholder="비밀번호 확인" required="" id="user_password_check">
+            <input type="password" class="form-control" placeholder="비밀번호 확인" required="" id="user-password-check"
+                   name="password-check">
         </div>
         <button type="submit" class="btn block w-100 mb-2 common-color-primary common-none-outline-button text-white"
                 id="login">계정 생성
@@ -37,8 +39,20 @@
         <div id="message mb-3"></div>
     </form>
 </div>
-
-
 </body>
+<script>
+    // 비밀번호 확인
+    function passwordMatch(event) {
+        var password = document.querySelector("#user-password").value;
+        var passwordCheck = document.querySelector("#user-password-check").value;
+
+        if (password !== passwordCheck) {
+            event.preventDefault(); // 틀리면 폼제출 방지
+            alert("비밀번호가 일치하지 않습니다")
+        }
+    }
+
+    document.querySelector('#signup-form').addEventListener('submit', passwordMatch);
+</script>
 
 </html>
