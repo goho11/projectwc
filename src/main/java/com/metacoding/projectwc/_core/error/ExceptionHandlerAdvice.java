@@ -10,27 +10,66 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
     @ExceptionHandler(Exception400.class)
-    public ResponseEntity<?> err400(Exception400 e) {
-        return new ResponseEntity(Resp.fail(e.getMessage()), HttpStatus.BAD_REQUEST);
+    public String err400(Exception400 e){
+        System.out.println("err400");
+        String body = """
+                <script>
+                    alert('${msg}');
+                    history.back();
+                </script>
+                """.replace("${msg}",e.getMessage());
+
+        return body;
     }
 
     @ExceptionHandler(Exception401.class)
-    public ResponseEntity<?> err401(Exception401 e) {
-        return new ResponseEntity(Resp.fail(e.getMessage()), HttpStatus.NOT_FOUND);
+    public String err401(Exception401 e){
+        System.out.println("err401");
+        String body = """
+                <script>
+                    alert('${msg}');
+                    history.back();
+                </script>
+                """.replace("${msg}",e.getMessage());
+
+        return body;
     }
 
     @ExceptionHandler(Exception403.class)
-    public ResponseEntity<?> err403(Exception403 e) {
-        return new ResponseEntity(Resp.fail(e.getMessage()), HttpStatus.BAD_REQUEST);
+    public String err403(Exception403 e){
+        System.out.println("err403");
+        String body = """
+                <script>
+                    alert('${msg}');
+                    history.back();
+                </script>
+                """.replace("${msg}",e.getMessage());
+
+        return body;
     }
 
     @ExceptionHandler(Exception404.class)
-    public ResponseEntity<?> err404(Exception404 e) {
-        return new ResponseEntity(Resp.fail(e.getMessage()), HttpStatus.BAD_REQUEST);
+    public String err404(Exception404 e){
+        System.out.println("err404");
+        String body = """
+                <script>
+                    alert('${msg}');
+                    history.back();
+                </script>
+                """.replace("${msg}",e.getMessage());
+
+        return body;
     }
 
-    @ExceptionHandler(Exception500.class)
-    public ResponseEntity<?> err500(Exception500 e) {
-        return new ResponseEntity(Resp.fail(e.getMessage()), HttpStatus.BAD_REQUEST);
+    public String err500(Exception500 e){
+        System.out.println("err500");
+        String body = """
+                <script>
+                    alert('${msg}');
+                    history.back();
+                </script>
+                """.replace("${msg}",e.getMessage());
+
+        return body;
     }
 }

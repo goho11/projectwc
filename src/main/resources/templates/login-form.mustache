@@ -18,18 +18,18 @@
     </div>
     <h3>Welcome to WC</h3>
     <p>이상형 월드컵을 만들고 공유하려면 로그인이 필요합니다.</p>
-    <form role="form" id="form1">
+    <form action="login" method="post">
         <div class="form-group mb-3">
-            <input type="email" class="form-control" placeholder="이메일" required="" id="user_email">
+            <input type="email" class="form-control" placeholder="이메일" required="" id="user_email" name="username">
         </div>
         <div class="form-group  mb-3">
-            <input type="password" class="form-control" placeholder="비밀번호" required="" id="user_password">
+            <input type="password" class="form-control" placeholder="비밀번호" required="" id="user_password" name="password">
         </div>
         <button type="submit" class="btn w-100 mb-2 common-color-primary common-none-outline-button text-white"
                 id="login">로그인
         </button>
         <div id="message mb-3"></div>
-        <a class="btn btn-outline-dark mb-3 w-100" href="#">계정 생성</a>
+        <a class="btn btn-outline-dark mb-3 w-100" href="/signup-form">계정 생성</a>
     </form>
 </div>
 </body>
