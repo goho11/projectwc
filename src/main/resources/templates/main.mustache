@@ -21,17 +21,21 @@
     <!-- 상단 검색 바 -->
     <div id="top-bar" class="mb-2">
         <div class="d-flex align-items-center" id="top-bar">
-            <div class="btn-group">
-                <button type="button" class="btn common-color-primary text-white">인기순</button>
-                <button type="button" class="btn border-1 border border-start-0">최신순</button>
-            </div>
-            <div class="ms-4 d-flex align-items-center flex-grow-1">
-                <input type="text" class="form-control flex-grow-1" id="search-text"
-                       placeholder="월드컵 제목으로 검색하세요." name="search-text">
-                <button type="submit" class="btn border-0 common-color-primary text-white"
-                        style="white-space: nowrap;">검색
-                </button>
-            </div>
+            {{#pageDTO}}
+                <div class="btn-group">
+                    <button onclick="location.href='?page={{currentPage}}&size={{size}}&sortBy=Popularity&searchKeyword={{searchKeyword}}'" type="button" class="btn common-color-primary
+                    text-white">인기순</button>
+                    <button onclick="location.href='?page={{currentPage}}&size={{size}}&sortBy=Latest&searchKeyword={{searchKeyword}}'" type="button" class="btn border-1 border
+                    border-start-0">최신순</button>
+                </div>
+                <div class="ms-4 d-flex align-items-center flex-grow-1">
+                    <input type="text" class="form-control flex-grow-1" id="searchKeyword"
+                           placeholder="월드컵 제목으로 검색하세요." name="searchKeyword">
+                    <button onclick="updateSearch()" type="button" class="btn border-0 common-color-primary text-white"
+                            style="white-space: nowrap;">검색
+                    </button>
+                </div>
+            {{/pageDTO}}
         </div>
     </div>
 
@@ -59,6 +63,7 @@
                     <h5 class="card-title main-card-title fw-bold">{{title}}</h5>
                     <p class="card-text main-card-text">
                         {{description}}
+                        게임완료횟수: {{gamesCompleted}}
                     </p>
                 </div>
                 <div class="ms-2 mb-2 main-btn-container">
@@ -71,24 +76,32 @@
 
     <nav>
         {{#pageDTO}}
-        <ul class="pagination justify-content-center">
-            <li class="page-item {{#isFirstPage}}disabled{{/isFirstPage}}">
-                <a class="page-link" href="?page={{prevPage}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">&lt;</a>
-            </li>
-            {{#pages}}
-                <li class="page-item {{#isCurrentPage}}active{{/isCurrentPage}}">
-                    <a class="page-link" href="?page={{number}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">{{number}}</a>
+            <ul class="pagination justify-content-center">
+                <li class="page-item {{#isFirstPage}}disabled{{/isFirstPage}}">
+                    <a class="page-link" href="?page={{prevPage}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">&lt;</a>
                 </li>
-            {{/pages}}
-            <li class="page-item {{#isLastPage}}disabled{{/isLastPage}}">
-                <a class="page-link" href="?page={{nextPage}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">&gt;</a>
-            </li>
-        </ul>
+                {{#pages}}
+                    <li class="page-item {{#isCurrentPage}}active{{/isCurrentPage}}">
+                        <a class="page-link" href="?page={{number}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">{{number}}</a>
+                    </li>
+                {{/pages}}
+                <li class="page-item {{#isLastPage}}disabled{{/isLastPage}}">
+                    <a class="page-link" href="?page={{nextPage}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">&gt;</a>
+                </li>
+            </ul>
         {{/pageDTO}}
     </nav>
 
 </div>
 </body>
+    <script>
+        function updateSearch() {
+            const searchKeyword = document.getElementById('searchKeyword').value;
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('searchKeyword', searchKeyword);
+            window.location.href = '?' + urlParams.toString();
+        }
+    </script>
 
 </html>
 

@@ -26,6 +26,7 @@ VALUES ('3', '/img/3.png', 1);
 INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id)
 VALUES ('4', '/img/4.png', 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id)
 VALUES ('5', '/img/5.png', 1);
 INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id)
@@ -78,4 +79,5 @@ INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id)
 VALUES ('29', '/img/29.png', 1);
 INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id)
 VALUES ('30', '/img/30.png', 1);
+
 
