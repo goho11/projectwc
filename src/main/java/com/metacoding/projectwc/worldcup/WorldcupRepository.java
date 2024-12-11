@@ -36,7 +36,7 @@ public class WorldcupRepository  {
 //                .getResultList();
 //    }
     public List<Worldcup> findAllByTiltle(String searchKeyword, String sortBy, Integer offset, Integer limit) {
-        String jpql = "SELECT w FROM Worldcup w WHERE w.title LIKE :searchKeyword ORDER BY w." + sortBy + " DESC";
+        String jpql = "SELECT w FROM Worldcup w WHERE w.title LIKE :searchKeyword AND w.visibility = 1 AND w.isDeleted = false ORDER BY w." + sortBy + " DESC";
         TypedQuery<Worldcup> query = entityManager.createQuery(jpql, Worldcup.class)
                 .setParameter("searchKeyword", "%" + searchKeyword + "%");
 
@@ -47,4 +47,12 @@ public class WorldcupRepository  {
         return query.getResultList();
     }
 
+    public int countAllWorldcup(String searchKeyword) {
+        // 검색 조건에 맞는 전체 항목 수를 계산하는 JPQL 쿼리를 작성합니다.
+        String jpql = "SELECT COUNT(w) FROM Worldcup w WHERE w.title LIKE :searchKeyword AND w.visibility = 1 AND w.isDeleted = false";
+        return entityManager.createQuery(jpql, Long.class)
+                .setParameter("searchKeyword", "%" + searchKeyword + "%")
+                .getSingleResult()
+                .intValue();
+    }
 }

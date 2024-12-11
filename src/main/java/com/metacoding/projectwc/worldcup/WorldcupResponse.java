@@ -1,16 +1,12 @@
 package com.metacoding.projectwc.worldcup;
 
 import lombok.Data;
-import com.metacoding.projectwc.user.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.Data;
-import org.aspectj.weaver.World;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.Builder;
+
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
 
 public class WorldcupResponse {
 
@@ -43,6 +39,36 @@ public class WorldcupResponse {
             this.gamesCompleted = worldcup.getGamesCompleted();
             this.createdAt = worldcup.getCreatedAt();
 
+        }
+    }
+
+    @Data
+    public static class pageDTO {
+        private Integer currentPage;
+        private Integer totalPages;
+        private Integer size;
+        private String sortBy;
+        private String searchKeyword;
+
+        private boolean isFirstPage;
+        private boolean isLastPage;
+        private Integer prevPage;
+        private Integer nextPage;
+
+        List<Map<String, Object>> pages;
+
+        @Builder
+        public pageDTO(Integer currentPage, Integer totalPages, Integer size, String sortBy, String searchKeyword, boolean isFirstPage, boolean isLastPage, Integer prevPage, Integer nextPage, List<Map<String, Object>> pages) {
+            this.currentPage = currentPage;
+            this.totalPages = totalPages;
+            this.size = size;
+            this.sortBy = sortBy;
+            this.searchKeyword = searchKeyword;
+            this.isFirstPage = isFirstPage;
+            this.isLastPage = isLastPage;
+            this.prevPage = prevPage;
+            this.nextPage = nextPage;
+            this.pages = pages;
         }
     }
 }

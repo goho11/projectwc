@@ -84,4 +84,13 @@ public class WorldcupRepositoryTest {
             System.out.println(wc);
         }
     }
+
+    @Test
+    public void countAllWorldcup_test() {
+        String searchKeyword = "";
+        int countAll = worldcupRepository.countAllWorldcup(searchKeyword);
+
+        System.out.println("총 월드컵 숫자: " + countAll);
+        Assertions.assertThat(countAll).isGreaterThan(0);
+    }
 }
