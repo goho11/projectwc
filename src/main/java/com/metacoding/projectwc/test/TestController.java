@@ -10,15 +10,6 @@ public class TestController {
         return "index";
     }
 
-//    @GetMapping("login-form")
-//    public String loginForm() {
-//        return "login-form";
-//    }
-//
-//    @GetMapping("main")
-//    public String main() {
-//        return "main";
-//    }
 //
 //    @GetMapping("mine")
 //    public String mine() {
@@ -59,4 +50,5 @@ public class TestController {
 //    public String wcForm() {
 //        return "wc-form";
 //    }
+
 }

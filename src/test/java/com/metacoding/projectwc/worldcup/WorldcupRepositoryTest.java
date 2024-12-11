@@ -1,14 +1,20 @@
 package com.metacoding.projectwc.worldcup;
 
+
 import com.metacoding.projectwc.user.User;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
+import java.util.List;
+
+
 @Import(WorldcupRepository.class)
 @DataJpaTest
 public class WorldcupRepositoryTest {
+
     @Autowired
     private WorldcupRepository worldcupRepository;
 
@@ -36,5 +42,40 @@ public class WorldcupRepositoryTest {
         System.out.println(worldcup.getUser());
         System.out.println(worldcup.getTitle());
         System.out.println(worldcup.getVisibility());
+    }
+
+    @Test
+    public void findAllByTiltle_test() {
+        // given -> 더미데이터
+        WorldcupRequest.findAllDTO findAllDTO = new WorldcupRequest.findAllDTO();
+        Integer offset = (findAllDTO.getPage() - 1) * findAllDTO.getSize();
+//        findAllDTO.setSize(20);
+
+//        findAllDTO.setSortBy("gamesCompleted");
+        String sortBy;
+        // 최신순
+        if (findAllDTO.getSortBy().equals("Latest")) {
+            sortBy = "createdAt";
+        } else { // Popularity 인기순
+            sortBy = "gamesCompleted";
+        }
+        findAllDTO.setSearchKeyword("검색");
+
+        // when
+        List<Worldcup> worldcupList = worldcupRepository.findAllByTiltle(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize());
+
+        // then
+        for (Worldcup wc : worldcupList) {
+            System.out.println(wc);
+        }
+    }
+
+    @Test
+    public void countAllWorldcup_test() {
+        String searchKeyword = "";
+        int countAll = worldcupRepository.countAllWorldcup(searchKeyword);
+
+        System.out.println("총 월드컵 숫자: " + countAll);
+        Assertions.assertThat(countAll).isGreaterThan(0);
     }
 }

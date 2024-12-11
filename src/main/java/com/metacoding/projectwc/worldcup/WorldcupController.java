@@ -69,4 +69,18 @@ public class WorldcupController {
         worldcupItemService.save(saveDTO, worldcup);
         return new ResponseEntity(Resp.ok("일단 됨"), HttpStatus.CREATED);
     }
+
+    @GetMapping("/main")
+    public String main(Model model, WorldcupRequest.findAllDTO findAllDTO) {
+
+        // findAllDTO 디폴트 값은 1페이지, 사이즈는 10, 최신순
+        List<WorldcupResponse.findAllDTO> worldcupList = worldcupService.findAllByTiltle(findAllDTO);
+        model.addAttribute("worldcupList", worldcupList);
+
+        // 페이지 정보
+        WorldcupResponse.pageDTO pageDTO = worldcupService.createPageDTO(findAllDTO);
+        model.addAttribute("pageDTO", pageDTO);
+
+        return "main";
+    }
 }

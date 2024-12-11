@@ -1,13 +1,18 @@
 package com.metacoding.projectwc.worldcup.item;
 
+import com.metacoding.projectwc.worldcup.Worldcup;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
 public class WorldcupItemRepository {
     private final EntityManager entityManager;
+
     public WorldcupItem save(WorldcupItem worldcupItem) {
         entityManager.persist(worldcupItem);
         return worldcupItem;
@@ -20,5 +25,14 @@ public class WorldcupItemRepository {
         Object singleResult = entityManager.createNativeQuery(sql)
                 .getSingleResult();
         return Integer.parseInt(singleResult.toString());
+    }
+
+    public List<WorldcupItem> findTwoItems(Integer id) {
+        String jpql = "SELECT w FROM WorldcupItem w WHERE w.worldcup.id = :worldcupId AND w.isDeleted = false ORDER BY w.championCount DESC";
+        TypedQuery<WorldcupItem> query = entityManager.createQuery(jpql, WorldcupItem.class);
+        query.setParameter("worldcupId", id);
+        query.setMaxResults(2); // 최대 결과 수를 2개로 제한
+
+        return query.getResultList();
     }
 }

@@ -3,8 +3,26 @@ INSERT INTO user_tb (email, password, nickname, created_at)
 VALUES ('test', '1234', 'test', now());
 
 -- Worldcup 더미
-INSERT INTO worldcup_tb (visibility, user_id, created_at)
-VALUES (1, 1, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터1', '월드컵 설명1', 1, 1, 1, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터2', '월드컵 설명2', 1, 1, 2, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터3', '월드컵 설명3', 1, 1, 4, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터4', '월드컵 설명4', 1, 1, 11, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터5', '월드컵 설명5', 1, 1, 13, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터6', '월드컵 설명6', 1, 1, 144, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터7', '월드컵 설명7', 1, 1, 11, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 검색8', '월드컵 설명8', 1, 1, 221, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터9', '월드컵 설명9', 1, 1, 13, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터10', '월드컵 설명10', 1, 1, 11, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터11', '월드컵 설명11', 1, 1, 13, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터12', '월드컵 설명12', 1, 1, 21, now());
+
+-- 썸네일 2개 체크를 위한 WorldcupItem
+INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id, champion_count)
+VALUES ('썸네일1', '/img/101.png', 1, 8);
+INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id, champion_count)
+VALUES ('썸네일2', '/img/102.png', 1, 6);
+INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id, champion_count)
+VALUES ('썸네일3', '/img/103.png', 1, 2);
 
 -- WorldcupItem
 INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id)
@@ -67,4 +85,5 @@ INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id)
 VALUES ('29', '/img/29.png', 1);
 INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id)
 VALUES ('30', '/img/30.png', 1);
+
 
