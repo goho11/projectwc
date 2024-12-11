@@ -1,7 +1,7 @@
 package com.metacoding.projectwc.worldcup;
 
+import com.metacoding.projectwc._core.error.ex.Exception404;
 import com.metacoding.projectwc.user.User;
-import com.metacoding.projectwc._core.error.ex.Exception400;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +19,7 @@ public class WorldcupService {
     }
 
     public WorldcupResponse.findByIDDTO findById(int id) {
-        Worldcup worldcup = worldcupRepository.findById(id).orElseThrow(() -> new Exception400("Worldcup not found"));
-        return new WorldcupResponse.findByIDDTO(worldcup);
-
+        Worldcup worldcupPS = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("Worldcup not found"));
+        return new WorldcupResponse.findByIDDTO(worldcupPS);
     }
 }
