@@ -47,16 +47,15 @@
                 <div class="d-flex">
                     <div class="w-50">
                         <div class="common-img-container" style="height:120px;">
-                            <img src="/img/horizolong.png" alt="Card image">
+                            <img src={{imgUrl1}} alt="Card image">
                         </div>
-                        <div class="text-center main-ellipsis-image-text">임시
-                        </div>
+                        <div class="text-center main-ellipsis-image-text">{{itemname1}}</div>
                     </div>
                     <div class="w-50">
                         <div class="common-img-container" style="height:120px;">
-                            <img src="/img/vertlong.png" alt="Card image">
+                            <img src={{imgUrl2}} alt="Card image">
                         </div>
-                        <div class="text-center main-ellipsis-image-text">임시2</div>
+                        <div class="text-center main-ellipsis-image-text">{{itemname2}}</div>
                     </div>
                 </div>
                 <div class="p-2">
@@ -64,6 +63,8 @@
                     <p class="card-text main-card-text">
                         {{description}}
                         게임완료횟수: {{gamesCompleted}}
+                        썸네일1: {{itemname1}}
+                        썸네일2: {{itemname2}}
                     </p>
                 </div>
                 <div class="ms-2 mb-2 main-btn-container">

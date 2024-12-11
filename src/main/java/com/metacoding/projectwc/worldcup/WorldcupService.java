@@ -2,6 +2,8 @@ package com.metacoding.projectwc.worldcup;
 
 import com.metacoding.projectwc._core.error.ex.Exception404;
 import com.metacoding.projectwc.user.User;
+import com.metacoding.projectwc.worldcup.item.WorldcupItem;
+import com.metacoding.projectwc.worldcup.item.WorldcupItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,12 +12,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class WorldcupService {
     private final WorldcupRepository worldcupRepository;
+    private final WorldcupItemRepository worldcupItemRepository;
 
     @Transactional
     public int save(User user) {
@@ -30,7 +34,6 @@ public class WorldcupService {
     }
 
     public List<WorldcupResponse.findAllDTO> findAllByTiltle(WorldcupRequest.findAllDTO findAllDTO) {
-
         // 오프셋
         Integer offset = (findAllDTO.getPage() - 1) * findAllDTO.getSize();
         String sortBy;
@@ -45,9 +48,36 @@ public class WorldcupService {
                 .findAllByTiltle(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize());
 
         return worldcupList.stream()
-                .map(WorldcupResponse.findAllDTO::new)
-                .toList();
+                .map(worldcup -> {
+                    List<WorldcupItem> worldcupItems = worldcupItemRepository.findTwoItems(worldcup.getId());
+                    WorldcupItem worldcupItem1;
+                    WorldcupItem worldcupItem2;
+                    if (worldcupItems.size() == 2) {
+                        worldcupItem1 = worldcupItems.get(0);
+                        worldcupItem2 = worldcupItems.get(1);
+
+                    } else if (worldcupItems.size() == 1) {
+                        worldcupItem1 = worldcupItems.get(0);
+                        worldcupItem2 = WorldcupItem.builder()
+                                .itemname("해당 이미지 없음")
+                                .imgUrl("이미지 없음")
+                                .build();
+                    } else {
+                        worldcupItem1 = WorldcupItem.builder()
+                            .itemname("해당 이미지 없음")
+                            .imgUrl("이미지 없음")
+                            .build();
+                        worldcupItem2 = WorldcupItem.builder()
+                                .itemname("해당 이미지 없음")
+                                .imgUrl("이미지 없음")
+                                .build();
+                    }
+                    return new WorldcupResponse.findAllDTO(worldcup, worldcupItem1, worldcupItem2);
+                })
+                .collect(Collectors.toList());
     }
+
+
 
     public WorldcupResponse.pageDTO createPageDTO(WorldcupRequest.findAllDTO findAllDTO) {
         // 총 월드컵 개수

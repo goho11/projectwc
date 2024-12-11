@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
+import java.util.List;
+
 @Import({Worldcup.class, WorldcupItemRepository.class})
 @DataJpaTest
 public class WorldcupItemRepositoryTest {
@@ -36,5 +38,20 @@ public class WorldcupItemRepositoryTest {
 
         // eye
         System.out.println("총 갯수: " + i);
+    }
+
+    @Test
+    public void findTwoItems_test() {
+        // given
+        int id = 1;
+
+        // when
+        List<WorldcupItem> worldcupItems = worldcupItemRepository.findTwoItems(id);
+
+        // eye
+        for (WorldcupItem worldcupItem : worldcupItems) {
+            System.out.println(worldcupItem.getItemname());
+            System.out.println(worldcupItem.getChampionCount());
+        }
     }
 }

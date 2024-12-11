@@ -45,21 +45,6 @@ public class WorldcupRepositoryTest {
     }
 
     @Test
-    public void findAll_test() {
-        // given -> 더미데이터
-        // when
-        List<Worldcup> worldcupList = worldcupRepository.findAll();
-
-        // then
-        for (Worldcup wc : worldcupList) {
-            System.out.println(wc);
-        }
-
-//        Assertions.assertThat(worldcupList).isNull();
-        Assertions.assertThat(worldcupList).isNotNull();
-    }
-
-    @Test
     public void findAllByTiltle_test() {
         // given -> 더미데이터
         WorldcupRequest.findAllDTO findAllDTO = new WorldcupRequest.findAllDTO();

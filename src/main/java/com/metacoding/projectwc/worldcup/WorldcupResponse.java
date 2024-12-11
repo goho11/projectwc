@@ -1,5 +1,6 @@
 package com.metacoding.projectwc.worldcup;
 
+import com.metacoding.projectwc.worldcup.item.WorldcupItem;
 import lombok.Data;
 import lombok.Builder;
 
@@ -28,10 +29,15 @@ public class WorldcupResponse {
         private String title;
         private String description;
         private Integer userId;
-        private Integer gamesCompleted; // 인기순
-        private Timestamp createdAt; // 최신순
+        private Integer gamesCompleted;
+        private Timestamp createdAt;
 
-        public findAllDTO(Worldcup worldcup) {
+        private String itemname1;
+        private String imgUrl1;
+        private String itemname2;
+        private String imgUrl2;
+
+        public findAllDTO(Worldcup worldcup, WorldcupItem worldcupItem1, WorldcupItem worldcupItem2) {
             this.id = worldcup.getId();
             this.title = worldcup.getTitle();
             this.description = worldcup.getDescription();
@@ -39,6 +45,10 @@ public class WorldcupResponse {
             this.gamesCompleted = worldcup.getGamesCompleted();
             this.createdAt = worldcup.getCreatedAt();
 
+            this.itemname1 = worldcupItem1.getItemname();
+            this.imgUrl1 = worldcupItem1.getImgUrl();
+            this.itemname2 = worldcupItem2.getItemname();
+            this.imgUrl2 = worldcupItem2.getImgUrl();
         }
     }
 
@@ -55,7 +65,7 @@ public class WorldcupResponse {
         private Integer prevPage;
         private Integer nextPage;
 
-        List<Map<String, Object>> pages;
+        private List<Map<String, Object>> pages;
 
         @Builder
         public pageDTO(Integer currentPage, Integer totalPages, Integer size, String sortBy, String searchKeyword, boolean isFirstPage, boolean isLastPage, Integer prevPage, Integer nextPage, List<Map<String, Object>> pages) {
