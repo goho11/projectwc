@@ -1,6 +1,5 @@
 package com.metacoding.projectwc.worldcup.item;
 
-import com.metacoding.projectwc.worldcup.Worldcup;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +15,20 @@ public class WorldcupItemRepository {
     public WorldcupItem save(WorldcupItem worldcupItem) {
         entityManager.persist(worldcupItem);
         return worldcupItem;
+    }
+
+    public List<WorldcupItem> findByWorldcupIdAndNameOrderByOption(int id, String itemname, String orderOption, int offset, int limit) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("select * from worldcup_item_tb where worldcup_id = :id".replace(":id", String.valueOf(id)));
+        if (itemname != null && !itemname.isEmpty())
+            stringBuilder.append(" and itemname like '%:itemname%'".replace(":itemname", itemname));
+        if (orderOption != null && !orderOption.isEmpty())
+            stringBuilder.append(" order by :orderOption".replace(":orderOption", orderOption));
+        else
+            stringBuilder.append(" order by id desc");
+        stringBuilder.append(" limit :offset, :limit".replace(":offset", String.valueOf(offset)).replace(":limit", String.valueOf(limit)));
+        String sql = stringBuilder.toString();
+        return entityManager.createNativeQuery(sql, WorldcupItem.class).getResultList();
     }
 
     public int countAll(int id) {
