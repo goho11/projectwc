@@ -72,9 +72,10 @@ public class WorldcupController {
 
     @GetMapping("/main/test")
     public String main(Model model, WorldcupRequest.findAllDTO findAllDTO) {
-        // findAllDTO 디폴트 값은 1페이지, 사이즈는 10, 최신순, 제목
 
-        List<WorldcupResponse.findAllDTO> worldcupList = worldcupService.findAll();
+
+        // findAllDTO 디폴트 값은 1페이지, 사이즈는 10, 최신순, 제목
+        List<WorldcupResponse.findAllDTO> worldcupList = worldcupService.findAll(findAllDTO);
         model.addAttribute("worldcupList", worldcupList);
 
         return "main";

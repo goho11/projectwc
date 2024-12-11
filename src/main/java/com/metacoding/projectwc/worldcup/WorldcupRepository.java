@@ -35,8 +35,8 @@ public class WorldcupRepository  {
 //                .setParameter("title", "%" + title + "%")
 //                .getResultList();
 //    }
-    public List<Worldcup> findAll(String searchKeyword, String searchField, String sort, Integer offset, Integer limit) {
-        String jpql = "SELECT w FROM Worldcup w WHERE w." + searchField + " LIKE :searchKeyword ORDER BY w." + sort + " DESC";
+    public List<Worldcup> findAllByTiltle(String searchKeyword, String sortBy, Integer offset, Integer limit) {
+        String jpql = "SELECT w FROM Worldcup w WHERE w.title LIKE :searchKeyword ORDER BY w." + sortBy + " DESC";
         TypedQuery<Worldcup> query = entityManager.createQuery(jpql, Worldcup.class)
                 .setParameter("searchKeyword", "%" + searchKeyword + "%");
 

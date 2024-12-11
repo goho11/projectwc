@@ -20,7 +20,6 @@ public class Worldcup {
 
     @Column(nullable = false, length = 50, columnDefinition = "VARCHAR(50) DEFAULT '새로운 월드컵'")
     private String title;
-
     private String description;
 
     // 0 비공개 / 1 공개
@@ -64,5 +63,6 @@ public class Worldcup {
             gamesCompleted = 0;
         if (isDeleted == null)
             isDeleted = false;
+
     }
 }

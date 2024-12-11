@@ -57,6 +57,31 @@ public class WorldcupRepositoryTest {
 
 //        Assertions.assertThat(worldcupList).isNull();
         Assertions.assertThat(worldcupList).isNotNull();
+    }
 
+    @Test
+    public void findAllByTiltle_test() {
+        // given -> 더미데이터
+        WorldcupRequest.findAllDTO findAllDTO = new WorldcupRequest.findAllDTO();
+        Integer offset = (findAllDTO.getPage() - 1) * findAllDTO.getSize();
+//        findAllDTO.setSize(20);
+
+//        findAllDTO.setSortBy("gamesCompleted");
+        String sortBy;
+        // 최신순
+        if (findAllDTO.getSortBy().equals("Latest")) {
+            sortBy = "createdAt";
+        } else { // Popularity 인기순
+            sortBy = "gamesCompleted";
+        }
+        findAllDTO.setSearchKeyword("검색");
+
+        // when
+        List<Worldcup> worldcupList = worldcupRepository.findAllByTiltle(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize());
+
+        // then
+        for (Worldcup wc : worldcupList) {
+            System.out.println(wc);
+        }
     }
 }

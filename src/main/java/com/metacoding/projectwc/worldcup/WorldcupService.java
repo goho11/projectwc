@@ -27,10 +27,22 @@ public class WorldcupService {
         return new WorldcupResponse.findByIDDTO(worldcupPS);
     }
 
-    public List<WorldcupResponse.findAllDTO> findAll() {
-        // TODO: WorldcupRequest.findAllDTO -> 리미트, 오프셋, 검색 타입, 검색 단어, 정렬 기준 적용하는 리포지토리 메서드 작성 필요
+    public List<WorldcupResponse.findAllDTO> findAll(WorldcupRequest.findAllDTO findAllDTO) {
+        // 오프셋
+        Integer offset = (findAllDTO.getPage() - 1) * findAllDTO.getSize();
+        String sortBy;
+        // Latest 최신순
+        if (findAllDTO.getSortBy().equals("Latest")) {
+            sortBy = "createdAt";
+        // Popularity 인기순
+        } else {
+            sortBy = "gamesCompleted";
+        }
 
-        return worldcupRepository.findAll().stream()
+        List<Worldcup> worldcupList = worldcupRepository
+                .findAllByTiltle(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize());
+
+        return worldcupList.stream()
                 .map(WorldcupResponse.findAllDTO::new)
                 .toList();
     }
