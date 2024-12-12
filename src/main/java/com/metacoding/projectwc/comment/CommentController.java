@@ -31,7 +31,7 @@ public class CommentController {
 
     @PutMapping("comments")
     public String deleteComment() {
-        // 논리 삭제
+        // 논리 삭제 구현
         // TODO 로그인 기능 완성될 경우 적용
 //        User seesionUser = (User) session.getAttribute("sessionUser");
         User user = User.builder().id(1).build();

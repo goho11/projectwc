@@ -20,8 +20,9 @@ public class CommentRepository {
     }
 
     public void deleteComment(Integer id) {
-        entityManager.createQuery("delete from Comment c where c.id = :id")
+        entityManager.createQuery("update Comment c set c.isDeleted = true where c.id = :id")
                 .setParameter("id", id)
                 .executeUpdate();
     }
+
 }

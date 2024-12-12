@@ -31,5 +31,4 @@ public class CommentService {
         Integer commentId = commentPS.getId();
         commentRepository.deleteComment(commentId);
     }
-
 }
