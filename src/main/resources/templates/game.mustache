@@ -44,6 +44,12 @@
     </form>
 
     <script>
+        let gameLeft = document.querySelector("#game-left");
+        gameLeft.style.backgroundImage = "url('{{worldcupItem1.imgUrl}}')";
+
+        let gameRight = document.querySelector("#game-right");
+        gameRight.style.backgroundImage = "url('{{worldcupItem2.imgUrl}}')";
+
         // "game-left"와 "game-right" 클릭 이벤트 처리
         document.querySelector('#game-left').addEventListener('click', function() {
             const dataId = this.getAttribute('data-id');
@@ -74,6 +80,5 @@
         });
     </script>
     </body>
-
 {{/match}}
 </html>
