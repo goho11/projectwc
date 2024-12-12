@@ -83,4 +83,22 @@ public class WorldcupController {
 
         return "main";
     }
+
+    @GetMapping("/mine")
+    public String mine(Model model, WorldcupRequest.findAllDTO findAllDTO) {
+        // TODO 로그인 기능 완성될 경우 적용
+//        User seesionUser = (User) session.getAttribute("sessionUser");
+
+        User user = User.builder().id(1).build();
+
+        // 로그인 한 유저가 생성한 월드컵 정보만 가져온다.
+        List<WorldcupResponse.findAllDTO> worldcupList = worldcupService.findAllByTiltleAndUser(findAllDTO, user);
+        model.addAttribute("worldcupList", worldcupList);
+
+        // 페이지 정보
+        WorldcupResponse.pageDTO pageDTO = worldcupService.createPageDTOForMine(findAllDTO, user);
+        model.addAttribute("pageDTO", pageDTO);
+
+        return "mine";
+    }
 }
