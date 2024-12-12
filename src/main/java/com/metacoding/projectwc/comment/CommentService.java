@@ -1,6 +1,5 @@
 package com.metacoding.projectwc.comment;
 
-import com.metacoding.projectwc._core.error.ex.Exception403;
 import com.metacoding.projectwc._core.error.ex.Exception404;
 import com.metacoding.projectwc.user.User;
 import com.metacoding.projectwc.worldcup.Worldcup;
