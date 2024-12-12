@@ -48,6 +48,17 @@ public class WorldcupItemRepositoryTest {
     }
 
     @Test
+    public void countByWorldcupIdAndNameOrderByOption_test() {
+        // given
+        int id = 1;
+        String itemname = "";
+        // when
+        int result = worldcupItemRepository.countByWorldcupIdAndNameOrderByOption(id, itemname);
+        // then
+        System.out.println(result);
+    }
+
+    @Test
     public void countAll_test() {
         // given
         int id = 1;

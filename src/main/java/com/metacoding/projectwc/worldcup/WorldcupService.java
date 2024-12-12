@@ -29,7 +29,7 @@ public class WorldcupService {
     }
 
     public WorldcupResponse.findByIDDTO findById(int id) {
-        Worldcup worldcupPS = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("Worldcup not found"));
+        Worldcup worldcupPS = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("월드컵을 찾을 수 없습니다."));
         return new WorldcupResponse.findByIDDTO(worldcupPS);
     }
 

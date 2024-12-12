@@ -1,7 +1,10 @@
 package com.metacoding.projectwc.worldcup;
 
+import com.metacoding.projectwc._core.error.ex.APIException404;
 import com.metacoding.projectwc.user.User;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -21,6 +24,16 @@ public class WorldcupRepository  {
 
     public Optional<Worldcup> findById(int id) {
         return Optional.ofNullable(entityManager.find(Worldcup.class, id));
+    }
+
+    public int findGamesCompletedById(int id) {
+        Query query = entityManager.createQuery("select w.gamesCompleted from Worldcup w where w.id=:id");
+        query.setParameter("id", id);
+        try {
+            return (Integer) query.getSingleResult();
+        }catch (NoResultException e) {
+            throw new APIException404("월드컵을 찾을 수 없습니다.");
+        }
     }
 
     public List<Worldcup> findAllByTiltle(String searchKeyword, String sortBy, Integer offset, Integer limit) {
