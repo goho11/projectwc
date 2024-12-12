@@ -59,16 +59,6 @@ public class WorldcupController {
         return "redirect:/game";
     }
 
-    @PostMapping("/worldcups/{id}/items")
-    public ResponseEntity<?> save(WorldcupItemRequest.SaveDTO saveDTO, @PathVariable int id) {
-        // TODO 유저의 월드컵 id가 맞는지 체크
-        // User seesionUser = (User) session.getAttribute("sessionUser");
-        // worldcupService.findById(id).getUser() 같은지 확인
-        Worldcup worldcup = Worldcup.builder().id(id).build();
-        worldcupItemService.save(saveDTO, worldcup);
-        return new ResponseEntity(Resp.ok("일단 됨"), HttpStatus.CREATED);
-    }
-
     @GetMapping("/main")
     public String main(Model model, WorldcupRequest.findAllDTO findAllDTO) {
 
