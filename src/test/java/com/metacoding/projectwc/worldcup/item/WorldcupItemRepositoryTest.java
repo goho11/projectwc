@@ -84,4 +84,15 @@ public class WorldcupItemRepositoryTest {
             System.out.println(worldcupItem.getChampionCount());
         }
     }
+
+    @Test
+    public void findById_test() {
+        // given
+        int id = 1;
+        // when
+        WorldcupItem worldcupItem = worldcupItemRepository.findById(id).orElseGet(() -> null);
+        // then
+        System.out.println(worldcupItem.getItemname());
+        System.out.println(worldcupItem.getImgUrl());
+    }
 }

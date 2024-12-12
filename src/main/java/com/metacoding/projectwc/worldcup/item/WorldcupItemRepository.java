@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -47,8 +48,6 @@ public class WorldcupItemRepository {
         return Integer.parseInt(singleResult.toString());
     }
 
-
-
     public List<WorldcupItem> findTwoItems(Integer id) {
         String jpql = "SELECT w FROM WorldcupItem w WHERE w.worldcup.id = :worldcupId AND w.isDeleted = false ORDER BY w.championCount DESC";
         TypedQuery<WorldcupItem> query = entityManager.createQuery(jpql, WorldcupItem.class);
@@ -56,5 +55,9 @@ public class WorldcupItemRepository {
         query.setMaxResults(2); // 최대 결과 수를 2개로 제한
 
         return query.getResultList();
+    }
+
+    public Optional<WorldcupItem> findById(int id) {
+        return Optional.ofNullable(entityManager.find(WorldcupItem.class, id));
     }
 }
