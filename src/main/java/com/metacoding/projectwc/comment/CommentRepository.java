@@ -24,5 +24,4 @@ public class CommentRepository {
                 .setParameter("id", id)
                 .executeUpdate();
     }
-
 }
