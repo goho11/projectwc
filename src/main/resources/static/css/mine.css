@@ -1,17 +1,17 @@
-.main-card {
+.mine-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%; /* 카드 높이를 고정 */
 }
 
-.main-card-title {
+.mine-card-title {
     white-space: nowrap; /* 텍스트를 한 줄로 표시 */
     overflow: hidden; /* 넘치는 텍스트를 숨김 */
     text-overflow: ellipsis; /* 넘치는 텍스트를 '...'으로 표시 */
 }
 
-.main-card-text {
+.mine-card-text {
     flex-grow: 1; /* 여유 공간을 차지하도록 설정 */
     height: 95px;
     display: -webkit-box;
@@ -21,25 +21,25 @@
     text-overflow: ellipsis;
 }
 
-.main-btn-container {
+.mine-btn-container {
     display: flex;
     flex-direction: column; /* 세로 방향으로 정렬 */
     gap: 5px; /* 각 줄 사이의 간격 */
 }
 
-.btn-group-row {
+.mine-btn-group-row {
     display: flex;
     gap: 5px; /* 버튼 사이의 간격 */
 }
 
 
-.main-card-list {
+.mine-card-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 5 열 설정 */
     grid-gap: 10px; /* 카드 간격 */
 }
 
-.main-ellipsis-image-text {
+.mine-ellipsis-image-text {
     white-space: nowrap; /* 텍스트를 한 줄로 표시 */
     overflow: hidden; /* 넘치는 텍스트를 숨김 */
     text-overflow: ellipsis; /* 넘치는 텍스트를 '...'으로 표시 */
