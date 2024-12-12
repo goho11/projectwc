@@ -17,6 +17,10 @@
 <body>
 {{> layout/navbar}}
 <div class="container">
+    <div id="custom-alert"
+         style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
+        알림 메시지
+    </div>
     <div class="row bg-white p-2 pt-4 rounded-4 my-3 shadow">
         <div>
             <h4><b>이상형 월드컵 정보</b></h4>
@@ -24,14 +28,16 @@
         <hr class="border border-secondary border-dashed my-3">
         <div class="row g-0">
             <label class="col-sm-1 text-center"><b>제목</b></label>
-            <div class="col-sm-10"><input type="text" name="title" class="form-control wh" value="새로운 월드컵">
+            <div class="col-sm-10"><input id="title" type="text" name="title" class="form-control wh"
+                                          value="{{model.title}}" onfocusout="updateWorldcup()">
                 <small>이상형월드컵의 제목을 입력하세요.</small>
             </div>
         </div>
         <hr class="border border-secondary border-dashed my-3">
         <div class="row g-0">
             <label class="col-sm-1 text-center"><b>설명</b></label>
-            <div class="col-sm-10"><input type="text" name="description" class="form-control wh">
+            <div class="col-sm-10"><input id="description" type="text" name="description" class="form-control wh"
+                                          value="{{model.description}}" onfocusout="updateWorldcup()">
                 <small>설명, 하고싶은 말 등을 자유롭게 쓰세요.</small>
             </div>
         </div>
@@ -40,13 +46,15 @@
             <label class="col-sm-1 text-center"><b>공개여부</b></label>
             <div class="col-sm-10">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radios" value="" id="radio2" checked>
+                    <input class="form-check-input" type="radio" name="radios" value="0" id="radio2"
+                           {{^model.visibility}}checked{{/model.visibility}} onclick="updateWorldcup()">
                     <label class="form-check-label" for="radio2">
                         비공개 (다른 사용자는 접근할 수 없습니다.)
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radios" value="" id="radio1">
+                    <input class="form-check-input" type="radio" name="radios" value="1" id="radio1"
+                           {{#model.visibility}}checked{{/model.visibility}} onclick="updateWorldcup()">
                     <label class="form-check-label" for="radio1">
                         공개 (모든 사용자가 플레이 할 수 있습니다.)
                     </label>
@@ -114,19 +122,56 @@
     let size;
     requestFind();
 
+    function showAlert(message, duration) {
+        const alertBox = document.getElementById('custom-alert');
+        alertBox.textContent = message;
+        alertBox.style.display = 'block';
+
+        setTimeout(() => {
+            alertBox.style.display = 'none';
+        }, duration);
+    }
+
+    async function updateWorldcup() {
+        let worldcup = {
+            title: document.querySelector("#title").value,
+            description: document.querySelector("#description").value,
+            visibility: document.querySelector('input[name="radios"]:checked').value,
+        }
+
+        let requestBody = JSON.stringify(worldcup);
+
+        let response = await fetch(`/worldcups/{{model.id}}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body: requestBody
+        });
+
+        let responseBody = await response.json();
+
+        if (responseBody.success) {
+            showAlert("저장되었습니다!", 2000);
+        } else {
+            showAlert("저장실패했습니다!", 2000);
+        }
+    }
+
     function changePage(p) {
         page = p;
         requestFind();
     }
 
     const dropzone = new Dropzone(".dropzone", {
-        url: "/worldcups/{{id}}/items",
+        url: "/worldcups/{{model.id}}/items",
         method: "post",
         maxFilesize: 10,
         dictDefaultMessage: "아이템 추가",
         // autoProcessQueue: false,
         queuecomplete() {
             page = 1;
+            showAlert("저장되었습니다!", 2000);
             requestFind();
         },
 
@@ -178,7 +223,6 @@
         let curPageGroup = Math.floor((page + 4) / 5) - 1;
         let firstPage = curPageGroup * 5 + 1;
         let lastPage = Math.min(curPageGroup * 5 + 5, totalPage);
-        console.log(curPageGroup, " ", firstPage, " ", lastPage);
         if (curPageGroup !== 0) {
             pageList.append(renderPageItem("≪", 1));
             pageList.append(renderPageItem("<", firstPage - 1));
@@ -210,7 +254,7 @@
             let rendered = renderTr(item);
             tbody.append(rendered);
             let newDropzone = new Dropzone(".my-dropzone-" + dropIndex, {
-                url: "/worldcups/{{id}}/items/" + item.id,
+                url: "/worldcups/{{model.id}}/items/" + item.id,
                 method: "put",
                 maxFiles: 1,
                 maxFilesize: 10,
