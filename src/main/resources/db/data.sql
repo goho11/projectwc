@@ -1,6 +1,8 @@
 -- User 더미
 INSERT INTO user_tb (email, password, nickname, created_at)
 VALUES ('test', '1234', 'test', now());
+INSERT INTO user_tb (email, password, nickname, created_at)
+VALUES ('test2', '1234', 'test2', now());
 
 -- Worldcup 더미
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터1', '월드컵 설명1', 1, 1, 1, now());

@@ -78,4 +78,31 @@ public class WorldcupRepositoryTest {
         System.out.println("총 월드컵 숫자: " + countAll);
         Assertions.assertThat(countAll).isGreaterThan(0);
     }
+
+    @Test
+    public void findAllByTiltleAndUser_test() {
+        // given -> 더미데이터
+        WorldcupRequest.findAllDTO findAllDTO = new WorldcupRequest.findAllDTO();
+        Integer offset = (findAllDTO.getPage() - 1) * findAllDTO.getSize();
+        String sortBy = "createdAt";
+        Integer userId = 1;
+
+        // when
+        List<Worldcup> worldcupList = worldcupRepository.findAllByTiltleAndUser(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize(), userId);
+
+        // then
+        for (Worldcup wc : worldcupList) {
+            System.out.println(wc);
+        }
+    }
+
+    @Test
+    public void countAllWorldcupByUser_test() {
+        String searchKeyword = "";
+        Integer userId = 1;
+        int countAll = worldcupRepository.countAllWorldcupByUser(searchKeyword, userId);
+
+        System.out.println("총 월드컵 숫자: " + countAll);
+        Assertions.assertThat(countAll).isGreaterThan(0);
+    }
 }
