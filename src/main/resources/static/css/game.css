@@ -1,33 +1,43 @@
 /* 각 클래스 이름 변동 가능 */
 /* 각  background-image도 변동 */
-.game-left {
+.game-left, .game-right {
     width: 50%;
     height: 100%;
     max-width: 50%;
     max-height: 100%;
-    background-image: url('/img/vertlong.png');
     background-repeat: no-repeat;
     background-size: contain;
+    position: relative; /* position 유지 */
+    transition: transform 1s ease-in-out;  /* transform으로만 위치 이동 애니메이션 */
+}
+
+.game-left {
+    background-image: url('/img/vertlong.png');
     background-position: right center;
-    position: relative;
-    z-index: 1
+    z-index: 1;
 }
 
 .game-right {
-    width: 50%;
-    height: 100%;
-    max-width: 50%;
-    max-height: 100%;
     background-image: url('/img/horizolong.png');
-    background-repeat: no-repeat;
-    background-size: contain;
     background-position: left center;
-    position: relative;
-    left: 50%;
-    top: -100%;
-    z-index: 2
+    left: 50%;  /* left 유지 */
+    top: -100%;  /* top 유지 */
+    z-index: 2;
 }
 
+/* 가운데로 이동 */
+.game-left.centered, .game-right.centered {
+    transform: translateX(0); /* 가운데로 이동 */
+}
+
+/* 화면 밖으로 이동 */
+.game-left.outside {
+    transform: translateX(-200vw); /* 화면 왼쪽으로 이동 */
+}
+
+.game-right.outside {
+    transform: translateX(200vw); /* 화면 오른쪽으로 이동 */
+}
 .game-content {
     padding: 0 20px
 }

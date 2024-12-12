@@ -34,7 +34,7 @@ public class WorldcupResponse {
         private String title;
         private String description;
 
-        public FindByIDDTO(Worldcup worldcup) {
+        public FindByIdDTO(Worldcup worldcup) {
             this.id = worldcup.getId();
             this.title = worldcup.getTitle();
             this.description = worldcup.getDescription();

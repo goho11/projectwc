@@ -2,6 +2,12 @@ package com.metacoding.projectwc.worldcup;
 
 import com.metacoding.projectwc._core.util.Resp;
 import com.metacoding.projectwc.user.User;
+import com.metacoding.projectwc.user.User;
+import com.metacoding.projectwc.worldcup.game.WorldcupGame;
+import com.metacoding.projectwc.worldcup.game.WorldcupGameService;
+import com.metacoding.projectwc.worldcup.game.match.WorldcupMatchResponse;
+import com.metacoding.projectwc.worldcup.game.match.WorldcupMatchService;
+import com.metacoding.projectwc.worldcup.item.WorldcupItem;
 import com.metacoding.projectwc.worldcup.item.WorldcupItemService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -10,13 +16,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 public class WorldcupController {
-    private final WorldcupService worldcupService;
     private final WorldcupItemService worldcupItemService;
+    private final WorldcupService worldcupService;
+    private final WorldcupGameService worldcupGameService;
+    private final WorldcupMatchService worldcupMatchService;
     private final HttpSession session;
 
     @GetMapping("/worldcups/new-worldcup")
@@ -42,7 +51,7 @@ public class WorldcupController {
     @GetMapping("/worldcups/start-form/{id}")
     public String startForm(@PathVariable("id") int id, Model model) {
         List<Integer> round = worldcupItemService.countAll(id);
-        WorldcupResponse.FindByIDDTO worldcup = worldcupService.findById(id);
+        WorldcupResponse.FindByIdDTO worldcup = worldcupService.findById(id);
         model.addAttribute("allItem", round.get(0));
         model.addAttribute("round", round);
         model.addAttribute("id", id);
@@ -50,11 +59,35 @@ public class WorldcupController {
         return "start-form";
     }
 
+    // 주소에서 받는 id는 월드컵아이디임 >> Worldcup 클래스 id
     @PostMapping("/worldcups/start-form/{id}")
-    public String startGame(@PathVariable("id") int id, @RequestParam int round) {
-        System.out.println(round);
+    public String startGame(@PathVariable("id") int id, @RequestParam int round, Model model) {
+        User user = User.builder().id(1).build(); // 더미유저 >> 나중에 지워야 함
+        WorldcupGame saveWorldcupGame = worldcupGameService.saveWorldcupGame(id, user, round); // 게임 생성
+        List<WorldcupItem> shuffledByRoundsList = worldcupItemService.getShuffledByRounds(round); // 경기 진행할 아이템 담을 리스트
+        List<WorldcupItem> winnerList = new ArrayList<>(); // 승리자들을 담아 둘 리스트
 
-        return "redirect:/game";
+        session.setAttribute("shuffledByRoundsList", shuffledByRoundsList); // 아이템들 세션저장
+        session.setAttribute("winnerList", winnerList);
+        session.setAttribute("worldcupGameId", saveWorldcupGame.getId());
+
+        return "redirect:/worldcups/game/" + id;
+    }
+
+    @GetMapping("/worldcups/game/{id}")
+    public String game(@PathVariable("id") int id, Model model) {
+        int worldcupGameId = (int) session.getAttribute("worldcupGameId");
+        WorldcupGame byId = worldcupGameService.findById(worldcupGameId);
+        List<WorldcupItem> shuffledByRoundsList = (List<WorldcupItem>) session.getAttribute("shuffledByRoundsList");
+        int matchNum = 1; // 초기 경기번호 지정 >> 요놈을 어떻게 해야하는데
+        worldcupService.findById(id); // 레이지로딩 방지
+        WorldcupMatchResponse.SaveWorldcupMatchDTO saveWorldcupMatchDTO = worldcupMatchService.saveWorldcupMatch(byId, shuffledByRoundsList.size(), matchNum, shuffledByRoundsList);
+
+        model.addAttribute("matchNum", matchNum);
+        model.addAttribute("match", saveWorldcupMatchDTO);
+        model.addAttribute("totalMatchNum",shuffledByRoundsList.size()/2);
+
+        return "game";
     }
 
     @GetMapping("/main")
@@ -94,4 +127,5 @@ public class WorldcupController {
         worldcupService.update(id, updateDTO);
         return ResponseEntity.ok(Resp.ok("갱신됨"));
     }
+
 }

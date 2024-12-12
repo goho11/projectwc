@@ -37,13 +37,20 @@ public class WorldcupItemService {
             return roundList;
         }
         // 2개 초과면 강수 계산 해서 담아서 반환
-        for (int i = 2; i < countAll; ) {
+        for(int i = 2; i < countAll;) {
             roundList.add(i);
             i = i * 2;
         }
         roundList.add(countAll);
         Collections.reverse(roundList); // 배열 뒤집기
         return roundList;
+    }
+
+    public List<WorldcupItem> getShuffledByRounds(int round) {
+        List<WorldcupItem> findAll = worldcupItemRepository.findAll();
+        Collections.shuffle(findAll);
+        List<WorldcupItem> shuffled = findAll.subList(0, round);
+        return shuffled;
     }
 
     public WorldcupItemResponse.RenderingDTO findByWorldcupIdAndNameOrderByOption(int id, WorldcupItemRequest.FindOptionsDTO findOptionsDTO) {

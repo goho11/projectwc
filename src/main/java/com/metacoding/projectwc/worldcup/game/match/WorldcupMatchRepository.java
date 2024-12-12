@@ -8,4 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class WorldcupMatchRepository {
     private final EntityManager entityManager;
+
+    public WorldcupMatch save(WorldcupMatch match) {
+        entityManager.persist(match);
+        return match;
+    }
 }

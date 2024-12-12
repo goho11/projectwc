@@ -26,6 +26,10 @@ VALUES ('썸네일2', '/img/102.png', 1, 6);
 INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id, champion_count)
 VALUES ('썸네일3', '/img/103.png', 1, 2);
 
+-- WorldcupGame 더미
+INSERT INTO worldcup_game_tb (worldcup_id, user_id, start_round, created_at)
+VALUES (1, 1, 8, now());
+
 -- WorldcupItem
 INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id)
 VALUES ('1', '/img/1.png', 1);
