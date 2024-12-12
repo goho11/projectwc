@@ -7,7 +7,7 @@ import lombok.Data;
 public class CommentRequest {
 
     @Data
-    public static class saveDTO {
+    public static class SaveDTO {
         private String nickname;
         private String content;
         private String winnername;

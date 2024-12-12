@@ -13,7 +13,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional(readOnly = false)
-    public void saveComment(CommentRequest.saveDTO saveDTO, User user, Worldcup worldcup) {
+    public void saveComment(CommentRequest.SaveDTO saveDTO, User user, Worldcup worldcup) {
         commentRepository.saveComment(saveDTO.toEntity(user, worldcup));
     }
 
