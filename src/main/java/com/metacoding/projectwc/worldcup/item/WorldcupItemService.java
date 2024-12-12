@@ -2,6 +2,7 @@ package com.metacoding.projectwc.worldcup.item;
 
 import com.metacoding.projectwc._core.util.FileUtil;
 import com.metacoding.projectwc.worldcup.Worldcup;
+import com.metacoding.projectwc.worldcup.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import java.util.List;
 @Service
 public class WorldcupItemService {
     private final WorldcupItemRepository worldcupItemRepository;
+    private final WorldcupRepository worldcupRepository;
 
     @Transactional
     public void save(WorldcupItemRequest.SaveDTO saveDTO, Worldcup worldcup) {
@@ -34,12 +36,19 @@ public class WorldcupItemService {
             return roundList;
         }
         // 2개 초과면 강수 계산 해서 담아서 반환
-        for(int i = 2; i < countAll;) {
+        for (int i = 2; i < countAll; ) {
             roundList.add(i);
             i = i * 2;
         }
         roundList.add(countAll);
         Collections.reverse(roundList); // 배열 뒤집기
         return roundList;
+    }
+
+    public WorldcupItemResponse.RenderingDTO findByWorldcupIdAndNameOrderByOption(int id, WorldcupItemRequest.FindOptionsDTO findOptionsDTO) {
+        int gamesCompleted = worldcupRepository.findGamesCompletedById(id);
+        int itemSize = worldcupItemRepository.countByWorldcupIdAndNameOrderByOption(id, findOptionsDTO.getItemname());
+        List<WorldcupItem> worldcupItemList = worldcupItemRepository.findByWorldcupIdAndNameOrderByOption(id, findOptionsDTO.getItemname(), findOptionsDTO.getOrderOption(), findOptionsDTO.getOffset(), findOptionsDTO.getLimit());
+        return new WorldcupItemResponse.RenderingDTO(itemSize, findOptionsDTO.getSize(), gamesCompleted, worldcupItemList);
     }
 }

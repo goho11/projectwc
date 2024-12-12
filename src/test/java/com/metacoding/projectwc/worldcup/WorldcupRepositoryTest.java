@@ -21,7 +21,7 @@ public class WorldcupRepositoryTest {
     @Test
     public void save_test() {
         // given
-        User user=User.builder().id(1).build();
+        User user = User.builder().id(1).build();
         Worldcup worldcup = Worldcup.builder().user(user).build();
         // when
         Worldcup worldcupPS = worldcupRepository.save(worldcup);
@@ -29,6 +29,7 @@ public class WorldcupRepositoryTest {
         System.out.println(worldcupPS.getId());
         System.out.println(worldcupPS.getTitle());
     }
+
     @Test
     public void findById_test() {
         // given
@@ -42,6 +43,16 @@ public class WorldcupRepositoryTest {
         System.out.println(worldcup.getUser());
         System.out.println(worldcup.getTitle());
         System.out.println(worldcup.getVisibility());
+    }
+
+    @Test
+    public void findGamesCompletedById_test() {
+        // given
+        int id = 2;
+        // when
+        int result = worldcupRepository.findGamesCompletedById(id);
+        // then
+        System.out.println(result);
     }
 
     @Test

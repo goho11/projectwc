@@ -29,6 +29,36 @@ public class WorldcupItemRepositoryTest {
     }
 
     @Test
+    public void findByWorldcupIdAndNameOrderByOption_test() {
+        // given
+        int id = 1;
+        String itemname = "1";
+        String orderOption = "img_url asc";
+        int offset = 10;
+        int limit = 10;
+        // when
+        List<WorldcupItem> list = worldcupItemRepository.findByWorldcupIdAndNameOrderByOption(id, itemname, orderOption, offset, limit);
+        // then
+        System.out.println(list.size());
+        for (WorldcupItem item : list) {
+            System.out.print(item.getId() + " ");
+            System.out.print(item.getItemname() + " ");
+            System.out.println(item.getImgUrl());
+        }
+    }
+
+    @Test
+    public void countByWorldcupIdAndNameOrderByOption_test() {
+        // given
+        int id = 1;
+        String itemname = "";
+        // when
+        int result = worldcupItemRepository.countByWorldcupIdAndNameOrderByOption(id, itemname);
+        // then
+        System.out.println(result);
+    }
+
+    @Test
     public void countAll_test() {
         // given
         int id = 1;
