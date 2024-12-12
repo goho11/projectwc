@@ -65,4 +65,10 @@ public class Worldcup {
             isDeleted = false;
 
     }
+
+    public void update(String title, String description, int visibility) {
+        this.title = title;
+        this.description = description;
+        this.visibility = visibility;
+    }
 }

@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
@@ -28,24 +25,24 @@ public class WorldcupService {
         return worldcupPS.getId();
     }
 
-    public WorldcupResponse.findByIDDTO findById(int id) {
+    public WorldcupResponse.FindByIDDTO findById(int id) {
         Worldcup worldcupPS = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("월드컵을 찾을 수 없습니다."));
-        return new WorldcupResponse.findByIDDTO(worldcupPS);
+        return new WorldcupResponse.FindByIDDTO(worldcupPS);
     }
 
-    public List<WorldcupResponse.findAllDTO> findAllByTiltle(WorldcupRequest.findAllDTO findAllDTO) {
+    public List<WorldcupResponse.FindAllDTO> findAllByTiltle(WorldcupRequest.FindAllDTO findAllDTO) {
         // 오프셋
         Integer offset = (findAllDTO.getPage() - 1) * findAllDTO.getSize();
         String sortBy;
         // Latest 최신순
         if (findAllDTO.getSortBy().equals("Latest")) {
             sortBy = "createdAt";
-        // Popularity 인기순
+            // Popularity 인기순
         } else {
             sortBy = "gamesCompleted";
         }
         List<Worldcup> worldcupList = worldcupRepository
-                .findAllByTiltle(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize());
+                .findAllByTitle(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize());
 
         return worldcupList.stream()
                 .map(worldcup -> {
@@ -64,21 +61,21 @@ public class WorldcupService {
                                 .build();
                     } else {
                         worldcupItem1 = WorldcupItem.builder()
-                            .itemname("해당 이미지 없음")
-                            .imgUrl("이미지 없음")
-                            .build();
+                                .itemname("해당 이미지 없음")
+                                .imgUrl("이미지 없음")
+                                .build();
                         worldcupItem2 = WorldcupItem.builder()
                                 .itemname("해당 이미지 없음")
                                 .imgUrl("이미지 없음")
                                 .build();
                     }
-                    return new WorldcupResponse.findAllDTO(worldcup, worldcupItem1, worldcupItem2);
+                    return new WorldcupResponse.FindAllDTO(worldcup, worldcupItem1, worldcupItem2);
                 })
                 .collect(Collectors.toList());
     }
 
     // main 페이지 pagination을 위한 pageDTO 생성
-    public WorldcupResponse.pageDTO createPageDTO(WorldcupRequest.findAllDTO findAllDTO) {
+    public WorldcupResponse.PageDTO createPageDTO(WorldcupRequest.FindAllDTO findAllDTO) {
         // 총 월드컵 개수
         int totalItems = worldcupRepository.countAllWorldcup(findAllDTO.getSearchKeyword()); // 전체 월드컵 수
         // 총 페이지 수
@@ -94,7 +91,7 @@ public class WorldcupService {
             page.put("isCurrentPage", currentPage == i);
             pages.add(page);
         }
-        WorldcupResponse.pageDTO pageDTO = WorldcupResponse.pageDTO.builder()
+        WorldcupResponse.PageDTO pageDTO = WorldcupResponse.PageDTO.builder()
                 .currentPage(currentPage)
                 .totalPages(totalItems)
                 .size(findAllDTO.getSize())
@@ -110,19 +107,19 @@ public class WorldcupService {
         return pageDTO;
     }
 
-    public List<WorldcupResponse.findAllDTO> findAllByTiltleAndUser(WorldcupRequest.findAllDTO findAllDTO, User user) {
+    public List<WorldcupResponse.FindAllDTO> findAllByTiltleAndUser(WorldcupRequest.FindAllDTO findAllDTO, User user) {
         // 오프셋
         Integer offset = (findAllDTO.getPage() - 1) * findAllDTO.getSize();
         String sortBy;
         // Latest 최신순
         if (findAllDTO.getSortBy().equals("Latest")) {
             sortBy = "createdAt";
-        // Popularity 인기순
+            // Popularity 인기순
         } else {
             sortBy = "gamesCompleted";
         }
         List<Worldcup> worldcupList = worldcupRepository
-                .findAllByTiltleAndUser(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize(), user.getId());
+                .findAllByTitleAndUser(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize(), user.getId());
 
         return worldcupList.stream()
                 .map(worldcup -> {
@@ -149,13 +146,13 @@ public class WorldcupService {
                                 .imgUrl("이미지 없음")
                                 .build();
                     }
-                    return new WorldcupResponse.findAllDTO(worldcup, worldcupItem1, worldcupItem2);
+                    return new WorldcupResponse.FindAllDTO(worldcup, worldcupItem1, worldcupItem2);
                 })
                 .collect(Collectors.toList());
     }
 
     // mine 페이지 pagination을 위한 pageDTO 생성
-    public WorldcupResponse.pageDTO createPageDTOForMine(WorldcupRequest.findAllDTO findAllDTO, User user) {
+    public WorldcupResponse.PageDTO createPageDTOForMine(WorldcupRequest.FindAllDTO findAllDTO, User user) {
         Integer userId = user.getId();
         // 해당 유저가 만든 총 월드컵 수
         int totalItems = worldcupRepository.countAllWorldcupByUser(findAllDTO.getSearchKeyword(), userId); // 전체 월드컵 수
@@ -172,7 +169,7 @@ public class WorldcupService {
             page.put("isCurrentPage", currentPage == i);
             pages.add(page);
         }
-        WorldcupResponse.pageDTO pageDTO = WorldcupResponse.pageDTO.builder()
+        WorldcupResponse.PageDTO pageDTO = WorldcupResponse.PageDTO.builder()
                 .currentPage(currentPage)
                 .totalPages(totalItems)
                 .size(findAllDTO.getSize())
@@ -186,5 +183,16 @@ public class WorldcupService {
                 .build();
 
         return pageDTO;
+    }
+
+    @Transactional
+    public void update(int id, WorldcupRequest.UpdateDTO updateDTO) {
+        Worldcup worldcupPS = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("월드컵을 찾을 수 없습니다."));
+        worldcupPS.update(updateDTO.getTitle(), updateDTO.getDescription(), updateDTO.getVisibility());
+    }
+
+    public WorldcupResponse.FindByIDForWcFormDTO findByIdForWcForm(int id) {
+        Worldcup worldcupPS = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("월드컵을 찾을 수 없습니다."));
+        return new WorldcupResponse.FindByIDForWcFormDTO(worldcupPS);
     }
 }

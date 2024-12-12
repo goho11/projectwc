@@ -56,9 +56,9 @@ public class WorldcupRepositoryTest {
     }
 
     @Test
-    public void findAllByTiltle_test() {
+    public void findAllByTitle_test() {
         // given -> 더미데이터
-        WorldcupRequest.findAllDTO findAllDTO = new WorldcupRequest.findAllDTO();
+        WorldcupRequest.FindAllDTO findAllDTO = new WorldcupRequest.FindAllDTO();
         Integer offset = (findAllDTO.getPage() - 1) * findAllDTO.getSize();
 //        findAllDTO.setSize(20);
 
@@ -73,7 +73,7 @@ public class WorldcupRepositoryTest {
         findAllDTO.setSearchKeyword("검색");
 
         // when
-        List<Worldcup> worldcupList = worldcupRepository.findAllByTiltle(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize());
+        List<Worldcup> worldcupList = worldcupRepository.findAllByTitle(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize());
 
         // then
         for (Worldcup wc : worldcupList) {
@@ -91,15 +91,15 @@ public class WorldcupRepositoryTest {
     }
 
     @Test
-    public void findAllByTiltleAndUser_test() {
+    public void findAllByTitleAndUser_test() {
         // given -> 더미데이터
-        WorldcupRequest.findAllDTO findAllDTO = new WorldcupRequest.findAllDTO();
+        WorldcupRequest.FindAllDTO findAllDTO = new WorldcupRequest.FindAllDTO();
         Integer offset = (findAllDTO.getPage() - 1) * findAllDTO.getSize();
         String sortBy = "createdAt";
         Integer userId = 1;
 
         // when
-        List<Worldcup> worldcupList = worldcupRepository.findAllByTiltleAndUser(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize(), userId);
+        List<Worldcup> worldcupList = worldcupRepository.findAllByTitleAndUser(findAllDTO.getSearchKeyword(), sortBy, offset, findAllDTO.getSize(), userId);
 
         // then
         for (Worldcup wc : worldcupList) {

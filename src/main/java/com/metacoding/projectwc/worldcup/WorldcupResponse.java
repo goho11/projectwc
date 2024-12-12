@@ -12,19 +12,37 @@ import java.util.Map;
 public class WorldcupResponse {
 
     @Data
-    public static class findByIDDTO {
+    public static class FindByIDForWcFormDTO {
+        private int id;
+        private String title;
+        private String description;
+        private boolean visibility;
+
+        public FindByIDForWcFormDTO(Worldcup worldcup) {
+            this.id = worldcup.getId();
+            this.title = worldcup.getTitle();
+            this.description = worldcup.getDescription();
+            if (description == null)
+                this.description = "";
+            this.visibility = worldcup.getVisibility() == 1;
+        }
+    }
+
+    @Data
+    public static class FindByIDDTO {
         private int id;
         private String title;
         private String description;
 
-        public findByIDDTO(Worldcup worldcup) {
+        public FindByIDDTO(Worldcup worldcup) {
             this.id = worldcup.getId();
             this.title = worldcup.getTitle();
             this.description = worldcup.getDescription();
         }
     }
+
     @Data
-    public static class findAllDTO {
+    public static class FindAllDTO {
         private Integer id;
         private String title;
         private String description;
@@ -37,7 +55,7 @@ public class WorldcupResponse {
         private String itemname2;
         private String imgUrl2;
 
-        public findAllDTO(Worldcup worldcup, WorldcupItem worldcupItem1, WorldcupItem worldcupItem2) {
+        public FindAllDTO(Worldcup worldcup, WorldcupItem worldcupItem1, WorldcupItem worldcupItem2) {
             this.id = worldcup.getId();
             this.title = worldcup.getTitle();
             this.description = worldcup.getDescription();
@@ -53,7 +71,7 @@ public class WorldcupResponse {
     }
 
     @Data
-    public static class pageDTO {
+    public static class PageDTO {
         private Integer currentPage;
         private Integer totalPages;
         private Integer size;
@@ -68,7 +86,7 @@ public class WorldcupResponse {
         private List<Map<String, Object>> pages;
 
         @Builder
-        public pageDTO(Integer currentPage, Integer totalPages, Integer size, String sortBy, String searchKeyword, boolean isFirstPage, boolean isLastPage, Integer prevPage, Integer nextPage, List<Map<String, Object>> pages) {
+        public PageDTO(Integer currentPage, Integer totalPages, Integer size, String sortBy, String searchKeyword, boolean isFirstPage, boolean isLastPage, Integer prevPage, Integer nextPage, List<Map<String, Object>> pages) {
             this.currentPage = currentPage;
             this.totalPages = totalPages;
             this.size = size;

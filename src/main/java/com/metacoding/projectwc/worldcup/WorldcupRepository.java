@@ -1,7 +1,6 @@
 package com.metacoding.projectwc.worldcup;
 
 import com.metacoding.projectwc._core.error.ex.APIException404;
-import com.metacoding.projectwc.user.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
@@ -36,7 +35,7 @@ public class WorldcupRepository  {
         }
     }
 
-    public List<Worldcup> findAllByTiltle(String searchKeyword, String sortBy, Integer offset, Integer limit) {
+    public List<Worldcup> findAllByTitle(String searchKeyword, String sortBy, Integer offset, Integer limit) {
         String jpql = "SELECT w FROM Worldcup w WHERE w.title LIKE :searchKeyword AND w.visibility = 1 AND w.isDeleted = false ORDER BY w." + sortBy + " DESC";
         TypedQuery<Worldcup> query = entityManager.createQuery(jpql, Worldcup.class)
                 .setParameter("searchKeyword", "%" + searchKeyword + "%");
@@ -48,7 +47,7 @@ public class WorldcupRepository  {
         return query.getResultList();
     }
 
-    public List<Worldcup> findAllByTiltleAndUser(String searchKeyword, String sortBy, Integer offset, Integer limit, Integer userId) {
+    public List<Worldcup> findAllByTitleAndUser(String searchKeyword, String sortBy, Integer offset, Integer limit, Integer userId) {
         String jpql = "SELECT w FROM Worldcup w WHERE w.title LIKE :searchKeyword AND w.visibility = 1 AND w.isDeleted = false AND w.user.id = :userId ORDER BY w." + sortBy + " DESC";
         TypedQuery<Worldcup> query = entityManager.createQuery(jpql, Worldcup.class)
                 .setParameter("searchKeyword", "%" + searchKeyword + "%")
