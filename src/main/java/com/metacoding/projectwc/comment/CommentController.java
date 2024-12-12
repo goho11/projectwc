@@ -32,8 +32,16 @@ public class CommentController {
     @PutMapping("comments")
     public String deleteComment() {
         // 논리 삭제
+        // TODO 로그인 기능 완성될 경우 적용
+//        User seesionUser = (User) session.getAttribute("sessionUser");
+        User user = User.builder().id(1).build();
+
+        // TODO 월드컵 정보는 어디서 받나?
+        Worldcup worldcup = Worldcup.builder().id(1).build();
+
+        commentService.deleteComment(user, worldcup);
 
         // TODO 무슨 화면으로?
-        return null;
+        return "redirect:/";
     }
 }

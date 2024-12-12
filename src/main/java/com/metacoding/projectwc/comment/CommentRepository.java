@@ -19,5 +19,9 @@ public class CommentRepository {
         entityManager.persist(comment);
     }
 
-
+    public void deleteComment(Integer id) {
+        entityManager.createQuery("delete from Comment c where c.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 }
