@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
     private final UserService userService;
-    private final HttpSession httpSession;
 
     @PostMapping("/signup")
     public String signup(UserRequest.SignupDTO signupDTO) {
+        userService.signup(signupDTO);
         return "redirect:/login-form";
     }
 
