@@ -44,8 +44,16 @@ public class WorldcupItemRepository {
         String sql = """
                 select count(*) from worldcup_item_tb where worldcup_id = :id
                 """.replace(":id", String.valueOf(id));
-        Object singleResult = entityManager.createNativeQuery(sql).getSingleResult();
+        Object singleResult = entityManager.createNativeQuery(sql)
+                .getSingleResult();
         return Integer.parseInt(singleResult.toString());
+    }
+
+    public List<WorldcupItem> findAll() {
+        String sql = """
+                select * from worldcup_item_tb
+                """;
+        return entityManager.createNativeQuery(sql,WorldcupItem.class).getResultList();
     }
 
     public List<WorldcupItem> findTwoItems(Integer id) {

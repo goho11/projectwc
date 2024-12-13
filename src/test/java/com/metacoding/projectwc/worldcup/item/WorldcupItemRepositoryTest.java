@@ -71,6 +71,15 @@ public class WorldcupItemRepositoryTest {
     }
 
     @Test
+    public void findAll_test() {
+        List<WorldcupItem> items = worldcupItemRepository.findAll();
+        for (WorldcupItem item : items) {
+            System.out.println(item.getItemname());
+            System.out.println(item.getImgUrl());
+        }
+    }
+
+    @Test
     public void findTwoItems_test() {
         // given
         int id = 1;

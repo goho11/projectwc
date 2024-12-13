@@ -20,7 +20,7 @@ public class WorldCupItemServiceTest {
         int id = 1;
 
         // when
-        List<Integer> integers = worldcupItemService.countAll(id);
+        List<Integer> integers = worldcupItemService.getRoundList(id);
 
         //eye
         for (Integer integer : integers) {
@@ -28,6 +28,22 @@ public class WorldCupItemServiceTest {
         }
     }
 
+    @Test
+    public void getShuffledByRounds_test() {
+        // given
+        int round = 15;
+
+        // when
+        List<WorldcupItem> shuffledByRounds = worldcupItemService.getShuffledByRounds(round);
+
+        // eye
+        System.out.println(shuffledByRounds.size());
+        for(WorldcupItem shuffledByRound : shuffledByRounds) {
+            System.out.println(shuffledByRound.getItemname());
+            System.out.println(shuffledByRound.getImgUrl());
+            System.out.println("=========");
+        }
+    }
     @Test
     public void findByWorldcupIdAndNameOrderByOption_test() {
         // given

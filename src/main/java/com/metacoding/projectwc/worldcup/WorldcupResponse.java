@@ -29,12 +29,12 @@ public class WorldcupResponse {
     }
 
     @Data
-    public static class FindByIDDTO {
+    public static class FindByIdDTO {
         private int id;
         private String title;
         private String description;
 
-        public FindByIDDTO(Worldcup worldcup) {
+        public FindByIdDTO(Worldcup worldcup) {
             this.id = worldcup.getId();
             this.title = worldcup.getTitle();
             this.description = worldcup.getDescription();
