@@ -25,12 +25,6 @@ public class UserService implements UserDetailsService {
     }
 
     public UserResponse.UserInfoDTO getUserInfo(User user) {
-        if (user == null) {
-            UserResponse.UserInfoDTO userInfoDTO = UserResponse.UserInfoDTO.builder()
-                    .isDeleted(true)
-                    .build();
-            return userInfoDTO;
-        }
         return new UserResponse.UserInfoDTO(user);
     }
 }

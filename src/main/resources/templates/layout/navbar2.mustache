@@ -56,4 +56,35 @@
         // 4. 응답 처리
         console.log(responseBody);
     }
+
+    async function getAuthentication2(){
+        let url = `/api/v1/authentication`;
+        let response = await fetch(url);
+        let responseData = await response.json();
+        let userDetails = responseData.data;
+        if(userDetails==null){
+            page.innerHTML=`
+        <div>
+        <a href="/login-form">로그인</a>
+        <a href="/join-form">회원가입</a>
+        </div>
+        `
+        }else {
+            if (userDetails.role === "ROLE_USER") {
+                page.innerHTML = `
+            <div>
+            <a href="/logout">로그아웃</a>
+            <a href="/user-info/${userDetails.id}">마이페이지</a>
+            </div>
+            `;
+            } else if (userDetails.role === "ROLE_ADMIN,ROLE_USER") {
+                page.innerHTML = `
+            <div>
+            <a href="/logout">로그아웃</a>
+            <a href="/confirm-report">관리자페이지</a>
+            </div>
+            `;
+            }
+        }
+    }
 </script>

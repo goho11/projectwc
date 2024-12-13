@@ -7,26 +7,21 @@
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar" style="overflow-x: hidden;">
                 <!-- 왼쪽 메뉴 -->
-                <ul class="navbar-nav navbar-left-menu">
+                <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link common-hover-primary" href="/main">이상형 월드컵</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link common-hover-primary" href="/worldcups/new-worldcup">이상형 월드컵 만들기</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link common-hover-primary" href="/s/worldcups/mine">내가 만든 월드컵</a>
+                    </li>
                 </ul>
                 <!-- 오른쪽 메뉴 -->
                 <ul class="navbar-nav ms-auto navbar-right-menu">
                     <!-- 로그인 여부와 권한 판별 -->
-                    <li class="nav-item">
-                        <a class="nav-link common-hover-primary" href="/login-form">LogIn</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link common-hover-primary" href="#">회원정보수정</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link common-hover-primary" href="/logout">LogOut</a>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -40,49 +35,40 @@
 {{/sessionUser}}
 
 <script>
-    let navbarLeftMenu = document.querySelector('.navbar-left-menu');
     let navbarRightMenu = document.querySelector('.navbar-right-menu');
 
-    let userInfo;
-    getUserInfo();
+    getAuthentication();
 
     // 비동기로 로그인한 유저 정보 가져오기
-    async function getUserInfo() {
+    async function getAuthentication() {
         // API 요청
-        let response = await fetch(`http://localhost:8080/get-user-info`, {
+        let response = await fetch(`http://localhost:8080/api/authentication`, {
             method: "get",
         });
-
-        console.log(response.status);
-
-        userInfo = await response.json();
+        let responseData = await response.json();
+        let userInfo = responseData.body;
 
         // 응답 처리
         console.log(userInfo);
 
-        if (userInfo.body.isDeleted === true) {
-            removeMenuItem();
-            console.log("아이템 삭제 실행");
-        } else if ( userInfo.body.isDeleted === false) {
-            console.log(userInfo.body.isDeleted);
-            addMenuItem();
-            console.log("아이템 생성 실행");
-        }
-    }
-
-    function addMenuItem() {
-        let dom = `
-            <li class="nav-item" id="custom-menu-item">
-                <a class="nav-link common-hover-primary" href="/s/worldcups/mine">내가 만든 월드컵</a>
+        if (userInfo == null) {
+            navbarRightMenu.innerHTML=`
+            <li class="nav-item">
+                <a class="nav-link common-hover-primary" href="/login-form">LogIn</a>
             </li>
-        `;
-        navbarLeftMenu.innerHTML += dom;
-    }
-
-    function removeMenuItem() {
-        let item = document.getElementById('custom-menu-item');
-        if (item) {
-            item.remove();
+            <li class="nav-item">
+                <a class="nav-link common-hover-primary" href="/signup-form">회원가입</a>
+            </li>
+            `;
+        } else if (userInfo != null) {
+            navbarRightMenu.innerHTML=`
+            <li class="nav-item">
+                <a class="nav-link common-hover-primary" href="#">회원정보수정</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link common-hover-primary" href="/logout">LogOut</a>
+            </li>
+            `;
         }
     }
 </script>

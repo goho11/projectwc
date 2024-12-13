@@ -35,7 +35,7 @@ public class UserController {
     }
 
     // REST API로 만들어서 navbar.mustache에서 로그인 여부와 권한 판별 용 데이터 전송
-    @GetMapping("get-user-info")
+    @GetMapping("/api/authentication")
     public ResponseEntity<?> checkLogin(@AuthenticationPrincipal User user) {
         UserResponse.UserInfoDTO userInfoDTO = userService.getUserInfo(user);
 
