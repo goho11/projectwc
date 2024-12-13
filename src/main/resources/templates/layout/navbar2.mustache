@@ -6,18 +6,19 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar" style="overflow-x: hidden;">
-                <!-- 왼쪽 메뉴 -->
-                <ul class="navbar-nav navbar-left-menu">
+                <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link common-hover-primary" href="/main">이상형 월드컵</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link common-hover-primary" href="/worldcups/new-worldcup">이상형 월드컵 만들기</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link common-hover-primary" href="/s/worldcups/mine">내가 만든 월드컵</a>
+                    </li>
                 </ul>
-                <!-- 오른쪽 메뉴 -->
-                <ul class="navbar-nav ms-auto navbar-right-menu">
-                    <!-- 로그인 여부와 권한 판별 -->
+                <ul class="navbar-nav ms-auto">
+                    <!-- 보여야 하는거 || 로그인 안된 상태 >> 로그인이랑 회원가입 || 로그인 된 상태 >> 로그아웃 -->
                     <li class="nav-item">
                         <a class="nav-link common-hover-primary" href="/login-form">LogIn</a>
                     </li>
@@ -33,58 +34,26 @@
     </nav>
 </div>
 
-<!-- 임시 버튼 -->
+<!--임시 버튼-->
 <button onclick="getUserInfo()">사용자 정보 받아오기</button>
 {{#sessionUser}}
-    <h1>세션에 저장된 유저 이름 {{sessionUser.username}} 세션에 저장된 정보 노출 주의</h1>
+    <h1>세션에 저장된 유저 이름{{sessionUser.username}} 세션에 저장된 정보 노출 주의</h1>
 {{/sessionUser}}
 
 <script>
-    let navbarLeftMenu = document.querySelector('.navbar-left-menu');
-    let navbarRightMenu = document.querySelector('.navbar-right-menu');
-
-    let userInfo;
-    function onload() {
-        console.log("페이지가 로드 되었습니다.")
-        getUserInfo();
-        console.log("유저 정보가 로드 되었습니다.")
-
-    }
     // 비동기로 로그인한 유저 정보 가져오기
     async function getUserInfo() {
-        // API 요청
+        // 1. 사용자 입력값 받기 - 필요 없음
+
+        // 2. JSON 변환 - 필요 없음
+
+        // 3. API 요청
         let response = await fetch(`http://localhost:8080/get-user-info`, {
             method: "post",
         });
-        userInfo = await response.json();
+        let responseBody = await response.json();
 
-        // 응답 처리
-        console.log(userInfo);
-
-        if (userInfo.isDeleted === true) {
-            removeMenuItem();
-            console.log("아이템 삭제 실행");
-        } else if ( userInfo.isDeleted === false) {
-            console.log(userInfo.isDeleted);
-            console.log(userInfo.isDeleted !== undefined);
-            addMenuItem();
-            console.log("아이템 생성 실행");
-        }
-    }
-
-    function addMenuItem() {
-        let dom = `
-            <li class="nav-item" id="custom-menu-item">
-                <a class="nav-link common-hover-primary" href="/s/worldcups/mine">내가 만든 월드컵</a>
-            </li>
-        `;
-        navbarLeftMenu.innerHTML += dom;
-    }
-
-    function removeMenuItem() {
-        let item = document.getElementById('custom-menu-item');
-        if (item) {
-            item.remove();
-        }
+        // 4. 응답 처리
+        console.log(responseBody);
     }
 </script>
