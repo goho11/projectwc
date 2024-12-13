@@ -16,6 +16,7 @@ import java.util.List;
 public class WorldcupRepository  {
     private final EntityManager entityManager;
 
+
     public Worldcup save(Worldcup worldcup) {
         entityManager.persist(worldcup);
         return worldcup;

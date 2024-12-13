@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Import(CommentRepository.class)
 @DataJpaTest
 public class CommentRepositoryTest {
@@ -18,6 +21,35 @@ public class CommentRepositoryTest {
 
     @Autowired
     private EntityManager entityManager;
+
+    @Test
+    public void findAll_test() {
+        // 테스트 안 된 상태
+        List<Comment> commentList = commentRepository.findAll(1, 0, 5);
+
+//        for (Comment comment : commentList) {
+//            System.out.println("코멘트 내용은: " + comment.getContent());
+//        }
+
+        Comment savedComment = commentRepository.findById(1)
+                .orElseThrow(() -> new Exception404("코멘트를 찾을 수 없습니다."));
+        Comment savedComment2 = commentRepository.findById(2)
+                .orElseThrow(() -> new Exception404("코멘트를 찾을 수 없습니다."));
+        Comment savedComment3 = commentRepository.findById(3)
+                .orElseThrow(() -> new Exception404("코멘트를 찾을 수 없습니다."));
+        Comment savedComment4 = commentRepository.findById(4)
+                .orElseThrow(() -> new Exception404("코멘트를 찾을 수 없습니다."));
+        Comment savedComment5 = commentRepository.findById(5)
+                .orElseThrow(() -> new Exception404("코멘트를 찾을 수 없습니다."));
+
+        List<Comment> list = new ArrayList<>();
+        list.add(savedComment);
+        list.add(savedComment2);
+        list.add(savedComment3);
+        list.add(savedComment4);
+        list.add(savedComment5);
+        System.out.println("리스트 크기는 : " + list.size());
+    }
 
     @Test
     public void saveComment_test() {
