@@ -31,7 +31,6 @@ public class WorldcupAspect {
             "execution(* com.metacoding.projectwc.worldcup.item.WorldcupItemController.save(..))")
     public void worldcupUserCheck(JoinPoint joinPoint) {
         User sessionUser = (User) httpServletRequest.getSession().getAttribute("sessionUser");
-        System.out.println(httpServletRequest.getRequestURL());
         String url = httpServletRequest.getRequestURL().toString();
         int startIndex = url.indexOf("worldcups") + "worldcups/".length();
         int endIndex = url.indexOf("/", startIndex);

@@ -15,7 +15,6 @@ public class LoginFilter implements Filter {
 
         if (httpRequest.getUserPrincipal() != null) {
             httpResponse.sendRedirect("/main");
-            System.out.println("음?");
             return;
         }
         filterChain.doFilter(servletRequest, servletResponse);

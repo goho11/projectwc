@@ -25,9 +25,6 @@ public class WorldcupItemController {
 
     @GetMapping("/worldcups/{id}/items")
     public ResponseEntity<?> findWorldcupItems(@PathVariable int id, @ModelAttribute WorldcupItemRequest.FindOptionsDTO findOptionsDTO) {
-//        return new ResponseEntity()
-
-        System.out.println(findOptionsDTO);
         WorldcupItemResponse.RenderingDTO renderingDTO = worldcupItemService.findByWorldcupIdAndNameOrderByOption(id, findOptionsDTO);
         return new ResponseEntity(Resp.ok(renderingDTO), HttpStatus.FOUND);
     }
