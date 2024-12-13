@@ -5,7 +5,6 @@ import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserRequest {
-
     @Data
     public static class signupDTO {
         String email;
@@ -24,13 +23,5 @@ public class UserRequest {
     public static class loginDTO {
         String email;
         String password;
-    }
-
-    @Data
-    public static class updateDTO {
-        private String currentPassword; // 현재 비밀번호
-        private String newPassword; // 새 비밀번호
-        private String nickname;
-        private String newNickname;
     }
 }
