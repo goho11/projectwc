@@ -204,7 +204,8 @@
     const dropzone = new Dropzone(".dropzone", {
         url: "/s/worldcups/{{model.id}}/items",
         method: "POST",
-        maxFilesize: 10,
+        maxFilesize: 1,
+        acceptedFiles: "image/*",
         dictDefaultMessage: "아이템 추가",
         // autoProcessQueue: false,
         queuecomplete() {
@@ -296,6 +297,7 @@
                 method: "POST",
                 maxFiles: 1,
                 maxFilesize: 1,
+                acceptedFiles: "image/*",
                 dictDefaultMessage: "이미지 변경",
                 success() {
                     showAlert("저장되었습니다!", 2000);
