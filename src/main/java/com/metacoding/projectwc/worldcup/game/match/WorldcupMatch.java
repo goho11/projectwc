@@ -46,4 +46,8 @@ public class WorldcupMatch {
         this.matchNum = matchNum;
         this.round = round;
     }
+
+    public void update(int worldcupMatchId) {
+        this.winnerPK = worldcupMatchId;
+    }
 }

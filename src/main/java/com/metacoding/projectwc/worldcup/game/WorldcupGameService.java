@@ -26,4 +26,10 @@ public class WorldcupGameService {
         WorldcupGame worldcupGame = worldcupGameRepository.findById(worldcupGameId).orElseThrow(() -> new Exception404("없는 경기 입니다."));
         return worldcupGame;
     }
+
+    @Transactional
+    public void completeGame(int worldcupGameId) {
+        WorldcupGame worldcupGame = worldcupGameRepository.findById(worldcupGameId).orElseThrow(() -> new Exception404("없는 경기 입니다."));
+        worldcupGame.completeUpadate();
+    }
 }

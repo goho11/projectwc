@@ -20,7 +20,7 @@ public class WorldCupItemServiceTest {
         int id = 1;
 
         // when
-        List<Integer> integers = worldcupItemService.countAll(id);
+        List<Integer> integers = worldcupItemService.getRoundList(id);
 
         //eye
         for (Integer integer : integers) {

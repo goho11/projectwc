@@ -1,5 +1,6 @@
 package com.metacoding.projectwc.worldcup.game.match;
 
+import com.metacoding.projectwc._core.error.ex.Exception404;
 import com.metacoding.projectwc.worldcup.game.WorldcupGame;
 import com.metacoding.projectwc.worldcup.item.WorldcupItem;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,11 @@ public class WorldcupMatchService {
 
         WorldcupMatch save = worldcupMatchRepository.save(build);
         return new WorldcupMatchResponse.SaveWorldcupMatchDTO(save);
+    }
+
+    @Transactional
+    public void winnerUpdate(Integer id, int worldcupMatchId) {
+        WorldcupMatch worldcupMatch = worldcupMatchRepository.findById(id).orElseThrow(() -> new Exception404("없는 매치 입니다."));
+        worldcupMatch.update(worldcupMatchId);
     }
 }

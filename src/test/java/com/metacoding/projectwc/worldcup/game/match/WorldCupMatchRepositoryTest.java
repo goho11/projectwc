@@ -46,4 +46,12 @@ public class WorldCupMatchRepositoryTest {
         System.out.println(save.getId());
     }
 
+    @Test
+    public void findById_test() {
+        int id = 1;
+        WorldcupMatch worldcupMatch = worldcupMatchRepository.findById(id).get();
+
+        System.out.println(worldcupMatch.getId() );
+
+    }
 }

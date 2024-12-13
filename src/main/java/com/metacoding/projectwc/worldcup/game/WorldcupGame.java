@@ -54,4 +54,8 @@ public class WorldcupGame {
         if (isCompleted == null)
             isCompleted = false;
     }
+
+    public void completeUpadate() {
+        this.isCompleted = true;
+    }
 }
