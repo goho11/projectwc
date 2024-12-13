@@ -1,17 +1,15 @@
 package com.metacoding.projectwc.user;
 
 import com.metacoding.projectwc._core.util.Resp;
-import com.metacoding.projectwc.worldcup.item.WorldcupItemRequest;
-import com.metacoding.projectwc.worldcup.item.WorldcupItemResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.attribute.UserPrincipal;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -20,8 +18,7 @@ public class UserController {
     private final HttpSession httpSession;
 
     @PostMapping("/signup")
-    public String signup(UserRequest.signupDTO signupDTO) {
-        userService.signup(signupDTO);
+    public String signup(UserRequest.SignupDTO signupDTO) {
         return "redirect:/login-form";
     }
 
@@ -34,4 +31,18 @@ public class UserController {
     public String loginForm() {
         return "login-form";
     }
+
+    @GetMapping("/s/user-form")
+    public String userForm(Model model, @AuthenticationPrincipal User user) {
+        String username = user.getUsername();
+        model.addAttribute("username", username);
+        return "user-form";
+    }
+
+    @PutMapping("/s/user")
+    public Resp<?> updateUser(@RequestBody UserRequest.UpdateDTO updateDTO, @AuthenticationPrincipal User user) {
+        userService.updateUser(user.getId(), updateDTO);
+        return Resp.ok("수정됨");
+    }
+
 }

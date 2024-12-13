@@ -6,9 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserRequest {
     @Data
-    public static class signupDTO {
+    public static class SignupDTO {
         String email;
-        @NotNull
         String password;
         String nickname;
 
@@ -20,8 +19,14 @@ public class UserRequest {
     }
 
     @Data
-    public static class loginDTO {
+    public static class LoginDTO {
         String email;
         String password;
+    }
+
+    @Data
+    public static class UpdateDTO {
+        private String password;
+        private String nickname;
     }
 }
