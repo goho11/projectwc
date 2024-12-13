@@ -58,7 +58,8 @@ public class User implements UserDetails {
 
     public void update(String nickname, String password) {
         this.nickname = nickname;
-        this.password = password;
+        if (password != null)
+            this.password = password;
     }
 
     @Override

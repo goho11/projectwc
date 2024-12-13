@@ -32,6 +32,4 @@ public class UserRepository {
         }
     }
 
-    // 여기 아래만 수정
-
 }

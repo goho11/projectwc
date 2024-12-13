@@ -1,6 +1,5 @@
 package com.metacoding.projectwc.user;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -26,7 +25,15 @@ public class UserRequest {
 
     @Data
     public static class UpdateDTO {
-        private String password;
         private String nickname;
+        private String password;
+        private String newPassword;
+
+        public String getNewPassword(PasswordEncoder passwordEncoder) {
+            if (newPassword.isEmpty())
+                return null;
+            String encoderPassword = passwordEncoder.encode(newPassword);
+            return encoderPassword;
+        }
     }
 }

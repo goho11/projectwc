@@ -1,15 +1,13 @@
 package com.metacoding.projectwc.user;
 
+import com.metacoding.projectwc._core.error.ex.Exception403;
 import com.metacoding.projectwc._core.error.ex.Exception404;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -32,18 +30,17 @@ public class UserService implements UserDetailsService {
         return new UserResponse.UserInfoDTO(user);
     }
 
-    // 여기 아래로만 수정
-
     @Transactional
-    public void updateUser(Integer id, UserRequest.UpdateDTO updateDTO) {
+    public User updateUser(Integer id, UserRequest.UpdateDTO updateDTO) {
         User userPS = userRepository.findById(id)
                 .orElseThrow(() -> new Exception404("해당 ID의 사용자를 찾을 수 없습니다." + id));
 
-        userPS.update(updateDTO.getNickname(), updateDTO.getPassword());
-    }
+        if (!passwordEncoder.matches(updateDTO.getPassword(), userPS.getPassword())) {
+            throw new Exception403("비밀번호가 틀렸습니다.");
+        }
 
-    public boolean checkPassword(User user, String rawPassword) {
-        return passwordEncoder.matches(rawPassword, user.getPassword());
+        userPS.update(updateDTO.getNickname(), updateDTO.getNewPassword(passwordEncoder));
+        return userPS;
     }
 }
 
