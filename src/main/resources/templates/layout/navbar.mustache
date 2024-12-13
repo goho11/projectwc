@@ -44,29 +44,27 @@
     let navbarRightMenu = document.querySelector('.navbar-right-menu');
 
     let userInfo;
-    function onload() {
-        console.log("페이지가 로드 되었습니다.")
-        getUserInfo();
-        console.log("유저 정보가 로드 되었습니다.")
+    getUserInfo();
 
-    }
     // 비동기로 로그인한 유저 정보 가져오기
     async function getUserInfo() {
         // API 요청
         let response = await fetch(`http://localhost:8080/get-user-info`, {
-            method: "post",
+            method: "get",
         });
+
+        console.log(response.status);
+
         userInfo = await response.json();
 
         // 응답 처리
         console.log(userInfo);
 
-        if (userInfo.isDeleted === true) {
+        if (userInfo.body.isDeleted === true) {
             removeMenuItem();
             console.log("아이템 삭제 실행");
-        } else if ( userInfo.isDeleted === false) {
-            console.log(userInfo.isDeleted);
-            console.log(userInfo.isDeleted !== undefined);
+        } else if ( userInfo.body.isDeleted === false) {
+            console.log(userInfo.body.isDeleted);
             addMenuItem();
             console.log("아이템 생성 실행");
         }
