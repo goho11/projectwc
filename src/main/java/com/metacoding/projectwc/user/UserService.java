@@ -24,5 +24,8 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    public UserResponse.UserInfoDTO getUserInfo(User user) {
+        return new UserResponse.UserInfoDTO(user);
+    }
 }
 
