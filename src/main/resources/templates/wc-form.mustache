@@ -67,7 +67,7 @@
         </div>
         <hr class="border border-secondary border-dashed my-3">
         <div class="row justify-content-center g-0">
-            <div class="dropzone col-sm-11"></div>
+            <div class="dropzone col-sm-11 text-center align-content-center" style="height: 180px; overflow-y: auto;"></div>
         </div>
         <hr class="border border-secondary border-dashed my-3" id="img-table-part">
         <div class="d-flex justify-content-between align-items-center mb-3 fw-bold">
@@ -132,10 +132,25 @@
         }, duration);
     }
 
+    async function deleteWorldcupItem(itemId) {
+        let response = await fetch(`/worldcups/{{model.id}}/items/` + itemId,{
+            method:"DELETE"
+        });
+
+        let responseBody = await response.json();
+
+        if (responseBody.success) {
+            showAlert("저장되었습니다!", 2000);
+            requestFind();
+        } else {
+            showAlert("저장실패했습니다!", 2000);
+        }
+    }
+
     async function updateWorldcupItem(itemId) {
         let worldcupItem = {
             itemname: document.querySelector("#itemname" + itemId).value,
-        }
+        };
         let requestBody = JSON.stringify(worldcupItem);
 
         let response = await fetch(`/worldcups/{{model.id}}/items/` + itemId, {
@@ -144,7 +159,7 @@
                 "Content-Type": "application/json; charset=utf-8"
             },
             body: requestBody
-        })
+        });
 
         let responseBody = await response.json();
 
@@ -311,7 +326,7 @@
                     <div class="dropzone my-dropzone-${dropIndex} wcform-dropzone-size"></div>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-danger"><b>삭제</b></button>
+                    <button type="button" class="btn btn-danger" onclick="deleteWorldcupItem(${item.id})"><b>삭제</b></button>
                 </td>
                 <td>
                     <div class="d-flex align-items-center justify-content-center">

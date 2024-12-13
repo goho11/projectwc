@@ -71,4 +71,8 @@ public class WorldcupItem {
     public void updateItemname(String itemname) {
         this.itemname = itemname;
     }
+
+    public void softDelete() {
+        isDeleted = true;
+    }
 }

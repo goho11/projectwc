@@ -42,4 +42,11 @@ public class WorldcupItemController {
         worldcupItemService.updateImg(itemId, updateImgDTO);
         return ResponseEntity.ok(Resp.ok("됨"));
     }
+
+    @DeleteMapping("/worldcups/{id}/items/{itemId}")
+    public ResponseEntity<?> deleteItem(@PathVariable int id, @PathVariable int itemId) {
+        // TODO 모든 아이템 처리에 로그인 유저확인 밑 월드컵아이디와 비교하여 자기꺼 맞는지 확인해야함 
+        worldcupItemService.deleteItem(itemId);
+        return ResponseEntity.ok(Resp.ok("됨"));
+    }
 }

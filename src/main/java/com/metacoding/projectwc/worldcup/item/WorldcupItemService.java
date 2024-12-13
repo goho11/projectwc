@@ -65,4 +65,10 @@ public class WorldcupItemService {
         String imgUrl = FileUtil.fileSave(updateImgDTO.getFile());
         worldcupItemPS.updateImgUrl(imgUrl);
     }
+
+    @Transactional
+    public void deleteItem(int itemId) {
+        WorldcupItem worldcupItemPS = worldcupItemRepository.findById(itemId).orElseThrow(() -> new APIException404("없는 월드컵 아이템입니다."));
+        worldcupItemPS.softDelete();
+    }
 }
