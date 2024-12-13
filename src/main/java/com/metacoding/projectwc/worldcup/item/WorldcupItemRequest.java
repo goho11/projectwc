@@ -6,6 +6,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class WorldcupItemRequest {
     @Data
+    public static class UpdateNameDTO {
+        private String itemname;
+    }
+
+    @Data
+    public static class UpdateImgDTO {
+        private MultipartFile file;
+    }
+
+    @Data
     public static class SaveDTO {
         private MultipartFile file;
 
