@@ -63,4 +63,12 @@ public class WorldcupItem {
         if (isDeleted == null)
             isDeleted = false;
     }
+
+    public void updateImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void updateItemname(String itemname) {
+        this.itemname = itemname;
+    }
 }

@@ -116,7 +116,7 @@
     Dropzone.autoDiscover = false;
     const tbody = document.querySelector("#tbody");
     const pageList = document.querySelector("#page-list");
-    let dropzones = [];
+    let dropZones = [];
     let dropIndex = 1;
     let page = 1;
     let size;
@@ -130,6 +130,29 @@
         setTimeout(() => {
             alertBox.style.display = 'none';
         }, duration);
+    }
+
+    async function updateWorldcupItem(itemId) {
+        let worldcupItem = {
+            itemname: document.querySelector("#itemname" + itemId).value,
+        }
+        let requestBody = JSON.stringify(worldcupItem);
+
+        let response = await fetch(`/worldcups/{{model.id}}/items/` + itemId, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body: requestBody
+        })
+
+        let responseBody = await response.json();
+
+        if (responseBody.success) {
+            showAlert("저장되었습니다!", 2000);
+        } else {
+            showAlert("저장실패했습니다!", 2000);
+        }
     }
 
     async function updateWorldcup() {
@@ -179,8 +202,8 @@
 
     function clearTbody() {
         tbody.innerHTML = "";
-        dropzones.forEach(dropzone => dropzone.destroy());
-        dropzones = [];
+        dropZones.forEach(dropzone => dropzone.destroy());
+        dropZones = [];
         dropIndex = 1;
     }
 
@@ -255,18 +278,23 @@
             tbody.append(rendered);
             let newDropzone = new Dropzone(".my-dropzone-" + dropIndex, {
                 url: "/worldcups/{{model.id}}/items/" + item.id,
-                method: "put",
+                method: "POST",
                 maxFiles: 1,
-                maxFilesize: 10,
+                maxFilesize: 1,
                 dictDefaultMessage: "이미지 변경",
-                queuecomplete() {
+                success() {
+                    showAlert("저장되었습니다!", 2000);
+                    requestFind();
+                },
+                error() {
+                    showAlert("저장실패했습니다!", 2000);
                     setTimeout(() => {
                         this.removeAllFiles(true);
                     }, 1000);
                 }
             });
             dropIndex++;
-            dropzones.push(newDropzone);
+            dropZones.push(newDropzone);
         })
     }
 
@@ -278,7 +306,7 @@
                 <td class="common-img-container">
                     <img src="${item.imgUrl}" alt="이미지" class="img-fluid">
                 </td>
-                <td><input type="text" value="${item.itemname}" class="form-control wh w-100"></td>
+                <td><input type="text" id="itemname${item.id}" value="${item.itemname}" onfocusout="updateWorldcupItem(${item.id})" class="form-control wh w-100"></td>
                 <td>
                     <div class="dropzone my-dropzone-${dropIndex} wcform-dropzone-size"></div>
                 </td>

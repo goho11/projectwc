@@ -1,5 +1,6 @@
 package com.metacoding.projectwc.worldcup.item;
 
+import com.metacoding.projectwc._core.error.ex.APIException404;
 import com.metacoding.projectwc._core.util.FileUtil;
 import com.metacoding.projectwc.worldcup.Worldcup;
 import com.metacoding.projectwc.worldcup.WorldcupRepository;
@@ -50,5 +51,18 @@ public class WorldcupItemService {
         int itemSize = worldcupItemRepository.countByWorldcupIdAndNameOrderByOption(id, findOptionsDTO.getItemname());
         List<WorldcupItem> worldcupItemList = worldcupItemRepository.findByWorldcupIdAndNameOrderByOption(id, findOptionsDTO.getItemname(), findOptionsDTO.getOrderOption(), findOptionsDTO.getOffset(), findOptionsDTO.getLimit());
         return new WorldcupItemResponse.RenderingDTO(itemSize, findOptionsDTO.getSize(), gamesCompleted, worldcupItemList);
+    }
+
+    @Transactional
+    public void updateName(int itemId, WorldcupItemRequest.UpdateNameDTO updateNameDTO) {
+        WorldcupItem worldcupItemPS = worldcupItemRepository.findById(itemId).orElseThrow(() -> new APIException404("없는 월드컵 아이템입니다."));
+        worldcupItemPS.updateItemname(updateNameDTO.getItemname());
+    }
+
+    @Transactional
+    public void updateImg(int itemId, WorldcupItemRequest.UpdateImgDTO updateImgDTO) {
+        WorldcupItem worldcupItemPS = worldcupItemRepository.findById(itemId).orElseThrow(() -> new APIException404("없는 월드컵 아이템입니다."));
+        String imgUrl = FileUtil.fileSave(updateImgDTO.getFile());
+        worldcupItemPS.updateImgUrl(imgUrl);
     }
 }
