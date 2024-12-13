@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
 @Controller
@@ -37,39 +38,37 @@ public class UserController {
     @GetMapping("/s/user-form")
     public String userForm(Model model, Authentication authentication) {
         String email = authentication.getName();
-        User user = userRepository.findByUsername(email)
-                .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
+        User user = userService.findByUsername(email);
         model.addAttribute("user", user);
         return "user-form";
     }
 
     @PostMapping("/s/user")
-    public String updateUser(@ModelAttribute UserRequest.updateDTO updateDTO, Authentication authentication) {
+    public String updateUser(@ModelAttribute UserRequest.updateDTO updateDTO, Authentication authentication, RedirectAttributes redirectAttributes) {
         String email = authentication.getName();
-        User user = userRepository.findByUsername(email)
-                .orElseThrow(() -> new Exception404("사용자를 찾을 수 없습니다."));
+        User user = userService.findByUsername(email);
 
-        // 입력된 현재 비밀번호가 기존 비밀번호와 일치하는지 확인
+        // 비밀번호 확인
         if (!userService.checkPassword(user, updateDTO.getCurrentPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            // 비밀번호 틀린 경우
+            redirectAttributes.addFlashAttribute("errorMessage", "현재 비밀번호가 틀립니다.");
+            return "redirect:/s/user-form";  // 에러 발생 후 다시 수정 페이지로 리다이렉트
         }
 
-        // 닉네임 수정
+        if (!userService.checkNickname(user, updateDTO.getNickname())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "현재 닉네임과 동일합니다.");
+            return "redirect:/s/user-form";  // 동일할 경우 리다이렉트
+        }
+
+        // 닉네임과 비밀번호 업데이트
         user.setNickname(updateDTO.getNickname());
-
-        // 비밀번호 변경이 필요한 경우, 새로운 비밀번호로 설정
         if (updateDTO.getNewPassword() != null && !updateDTO.getNewPassword().isEmpty()) {
-            if (updateDTO.getCurrentPassword().equals(updateDTO.getNewPassword())) {
-                throw new RuntimeException("새 비밀번호가 현재 비밀번호와 같을 수 없습니다.");
-            }
-            // 새로운 비밀번호를 암호화해서 저장
-            user.setPassword(passwordEncoder.encode(updateDTO.getNewPassword()));
+            user.setPassword(passwordEncoder.encode(updateDTO.getNewPassword()));  // 비밀번호 암호화
         }
-
-        // 유저 정보 업데이트
         userService.updateUser(user);
 
-        // 수정 후 유저 정보 화면으로 리다이렉트
+        // 수정 후 성공 메시지
+        redirectAttributes.addFlashAttribute("successMessage", "회원정보가 수정되었습니다.");
         return "redirect:/s/user-form";
     }
 
