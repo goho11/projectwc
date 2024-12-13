@@ -6,28 +6,37 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar" style="overflow-x: hidden;">
+                <!-- 왼쪽 메뉴 -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link common-hover-primary" href="#">이상형 월드컵</a>
+                        <a class="nav-link common-hover-primary" href="/main">이상형 월드컵</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link common-hover-primary" href="/worldcups/new-worldcup">이상형 월드컵 만들기</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link common-hover-primary" href="#">내가 만든 월드컵</a>
+                        <a class="nav-link common-hover-primary" href="/s/worldcups/mine">내가 만든 월드컵</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ms-auto">
-                    <!-- 보여야 하는거 || 로그인 안된 상태 >> 로그인이랑 회원가입 || 로그인 된 상태 >> 로그아웃 -->
-                    <li class="nav-item">
-                        <a class="nav-link common-hover-primary" href="#">LogIn</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link common-hover-primary" href="#">회원정보수정</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link common-hover-primary" href="#">LogOut</a>
-                    </li>
+                <!-- 오른쪽 메뉴 -->
+                <ul class="navbar-nav ms-auto navbar-right-menu">
+                    <!-- 로그인 여부와 권한 판별 -->
+                    {{^sessionUser}}
+                        <li class="nav-item">
+                            <a class="nav-link common-hover-primary" href="/login-form">LogIn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link common-hover-primary" href="/signup-form">회원가입</a>
+                        </li>
+                    {{/sessionUser}}
+                    {{#sessionUser}}
+                        <li class="nav-item">
+                            <a class="nav-link common-hover-primary" href="/signup-form">회원정보수정</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link common-hover-primary" href="/logout">LogOut</a>
+                        </li>
+                    {{/sessionUser}}
                 </ul>
             </div>
         </div>
