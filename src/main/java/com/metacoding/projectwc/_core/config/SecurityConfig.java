@@ -37,8 +37,14 @@ public class SecurityConfig {
                                     HttpSession session = request.getSession();
                                     session.setAttribute("sessionUser", user);
 
-                                    response.sendRedirect("/");
-                                }));
+                                    response.sendRedirect("/main");
+                                }))
+                .logout(l ->
+                        l.logoutUrl("/logout")
+                                .logoutSuccessUrl("/main")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
+                );
 
 //        http.authorizeHttpRequests(r ->
 //                        r.requestMatchers("/s/**").hasAnyRole("USER", "ADMIN")

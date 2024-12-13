@@ -17,6 +17,7 @@ import java.nio.file.attribute.UserPrincipal;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final HttpSession httpSession;
 
     @PostMapping("/signup")
     public String signup(UserRequest.signupDTO signupDTO) {
