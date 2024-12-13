@@ -27,14 +27,5 @@ public class UserResponse {
             this.createdAt = user.getCreatedAt();
             this.isDeleted = user.getIsDeleted();
         }
-
-        @Builder
-        public UserInfoDTO(Integer id, String email, String nickname, Timestamp createdAt, Boolean isDeleted) {
-            this.id = id;
-            this.email = email;
-            this.nickname = nickname;
-            this.createdAt = createdAt;
-            this.isDeleted = isDeleted;
-        }
     }
 }

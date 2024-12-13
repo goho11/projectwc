@@ -33,13 +33,4 @@ public class UserController {
     public String loginForm() {
         return "login-form";
     }
-
-    // REST API로 만들어서 navbar.mustache에서 로그인 여부와 권한 판별 용 데이터 전송
-    @GetMapping("/api/authentication")
-    public ResponseEntity<?> checkLogin(@AuthenticationPrincipal User user) {
-        UserResponse.UserInfoDTO userInfoDTO = userService.getUserInfo(user);
-
-        // JSON으로 전송
-        return new ResponseEntity<>(Resp.ok(userInfoDTO), HttpStatus.OK);
-    }
 }

@@ -21,54 +21,24 @@
                 <!-- 오른쪽 메뉴 -->
                 <ul class="navbar-nav ms-auto navbar-right-menu">
                     <!-- 로그인 여부와 권한 판별 -->
-
+                    {{^sessionUser}}
+                        <li class="nav-item">
+                            <a class="nav-link common-hover-primary" href="/login-form">LogIn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link common-hover-primary" href="/signup-form">회원가입</a>
+                        </li>
+                    {{/sessionUser}}
+                    {{#sessionUser}}
+                        <li class="nav-item">
+                            <a class="nav-link common-hover-primary" href="/signup-form">회원정보수정</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link common-hover-primary" href="/logout">LogOut</a>
+                        </li>
+                    {{/sessionUser}}
                 </ul>
             </div>
         </div>
     </nav>
 </div>
-
-<!-- 임시 버튼 -->
-<button onclick="getUserInfo()">사용자 정보 받아오기</button>
-{{#sessionUser}}
-    <h1>세션에 저장된 유저 이름 {{sessionUser.username}} 세션에 저장된 정보 노출 주의</h1>
-{{/sessionUser}}
-
-<script>
-    let navbarRightMenu = document.querySelector('.navbar-right-menu');
-
-    getAuthentication();
-
-    // 비동기로 로그인한 유저 정보 가져오기
-    async function getAuthentication() {
-        // API 요청
-        let response = await fetch(`http://localhost:8080/api/authentication`, {
-            method: "get",
-        });
-        let responseData = await response.json();
-        let userInfo = responseData.body;
-
-        // 응답 처리
-        console.log(userInfo);
-
-        if (userInfo == null) {
-            navbarRightMenu.innerHTML=`
-            <li class="nav-item">
-                <a class="nav-link common-hover-primary" href="/login-form">LogIn</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link common-hover-primary" href="/signup-form">회원가입</a>
-            </li>
-            `;
-        } else if (userInfo != null) {
-            navbarRightMenu.innerHTML=`
-            <li class="nav-item">
-                <a class="nav-link common-hover-primary" href="#">회원정보수정</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link common-hover-primary" href="/logout">LogOut</a>
-            </li>
-            `;
-        }
-    }
-</script>
