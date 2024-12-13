@@ -33,15 +33,14 @@ public class UserController {
     }
 
     @GetMapping("/s/user-form")
-    public String userForm(Model model, @AuthenticationPrincipal User user) {
-        String username = user.getUsername();
-        model.addAttribute("username", username);
+    public String userForm() {
         return "user-form";
     }
 
-    @PutMapping("/s/user")
+    @PostMapping("/s/user")
     public Resp<?> updateUser(@RequestBody UserRequest.UpdateDTO updateDTO, @AuthenticationPrincipal User user) {
-        userService.updateUser(user.getId(), updateDTO);
+        String nickname = user.getNickname(); // 옛날 닉네임
+//        userService.updateUser(user.getId(), updateDTO, nickname);
         return Resp.ok("수정됨");
     }
 

@@ -31,4 +31,7 @@ public class UserRepository {
             throw new Exception401("이메일 혹은 비밀번호가 일치하지 않습니다");
         }
     }
+
+    // 여기 아래만 수정
+
 }

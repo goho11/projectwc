@@ -19,14 +19,15 @@
 
     <div class="container mt-3">
         <h3 class="border-bottom p-2">회원 정보 수정</h3>
+{{#sessionUser}}
         <form action="/action_page.php" class="fw-bold">
             <div class="mb-3 mt-3">
                 <label for="email">이메일</label>
-                <input type="email" class="form-control" id="email" placeholder="회원 이메일 주소 임시" name="email">
+                <input type="email" class="form-control" id="email" placeholder="회원 이메일 주소 임시" name="email" value="{{sessionUser.email}}">
             </div>
             <div class="mb-3">
                 <label for="pwd">닉네임</label>
-                <input type="text" class="form-control" id="nickname" placeholder="회원 닉네임 임시" name="nickname">
+                <input type="text" class="form-control" id="nickname" placeholder="회원 닉네임 임시" name="nickname" value="{{sessionUser.nickname}}">
             </div>
             <div class="mb-3">
                 <label>현재 비밀번호</label>
@@ -47,6 +48,8 @@
                 </button>
             </div>
         </form>
+
+{{/sessionUser}}
     </div>
 
 

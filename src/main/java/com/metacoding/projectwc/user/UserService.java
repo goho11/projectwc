@@ -32,6 +32,8 @@ public class UserService implements UserDetailsService {
         return new UserResponse.UserInfoDTO(user);
     }
 
+    // 여기 아래로만 수정
+
     @Transactional
     public void updateUser(Integer id, UserRequest.UpdateDTO updateDTO) {
         User userPS = userRepository.findById(id)
