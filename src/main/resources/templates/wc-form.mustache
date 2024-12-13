@@ -133,7 +133,7 @@
     }
 
     async function deleteWorldcupItem(itemId) {
-        let response = await fetch(`/worldcups/{{model.id}}/items/` + itemId,{
+        let response = await fetch(`/s/worldcups/{{model.id}}/items/` + itemId,{
             method:"DELETE"
         });
 
@@ -153,7 +153,7 @@
         };
         let requestBody = JSON.stringify(worldcupItem);
 
-        let response = await fetch(`/worldcups/{{model.id}}/items/` + itemId, {
+        let response = await fetch(`/s/worldcups/{{model.id}}/items/` + itemId, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
@@ -179,7 +179,7 @@
 
         let requestBody = JSON.stringify(worldcup);
 
-        let response = await fetch(`/worldcups/{{model.id}}`, {
+        let response = await fetch(`/s/worldcups/{{model.id}}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
@@ -202,8 +202,8 @@
     }
 
     const dropzone = new Dropzone(".dropzone", {
-        url: "/worldcups/{{model.id}}/items",
-        method: "post",
+        url: "/s/worldcups/{{model.id}}/items",
+        method: "POST",
         maxFilesize: 10,
         dictDefaultMessage: "아이템 추가",
         // autoProcessQueue: false,
@@ -292,7 +292,7 @@
             let rendered = renderTr(item);
             tbody.append(rendered);
             let newDropzone = new Dropzone(".my-dropzone-" + dropIndex, {
-                url: "/worldcups/{{model.id}}/items/" + item.id,
+                url: "/s/worldcups/{{model.id}}/items/" + item.id,
                 method: "POST",
                 maxFiles: 1,
                 maxFilesize: 1,

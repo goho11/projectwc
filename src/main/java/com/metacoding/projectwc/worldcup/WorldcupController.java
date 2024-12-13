@@ -28,17 +28,17 @@ public class WorldcupController {
     private final WorldcupMatchService worldcupMatchService;
     private final HttpSession session;
 
-    @GetMapping("/worldcups/new-worldcup")
+    @GetMapping("/s/worldcups/new-worldcup")
     public String saveWorldcup() {
         User user = User.builder().id(1).build();
         // TODO 로그인 기능 구현 시 수정 필요
 //        User seesionUser = (User) session.getAttribute("sessionUser");
         int id = worldcupService.save(user);
 //        int id = worldcupService.saveWorldcup(sessionUser);
-        return "redirect:/worldcups/wc-form/" + id;
+        return "redirect:/worldcups/" + id + "/wc-form";
     }
 
-    @GetMapping("/worldcups/wc-form/{id}")
+    @GetMapping("/s/worldcups/{id}/wc-form")
     public String wcFormById(@PathVariable int id, Model model) {
         // TODO 유저의 월드컵 id가 맞는지 체크
         // User seesionUser = (User) session.getAttribute("sessionUser");
@@ -133,7 +133,7 @@ public class WorldcupController {
         return "mine";
     }
 
-    @PutMapping("/worldcups/{id}")
+    @PutMapping("/s/worldcups/{id}")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody WorldcupRequest.UpdateDTO updateDTO) {
         worldcupService.update(id, updateDTO);
         return ResponseEntity.ok(Resp.ok("갱신됨"));

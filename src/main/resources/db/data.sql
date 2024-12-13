@@ -1,22 +1,34 @@
 -- User 더미
 INSERT INTO user_tb (email, password, nickname, created_at)
-VALUES ('test@test.com', '$2a$10$pm1qv9RhJ4.rjpJHstOQruS/5FvwL4v/PPocjKzpqNZEQEhzILRfm', 'test', now());
+VALUES ('a@a', '$2a$10$cp7ofvIT1xXCVRtocaxxM.sHBfUh.y1lR6rZ1ijhoFA.JHEdko2tS', 'test', now());
 INSERT INTO user_tb (email, password, nickname, created_at)
-VALUES ('test2@test.com', '$2a$10$pm1qv9RhJ4.rjpJHstOQruS/5FvwL4v/PPocjKzpqNZEQEhzILRfm', 'test2', now());
+VALUES ('b@b', '$2a$10$9DEyZTarJYA5ZH303Mjv4uCwldbrWM/POnvJ30PVaYy8aQ/SxUs9K', 'test2', now());
 
 -- Worldcup 더미
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터1', '월드컵 설명1', 1, 1, 1, now());
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터2', '월드컵 설명2', 1, 1, 2, now());
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터3', '월드컵 설명3', 1, 1, 4, now());
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터4', '월드컵 설명4', 1, 1, 11, now());
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터5', '월드컵 설명5', 1, 1, 13, now());
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터6', '월드컵 설명6', 1, 1, 144, now());
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터7', '월드컵 설명7', 1, 1, 11, now());
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 검색8', '월드컵 설명8', 1, 1, 221, now());
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터9', '월드컵 설명9', 1, 1, 13, now());
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터10', '월드컵 설명10', 1, 1, 11, now());
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터11', '월드컵 설명11', 1, 1, 13, now());
-INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at) VALUES ('월드컵 더미 데이터12', '월드컵 설명12', 1, 1, 21, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터1', '월드컵 설명1', 1, 1, 1, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터2', '월드컵 설명2', 1, 1, 2, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터3', '월드컵 설명3', 1, 1, 4, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터4', '월드컵 설명4', 1, 1, 11, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터5', '월드컵 설명5', 1, 1, 13, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터6', '월드컵 설명6', 1, 1, 144, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터7', '월드컵 설명7', 1, 1, 11, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 검색8', '월드컵 설명8', 1, 1, 221, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터9', '월드컵 설명9', 1, 1, 13, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터10', '월드컵 설명10', 1, 1, 11, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터11', '월드컵 설명11', 1, 1, 13, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터12', '월드컵 설명12', 1, 1, 21, now());
 
 -- 썸네일 2개 체크를 위한 WorldcupItem
 INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id, champion_count)
