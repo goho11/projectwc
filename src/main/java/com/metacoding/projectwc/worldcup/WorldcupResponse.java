@@ -29,7 +29,7 @@ public class WorldcupResponse {
     }
 
     @Data
-    public static class FindByIDDTO {
+    public static class FindByIdDTO {
         private int id;
         private String title;
         private String description;

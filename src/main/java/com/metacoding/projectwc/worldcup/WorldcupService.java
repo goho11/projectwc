@@ -25,9 +25,9 @@ public class WorldcupService {
         return worldcupPS.getId();
     }
 
-    public WorldcupResponse.FindByIDDTO findById(int id) {
+    public WorldcupResponse.FindByIdDTO findById(int id) {
         Worldcup worldcupPS = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("월드컵을 찾을 수 없습니다."));
-        return new WorldcupResponse.FindByIDDTO(worldcupPS);
+        return new WorldcupResponse.FindByIdDTO(worldcupPS);
     }
 
     public List<WorldcupResponse.FindAllDTO> findAllByTiltle(WorldcupRequest.FindAllDTO findAllDTO) {
@@ -194,10 +194,5 @@ public class WorldcupService {
     public WorldcupResponse.FindByIDForWcFormDTO findByIdForWcForm(int id) {
         Worldcup worldcupPS = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("월드컵을 찾을 수 없습니다."));
         return new WorldcupResponse.FindByIDForWcFormDTO(worldcupPS);
-
-    public WorldcupResponse.FindByIdDTO findById(int id) {
-        Worldcup worldcupPS = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("Worldcup not found"));
-        return new WorldcupResponse.FindByIdDTO(worldcupPS);
     }
-
 }
