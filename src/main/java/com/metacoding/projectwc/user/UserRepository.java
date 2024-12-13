@@ -1,10 +1,11 @@
 package com.metacoding.projectwc.user;
 
-import com.metacoding.projectwc._core.error.ex.Exception401;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -12,17 +13,23 @@ public class UserRepository {
     private final EntityManager entityManager;
 
     public User save(User user) {
-        entityManager.persist(user);
+        if (user.getId() == null) {
+            // 새 객체일 경우
+            entityManager.persist(user);
+        } else {
+            // 기존 객체일 경우 merge
+            user = entityManager.merge(user);
+        }
         return user;
     }
 
-    public User findByUsername(String username) {
-        Query query = entityManager.createQuery("select u from User u where u.email = :email", User.class);
-        query.setParameter("email", username);
+    public Optional<User> findByUsername(String username) {
         try {
-            return (User) query.getSingleResult();
+            Query query = entityManager.createQuery("select u from User u where u.email = :email", User.class);
+            query.setParameter("email", username);
+            return Optional.of((User) query.getSingleResult());
         } catch (RuntimeException e) {
-            throw new Exception401("이메일 혹은 비밀번호가 일치하지 않습니다");
+            return Optional.empty();
         }
     }
 }
