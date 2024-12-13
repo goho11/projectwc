@@ -13,19 +13,21 @@
 <body>
 {{> layout/navbar}}
 <div class="container my-4">
-
-    <!-- 우승 이미지 -->
-    <div class="container-fluid my-5">
-        <div class="card text-white">
-            <img src="/img/photo.png" class="card-img" alt="Example Image">
+    {{#model}}
+        <!-- 우승 이미지 -->
+        <div class="container-fluid my-5">
+            <h1>{{itemname}}</h1>
+            <div class="card text-white">
+                <img src="{{imgUrl}}" class="card-img" alt="Example Image">
+            </div>
         </div>
-    </div>
+    {{/model}}
 
     <!-- 버튼 -->
     <div class="d-flex justify-content-start gap-2 my-4">
-        <button type="button" class="btn btn-primary">다시시작</button>
-        <button type="button" class="btn btn-danger">랭킹보기</button>
-        <button type="button" class="btn btn-secondary">다른 월드컵 보기</button>
+        <button type="button" class="btn btn-primary" id="restart">다시시작</button>
+        <button type="button" class="btn btn-danger" id="ranking">랭킹보기</button>
+        <button type="button" class="btn btn-secondary" id="main">다른 월드컵 보기</button>
     </div>
 
     <!-- 댓글 개수 -->
@@ -94,9 +96,27 @@
                 <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
             </ul>
         </nav>
-<!--        <button class="btn common-color-primary text-white w-100 mt-2">20개 더 보기</button>-->
+        <!--        <button class="btn common-color-primary text-white w-100 mt-2">20개 더 보기</button>-->
     </div>
-
+</div>
 </body>
+<script>
+    let restartBtn = document.querySelector("#restart");
+    restartBtn.addEventListener("click", e => {
+        let id = {{worldcupId}};
+        window.location.href = `/worldcups/start-form/${id}`;
+    });
 
+    let rankingBtn = document.querySelector("#ranking");
+    rankingBtn.addEventListener("click", e => {
+        let id = {{worldcupId}};
+        window.location.href = `/worldcups/rank/${id}`;
+    });
+
+    let mainBtn = document.querySelector("#main");
+    mainBtn.addEventListener("click", e => {
+        window.location.href = `/main`;
+    });
+
+</script>
 </html>

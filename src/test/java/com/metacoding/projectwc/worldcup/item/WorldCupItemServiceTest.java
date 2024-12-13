@@ -32,18 +32,20 @@ public class WorldCupItemServiceTest {
     public void getShuffledByRounds_test() {
         // given
         int round = 15;
+        int worldcupId = 1;
 
         // when
-        List<WorldcupItem> shuffledByRounds = worldcupItemService.getShuffledByRounds(round);
+        List<WorldcupItem> shuffledByRounds = worldcupItemService.getShuffledByRounds(round, worldcupId);
 
         // eye
         System.out.println(shuffledByRounds.size());
-        for(WorldcupItem shuffledByRound : shuffledByRounds) {
+        for (WorldcupItem shuffledByRound : shuffledByRounds) {
             System.out.println(shuffledByRound.getItemname());
             System.out.println(shuffledByRound.getImgUrl());
             System.out.println("=========");
         }
     }
+
     @Test
     public void findByWorldcupIdAndNameOrderByOption_test() {
         // given

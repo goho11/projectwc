@@ -75,4 +75,8 @@ public class Worldcup {
     public void softDelete() {
         isDeleted = true;
     }
+
+    public void completeGame() {
+        gamesCompleted++;
+    }
 }

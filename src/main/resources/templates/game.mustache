@@ -41,6 +41,7 @@
     <!-- 숨겨진 폼 -->
     <form id="gameForm" action="/worldcups/{{worldcupGame.worldcup.id}}/games/{{worldcupGame.id}}" method="POST" style="display:none;">
         <input type="hidden" name="winner" id="winner">
+        <input type="hidden" name="loser" id="loser">
     </form>
 
     <script>
@@ -52,11 +53,13 @@
 
         // "game-left"와 "game-right" 클릭 이벤트 처리
         document.querySelector('#game-left').addEventListener('click', function() {
-            const dataId = this.getAttribute('data-id');
-            document.querySelector('#winner').value = dataId;
+            const winnerDataId = this.getAttribute('data-id');
+            const loserDataId = document.querySelector('#game-right').getAttribute('data-id');
+            document.querySelector('#winner').value = winnerDataId;
+            document.querySelector('#loser').value = loserDataId;
+
 
             // 애니메이션 처리
-            document.querySelector('#game-left').classList.add('centered');
             document.querySelector('#game-right').classList.add('outside');
 
             // 애니메이션이 끝난 후 submit
@@ -66,11 +69,12 @@
         });
 
         document.querySelector('#game-right').addEventListener('click', function() {
-            const dataId = this.getAttribute('data-id');
-            document.querySelector('#winner').value = dataId;
+            const winnerDataId = this.getAttribute('data-id');
+            const loserDataId = document.querySelector('#game-left').getAttribute('data-id');
+            document.querySelector('#winner').value = winnerDataId;
+            document.querySelector('#loser').value = loserDataId;
 
             // 애니메이션 처리
-            document.querySelector('#game-right').classList.add('centered');
             document.querySelector('#game-left').classList.add('outside');
 
             // 애니메이션이 끝난 후 submit

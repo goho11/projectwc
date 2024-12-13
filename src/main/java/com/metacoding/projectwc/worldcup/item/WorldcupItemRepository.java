@@ -49,11 +49,12 @@ public class WorldcupItemRepository {
         return Integer.parseInt(singleResult.toString());
     }
 
-    public List<WorldcupItem> findAll() {
+    public List<WorldcupItem> findByWorldcupId(int worldcupId) {
         String sql = """
-                select * from worldcup_item_tb
+                select w from WorldcupItem w WHERE w.isDeleted = false AND w.worldcup.id = :id
                 """;
-        return entityManager.createNativeQuery(sql,WorldcupItem.class).getResultList();
+
+        return entityManager.createQuery(sql,WorldcupItem.class).setParameter("id",worldcupId).getResultList();
     }
 
     public List<WorldcupItem> findTwoItems(Integer id) {

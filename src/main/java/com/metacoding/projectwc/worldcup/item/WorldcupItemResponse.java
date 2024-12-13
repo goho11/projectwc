@@ -61,4 +61,29 @@ public class WorldcupItemResponse {
                 this.winRate = 100 * item.getWinCount() / item.getTotalCount();
         }
     }
+
+    @Data
+    public static class RankDTO {
+        private int id;
+        private String itemname;
+        private String imgUrl;
+        private int champRate;
+        private int winRate;
+
+        public RankDTO(WorldcupItem item, int gamesCompleted) {
+            this.id = item.getId();
+            this.itemname = item.getItemname();
+            this.imgUrl = item.getImgUrl();
+            if (gamesCompleted == 0) {
+                this.champRate = 0;
+            } else {
+                this.champRate = (int) Math.round(item.getChampionCount() * 100.0 / gamesCompleted);
+            }
+            if (item.getTotalCount() == 0) {
+                this.winRate = 0;
+            } else {
+                this.winRate = (int) Math.round(item.getWinCount() * 100 / item.getTotalCount());
+            }
+        }
+    }
 }

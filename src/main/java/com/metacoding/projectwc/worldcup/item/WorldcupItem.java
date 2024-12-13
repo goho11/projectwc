@@ -75,4 +75,16 @@ public class WorldcupItem {
     public void softDelete() {
         isDeleted = true;
     }
+
+    public void winnerUpdate() {
+        this.totalCount++;
+        this.winCount++;
+    }
+    public void loserUpdate() {
+        this.totalCount++;
+    }
+    public void championUpdate() {
+        this.championCount++;
+    }
+
 }
