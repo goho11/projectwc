@@ -75,7 +75,7 @@ public class WorldcupItemService {
     }
 
     @Transactional
-    public void deleteItem(int itemId) {
+    public void delete(int itemId) {
         WorldcupItem worldcupItemPS = worldcupItemRepository.findById(itemId).orElseThrow(() -> new APIException404("없는 월드컵 아이템입니다."));
         worldcupItemPS.softDelete();
     }

@@ -71,4 +71,8 @@ public class Worldcup {
         this.description = description;
         this.visibility = visibility;
     }
+
+    public void softDelete() {
+        isDeleted = true;
+    }
 }
