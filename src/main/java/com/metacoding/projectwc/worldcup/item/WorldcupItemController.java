@@ -15,9 +15,6 @@ public class WorldcupItemController {
 
     @PostMapping("/s/worldcups/{id}/items")
     public ResponseEntity<?> save(@PathVariable int id, WorldcupItemRequest.SaveDTO saveDTO) {
-        // TODO 유저의 월드컵 id가 맞는지 체크
-        // User seesionUser = (User) session.getAttribute("sessionUser");
-        // worldcupService.findById(id).getUser() 같은지 확인
         Worldcup worldcup = Worldcup.builder().id(id).build();
         worldcupItemService.save(saveDTO, worldcup);
         return new ResponseEntity(Resp.ok("됨"), HttpStatus.CREATED);
@@ -43,7 +40,6 @@ public class WorldcupItemController {
 
     @DeleteMapping("/s/worldcups/{id}/items/{itemId}")
     public ResponseEntity<?> deleteItem(@PathVariable int id, @PathVariable int itemId) {
-        // TODO 모든 아이템 처리에 로그인 유저확인 밑 월드컵아이디와 비교하여 자기꺼 맞는지 확인해야함 
         worldcupItemService.deleteItem(itemId);
         return ResponseEntity.ok(Resp.ok("됨"));
     }

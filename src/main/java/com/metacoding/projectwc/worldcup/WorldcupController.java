@@ -12,6 +12,7 @@ import com.metacoding.projectwc.worldcup.item.WorldcupItemService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,26 +30,19 @@ public class WorldcupController {
     private final HttpSession session;
 
     @GetMapping("/s/worldcups/new-worldcup")
-    public String saveWorldcup() {
-        User user = User.builder().id(1).build();
-        // TODO 로그인 기능 구현 시 수정 필요
-//        User seesionUser = (User) session.getAttribute("sessionUser");
+    public String saveWorldcup(@AuthenticationPrincipal User user) {
         int id = worldcupService.save(user);
-//        int id = worldcupService.saveWorldcup(sessionUser);
-        return "redirect:/worldcups/" + id + "/wc-form";
+        return "redirect:/s/worldcups/" + id + "/wc-form";
     }
 
     @GetMapping("/s/worldcups/{id}/wc-form")
     public String wcFormById(@PathVariable int id, Model model) {
-        // TODO 유저의 월드컵 id가 맞는지 체크
-        // User seesionUser = (User) session.getAttribute("sessionUser");
-        // worldcupService.findById(id).getUser() 같은지 확인
         WorldcupResponse.FindByIDForWcFormDTO findByIDForWcFormDTO = worldcupService.findByIdForWcForm(id);
         model.addAttribute("model", findByIDForWcFormDTO);
         return "wc-form";
     }
 
-    @GetMapping("/worldcups/start-form/{id}")
+    @GetMapping("/worldcups/{id}/start-form")
     public String startForm(@PathVariable("id") int id, Model model) {
         List<Integer> roundList = worldcupItemService.getRoundList(id);
         int allItems = worldcupItemService.countAll(id);
@@ -62,7 +56,7 @@ public class WorldcupController {
     }
 
     // 주소에서 받는 id는 월드컵아이디임 >> Worldcup 클래스 id
-    @PostMapping("/worldcups/start-form/{id}")
+    @PostMapping("/worldcups/{id}/start-form")
     public String startGame(@PathVariable("id") int worldcupId, @RequestParam int round, Model model) {
         User user = User.builder().id(1).build(); // 더미유저 >> 나중에 지워야 함
         WorldcupGame saveWorldcupGame = worldcupGameService.saveWorldcupGame(worldcupId, user, round); // 게임 생성
@@ -74,11 +68,11 @@ public class WorldcupController {
         session.setAttribute("sessionWinnerList", winnerList);
         int worldcupGameId = saveWorldcupGame.getId();
 
-        return "redirect:/worldcups/game/" + worldcupId + "/" + worldcupGameId;
+        return "redirect:/worldcups/" + worldcupId + "/games/" + worldcupGameId;
     }
 
     // 이제 주소 id >> 게임 id
-    @GetMapping("/worldcups/game/{worldcupId}/{worldcupGameId}")
+    @GetMapping("/worldcups/{worldcupId}/games/{worldcupGameId}")
     public String game(@PathVariable("worldcupId") int worldcupId, @PathVariable("worldcupGameId") int worldcupGameId, Model model) {
         WorldcupGame byId = worldcupGameService.findById(worldcupGameId);
         List<WorldcupItem> shuffledByRoundsList = (List<WorldcupItem>) session.getAttribute("sessionShuffledByRoundsList");
@@ -101,7 +95,7 @@ public class WorldcupController {
         return "game";
     }
 
-    @GetMapping("/main")
+    @GetMapping({"/main", "/"})
     public String main(Model model, WorldcupRequest.FindAllDTO findAllDTO) {
 
         // findAllDTO 디폴트 값은 1페이지, 사이즈는 10, 최신순
@@ -138,8 +132,9 @@ public class WorldcupController {
         worldcupService.update(id, updateDTO);
         return ResponseEntity.ok(Resp.ok("갱신됨"));
     }
+
     // 주소의 아이디는 월드컵자체(원피스 최강자전) id, 세션에 들어있는 것 >> 승자리스트, 경기리스트, 월드컵 게임 id(원피스 최강자전을 플레이 중의 id), matchNum
-    @PostMapping("/worldcups/game/{worldcupId}/{worldcupGameId}")
+    @PostMapping("/worldcups/{worldcupId}/games/{worldcupGameId}")
     public String playGame(@PathVariable("worldcupId") int worldcupId, @RequestParam("winner") int winner, @PathVariable("worldcupGameId") int worldcupGameId) {
         List<WorldcupItem> shuffledByRoundsList = (List<WorldcupItem>) session.getAttribute("sessionShuffledByRoundsList");
         List<WorldcupItem> winnerList = (List<WorldcupItem>) session.getAttribute("sessionWinnerList");
@@ -171,13 +166,13 @@ public class WorldcupController {
             session.removeAttribute("sessionTotalMatchNum");
 
             session.setAttribute("winnerItem", winnerItem);
-            return "redirect:/worldcups/result/" + worldcupId + "/" + worldcupGameId;
+            return "redirect:/worldcups/" + worldcupId + "/result/" + worldcupGameId;
         }
 
         session.setAttribute("sessionShuffledByRoundsList", shuffledByRoundsList);
         session.setAttribute("sessionWinnerList", winnerList);
         session.setAttribute("sessionMatchNum", matchNum);
 
-        return "redirect:/worldcups/game/" + worldcupId + "/" + worldcupGameId;
+        return "redirect:/worldcups/" + worldcupId + "/games/" + worldcupGameId;
     }
 }
