@@ -39,8 +39,8 @@ public class WorldcupItemController {
     }
 
     @DeleteMapping("/s/worldcups/{id}/items/{itemId}")
-    public ResponseEntity<?> deleteItem(@PathVariable int id, @PathVariable int itemId) {
-        worldcupItemService.deleteItem(itemId);
+    public ResponseEntity<?> delete(@PathVariable int id, @PathVariable int itemId) {
+        worldcupItemService.delete(itemId);
         return ResponseEntity.ok(Resp.ok("됨"));
     }
 }

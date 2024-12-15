@@ -27,10 +27,11 @@ public class WorldcupAspect {
     private WorldcupRepository worldcupRepository;
 
     @Before("execution(* com.metacoding.projectwc.worldcup.WorldcupController.wcFormById(..))||" +
+            "execution(* com.metacoding.projectwc.worldcup.WorldcupController.delete(..))||" +
             "execution(* com.metacoding.projectwc.worldcup.WorldcupController.update(..))||" +
             "execution(* com.metacoding.projectwc.worldcup.item.WorldcupItemController.updateImg(..))||" +
             "execution(* com.metacoding.projectwc.worldcup.item.WorldcupItemController.updateImg(..))||" +
-            "execution(* com.metacoding.projectwc.worldcup.item.WorldcupItemController.deleteItem(..))||" +
+            "execution(* com.metacoding.projectwc.worldcup.item.WorldcupItemController.delete(..))||" +
             "execution(* com.metacoding.projectwc.worldcup.item.WorldcupItemController.save(..))")
     public void worldcupUserCheck(JoinPoint joinPoint) {
         User sessionUser = (User) httpServletRequest.getSession().getAttribute("sessionUser");

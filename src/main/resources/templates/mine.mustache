@@ -23,15 +23,18 @@
         <div class="d-flex align-items-center" id="top-bar">
             {{#pageDTO}}
                 <div class="btn-group">
-                    <button onclick="location.href='?page={{currentPage}}&size={{size}}&sortBy=Popularity&searchKeyword={{searchKeyword}}'" type="button" class="btn common-color-primary
+                    <button onclick="location.href='?page={{currentPage}}&size={{size}}
+                    &sortBy=Popularity&searchKeyword={{searchKeyword}}'" type="button" class="btn common-color-primary
                     text-white">인기순</button>
-                    <button onclick="location.href='?page={{currentPage}}&size={{size}}&sortBy=Latest&searchKeyword={{searchKeyword}}'" type="button" class="btn border-1 border
+                    <button onclick="location.href='?page={{currentPage}}&size={{size}}
+                    &sortBy=Latest&searchKeyword={{searchKeyword}}'" type="button" class="btn border-1 border
                     border-start-0">최신순</button>
                 </div>
                 <div class="ms-4 d-flex align-items-center flex-grow-1">
                     <input type="text" class="form-control flex-grow-1" id="searchKeyword"
                            placeholder="월드컵 제목으로 검색하세요." name="searchKeyword">
-                    <button onclick="updateSearch()" type="button" id="searchButton" class="btn border-0 common-color-primary text-white"
+                    <button onclick="updateSearch()" type="button" id="searchButton"
+                            class="btn border-0 common-color-primary text-white"
                             style="white-space: nowrap;">검색
                     </button>
                 </div>
@@ -69,12 +72,18 @@
                 </div>
                 <div class="ms-2 mb-2 mine-btn-container">
                     <div class="mine-btn-group-row">
-                        <button class="btn hover-coler btn-outline-danger btn-sm" onclick="location.href='/worldcups/{{id}}/start-form'">시작하기</button>
+                        <button class="btn hover-coler btn-outline-danger btn-sm"
+                                onclick="location.href='/worldcups/{{id}}/start-form'">시작하기
+                        </button>
                         <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
                     </div>
                     <div class="mine-btn-group-row">
-                        <button class="btn hover-coler btn-outline-info btn-sm" onclick="location.href='/s/worldcups/{{id}}/wc-form'">수정하기</button>
-                        <button class="btn hover-coler btn-outline-success btn-sm">삭제하기</button>
+                        <button class="btn hover-coler btn-outline-info btn-sm"
+                                onclick="location.href='/s/worldcups/{{id}}/wc-form'">수정하기
+                        </button>
+                        <button class="btn hover-coler btn-outline-success btn-sm" onclick="deleteWorldcup({{id}})">
+                            삭제하기
+                        </button>
                     </div>
                 </div>
 
@@ -86,15 +95,18 @@
         {{#pageDTO}}
             <ul class="pagination justify-content-center">
                 <li class="page-item {{#isFirstPage}}disabled{{/isFirstPage}}">
-                    <a class="page-link" href="?page={{prevPage}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">&lt;</a>
+                    <a class="page-link" href="?page={{prevPage}}&size={{size}}&sortBy={{sortBy}}
+                    &searchKeyword={{searchKeyword}}">&lt;</a>
                 </li>
                 {{#pages}}
                     <li class="page-item {{#isCurrentPage}}active{{/isCurrentPage}}">
-                        <a class="page-link" href="?page={{number}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">{{number}}</a>
+                        <a class="page-link" href="?page={{number}}&size={{size}}&sortBy={{sortBy}}
+                        &searchKeyword={{searchKeyword}}">{{number}}</a>
                     </li>
                 {{/pages}}
                 <li class="page-item {{#isLastPage}}disabled{{/isLastPage}}">
-                    <a class="page-link" href="?page={{nextPage}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">&gt;</a>
+                    <a class="page-link" href="?page={{nextPage}}&size={{size}}&sortBy={{sortBy}}
+                    &searchKeyword={{searchKeyword}}">&gt;</a>
                 </li>
             </ul>
         {{/pageDTO}}
@@ -102,24 +114,38 @@
 
 </div>
 </body>
-    <script>
-        function updateSearch() {
-            const searchKeyword = document.getElementById('searchKeyword').value;
-            const urlParams = new URLSearchParams(window.location.search);
-            urlParams.set('searchKeyword', searchKeyword);
-            window.location.href = '?' + urlParams.toString();
-        }
+<script>
+    function updateSearch() {
+        const searchKeyword = document.getElementById('searchKeyword').value;
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('searchKeyword', searchKeyword);
+        window.location.href = '?' + urlParams.toString();
+    }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchKeyword');
-            const searchButton = document.getElementById('searchButton');
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchKeyword');
+        const searchButton = document.getElementById('searchButton');
 
-            searchInput.addEventListener('keypress', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    searchButton.click();
-                }
-            });
+        searchInput.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                searchButton.click();
+            }
         });
-    </script>
+    });
+
+    async function deleteWorldcup(id) {
+        let response = await fetch("/s/worldcups/" + id, {
+            method: "delete"
+        });
+
+        let responseBody = await response.json();
+
+        if (responseBody.success) {
+            location.href="/s/worldcups/mine";
+        } else {
+            alert(responseBody.message);
+        }
+    }
+</script>
 </html>

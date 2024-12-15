@@ -130,7 +130,13 @@ public class WorldcupController {
     @PutMapping("/s/worldcups/{id}")
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody WorldcupRequest.UpdateDTO updateDTO) {
         worldcupService.update(id, updateDTO);
-        return ResponseEntity.ok(Resp.ok("갱신됨"));
+        return ResponseEntity.ok(Resp.ok("됨"));
+    }
+
+    @DeleteMapping("/s/worldcups/{id}")
+    public ResponseEntity<?> delete(@PathVariable int id) {
+        worldcupService.delete(id);
+        return ResponseEntity.ok(Resp.ok("됨"));
     }
 
     // 주소의 아이디는 월드컵자체(원피스 최강자전) id, 세션에 들어있는 것 >> 승자리스트, 경기리스트, 월드컵 게임 id(원피스 최강자전을 플레이 중의 id), matchNum
