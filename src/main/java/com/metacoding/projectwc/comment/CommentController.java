@@ -13,7 +13,7 @@ public class CommentController {
     private final CommentService commentService;
 
     // TODO: ResponseEntity<T> 써야하나?
-    @PostMapping("comments")
+    @PostMapping("/comments")
     public String saveComment(CommentRequest.SaveDTO saveDTO) {
         // TODO 로그인 기능 완성될 경우 적용
 //        User seesionUser = (User) session.getAttribute("sessionUser");
@@ -28,7 +28,7 @@ public class CommentController {
         return null;
     }
 
-    @PutMapping("comments")
+    @PutMapping("/comments")
     public String deleteComment() {
         // 논리 삭제 구현
         // TODO 로그인 기능 완성될 경우 적용

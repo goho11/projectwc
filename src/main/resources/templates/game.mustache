@@ -39,7 +39,7 @@
     </div>
 
     <!-- 숨겨진 폼 -->
-    <form id="gameForm" action="/worldcups/game/{{worldcupGame.worldcup.id}}/{{worldcupGame.id}}" method="POST" style="display:none;">
+    <form id="gameForm" action="/worldcups/{{worldcupGame.worldcup.id}}/games/{{worldcupGame.id}}" method="POST" style="display:none;">
         <input type="hidden" name="winner" id="winner">
     </form>
 

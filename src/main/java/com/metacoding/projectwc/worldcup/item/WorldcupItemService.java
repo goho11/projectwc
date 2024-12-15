@@ -34,7 +34,7 @@ public class WorldcupItemService {
         }
 
         // 4개 초과면 강수 계산 해서 담아서 반환
-        for(int i = 4; i <= countAll;) {
+        for (int i = 4; i <= countAll; ) {
             roundList.add(i);
             i = i * 2;
         }

@@ -1,7 +1,7 @@
 <div class="row border-bottom fw-bold">
     <nav class="navbar p-0 navbar-expand-xxl bg-white">
         <div class="container-fluid fs-5">
-            <a class="navbar-brand common-color-primary py-1 px-3 text-white fs-2" href="#">WC</a>
+            <a class="navbar-brand common-color-primary py-1 px-3 text-white fs-2" href="/">WC</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -9,32 +9,31 @@
                 <!-- 왼쪽 메뉴 -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link common-hover-primary" href="/main">이상형 월드컵</a>
+                        <a class="nav-link common-hover-primary" href="/">이상형 월드컵</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link common-hover-primary" href="/worldcups/new-worldcup">이상형 월드컵 만들기</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link common-hover-primary" href="/s/worldcups/mine">내가 만든 월드컵</a>
-                    </li>
+                    {{#sessionUser}}
+                        <li class="nav-item">
+                            <a class="nav-link common-hover-primary" href="/s/worldcups/new-worldcup">이상형 월드컵 만들기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link common-hover-primary" href="/s/worldcups/mine">내가 만든 월드컵</a>
+                        </li>
+                    {{/sessionUser}}
                 </ul>
                 <!-- 오른쪽 메뉴 -->
                 <ul class="navbar-nav ms-auto navbar-right-menu">
                     <!-- 로그인 여부와 권한 판별 -->
                     {{^sessionUser}}
                         <li class="nav-item">
-                            <a class="nav-link common-hover-primary" href="/login-form">LogIn</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link common-hover-primary" href="/signup-form">회원가입</a>
+                            <a class="nav-link common-hover-primary me-2" href="/login-form">LogIn</a>
                         </li>
                     {{/sessionUser}}
                     {{#sessionUser}}
                         <li class="nav-item">
-                            <a class="nav-link common-hover-primary" href="/signup-form">회원정보수정</a>
+                            <a class="nav-link common-hover-primary" href="/s/user-form">회원정보수정</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link common-hover-primary" href="/logout">LogOut</a>
+                            <a class="nav-link common-hover-primary me-2" href="/logout">LogOut</a>
                         </li>
                     {{/sessionUser}}
                 </ul>
