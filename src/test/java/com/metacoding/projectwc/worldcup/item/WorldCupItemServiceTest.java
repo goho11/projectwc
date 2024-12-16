@@ -35,7 +35,7 @@ public class WorldCupItemServiceTest {
         int worldcupId = 1;
 
         // when
-        List<WorldcupItem> shuffledByRounds = worldcupItemService.getShuffledByRounds(round, worldcupId);
+        List<WorldcupItem> shuffledByRounds = worldcupItemService.getShuffledByRounds(worldcupId, round);
 
         // eye
         System.out.println(shuffledByRounds.size());

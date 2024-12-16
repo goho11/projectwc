@@ -16,7 +16,9 @@ public class WorldcupGameService {
 
     @Transactional
     public WorldcupGame saveWorldcupGame(int id, User user, int round) {
-        Worldcup worldcup = worldcupRepository.findById(id).get();
+        Worldcup worldcup = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("없는 월드컵 입니다."));
+        if (worldcup.getIsDeleted())
+            throw new Exception404("없는 월드컵 입니다.");
         WorldcupGame build = WorldcupGame.builder().worldcup(worldcup).user(user).startRound(round).build();
         WorldcupGame worldcupGamePS = worldcupGameRepository.save(build);
         return worldcupGamePS;

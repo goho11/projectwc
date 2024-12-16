@@ -1,5 +1,7 @@
 package com.metacoding.projectwc.worldcup;
 
+import com.metacoding.projectwc._core.error.ex.Exception400;
+import com.metacoding.projectwc._core.error.ex.Exception404;
 import com.metacoding.projectwc._core.util.Resp;
 import com.metacoding.projectwc.user.User;
 import com.metacoding.projectwc.user.User;
@@ -36,35 +38,39 @@ public class WorldcupController {
         return "redirect:/s/worldcups/" + id + "/wc-form";
     }
 
-    @GetMapping("/s/worldcups/{id}/wc-form")
-    public String wcFormById(@PathVariable int id, Model model) {
-        // TODO 유저의 월드컵 id가 맞는지 체크
-        // User seesionUser = (User) session.getAttribute("sessionUser");
-        // worldcupService.findById(id).getUser() 같은지 확인
-        WorldcupResponse.FindByIDForWcFormDTO findByIDForWcFormDTO = worldcupService.findByIdForWcForm(id);
+    @GetMapping("/s/worldcups/{worldcupId}/wc-form")
+    public String wcFormById(@PathVariable int worldcupId, Model model) {
+        if (worldcupService.isDeleted(worldcupId))
+            throw new Exception404("월드컵을 찾을 수 없습니다.");
+        WorldcupResponse.FindByIDForWcFormDTO findByIDForWcFormDTO = worldcupService.findByIdForWcForm(worldcupId);
         model.addAttribute("model", findByIDForWcFormDTO);
         return "wc-form";
     }
 
-    @GetMapping("/worldcups/{id}/start-form")
-    public String startForm(@PathVariable("id") int id, Model model) {
-        List<Integer> roundList = worldcupItemService.getRoundList(id);
-        int allItems = worldcupItemService.countAll(id);
-        WorldcupResponse.FindByIdDTO worldcup = worldcupService.findById(id);
+    @GetMapping("/worldcups/{worldcupId}/start-form")
+    public String startForm(@PathVariable int worldcupId, Model model) {
+        if (worldcupService.isDeleted(worldcupId))
+            throw new Exception404("월드컵을 찾을 수 없습니다.");
+        List<Integer> roundList = worldcupItemService.getRoundList(worldcupId);
+        int allItems = worldcupItemService.countAll(worldcupId);
+        WorldcupResponse.FindByIdDTO worldcup = worldcupService.findById(worldcupId);
         model.addAttribute("allItem", allItems);
         model.addAttribute("fight", roundList.get(0));
         model.addAttribute("round", roundList);
-        model.addAttribute("id", id);
+        model.addAttribute("id", worldcupId);
         model.addAttribute("worldcup", worldcup);
         return "start-form";
     }
 
     // 주소에서 받는 id는 월드컵아이디임 >> Worldcup 클래스 id
-    @PostMapping("/worldcups/{id}/start-form")
-    public String startGame(@PathVariable("id") int worldcupId, @RequestParam int round, Model model) {
-        User user = User.builder().id(1).build(); // 더미유저 >> 나중에 지워야 함
+    @PostMapping("/worldcups/{worldcupId}/start-form")
+    public String startGame(@PathVariable int worldcupId, @RequestParam int round, Model model) {
+        User user = (User) session.getAttribute("sessionUser");
+        if (user == null) {
+            throw new Exception400("현재 비로그인 플레이 기능은 구현되어있지 않습니다.");
+        }
         WorldcupGame saveWorldcupGame = worldcupGameService.saveWorldcupGame(worldcupId, user, round); // 게임 생성
-        List<WorldcupItem> shuffledByRoundsList = worldcupItemService.getShuffledByRounds(round, worldcupId); // 경기 진행할 아이템 담을 리스트
+        List<WorldcupItem> shuffledByRoundsList = worldcupItemService.getShuffledByRounds(worldcupId, round); // 경기 진행할 아이템 담을 리스트
         List<WorldcupItem> winnerList = new ArrayList<>(); // 승리자들을 담아 둘 리스트
 
         session.setAttribute("sessionTotalMatchNum", shuffledByRoundsList.size() / 2);
@@ -77,15 +83,16 @@ public class WorldcupController {
 
     // 이제 주소 id >> 게임 id
     @GetMapping("/worldcups/{worldcupId}/games/{worldcupGameId}")
-    public String game(@PathVariable("worldcupId") int worldcupId, @PathVariable("worldcupGameId") int worldcupGameId, Model model) {
+    public String game(@PathVariable int worldcupId, @PathVariable int worldcupGameId, Model model) {
+        if (worldcupService.isDeleted(worldcupId))
+            throw new Exception404("월드컵을 찾을 수 없습니다.");
         WorldcupGame byId = worldcupGameService.findById(worldcupGameId);
         List<WorldcupItem> shuffledByRoundsList = (List<WorldcupItem>) session.getAttribute("sessionShuffledByRoundsList");
         int totalMatchNum = (int) session.getAttribute("sessionTotalMatchNum");
-        int matchNum = 1;
-        if (session.getAttribute("sessionMatchNum") == null) {
+        Integer matchNum = (Integer) session.getAttribute("sessionMatchNum");
+        if (matchNum == null) {
+            matchNum = 1;
             session.setAttribute("sessionMatchNum", matchNum);
-        } else {
-            matchNum = (Integer) session.getAttribute("sessionMatchNum");
         }
 
         WorldcupMatchResponse.SaveWorldcupMatchDTO saveWorldcupMatchDTO = worldcupMatchService.saveWorldcupMatch(byId, totalMatchNum * 2, matchNum, shuffledByRoundsList);
@@ -99,53 +106,9 @@ public class WorldcupController {
         return "game";
     }
 
-    @GetMapping({"/main", "/"})
-    public String main(Model model, WorldcupRequest.FindAllDTO findAllDTO) {
-
-        // findAllDTO 디폴트 값은 1페이지, 사이즈는 10, 최신순
-        List<WorldcupResponse.FindAllDTO> worldcupList = worldcupService.findAllByTiltle(findAllDTO);
-        model.addAttribute("worldcupList", worldcupList);
-
-        // 페이지 정보
-        WorldcupResponse.PageDTO pageDTO = worldcupService.createPageDTO(findAllDTO);
-        model.addAttribute("pageDTO", pageDTO);
-
-        return "main";
-    }
-
-    @GetMapping("/s/worldcups/mine")
-    public String mine(Model model, WorldcupRequest.FindAllDTO findAllDTO) {
-        // TODO 로그인 기능 완성될 경우 적용
-//        User seesionUser = (User) session.getAttribute("sessionUser");
-
-        User user = User.builder().id(1).build();
-
-        // 로그인 한 유저가 생성한 월드컵 정보만 가져온다.
-        List<WorldcupResponse.FindAllDTO> worldcupList = worldcupService.findAllByTiltleAndUser(findAllDTO, user);
-        model.addAttribute("worldcupList", worldcupList);
-
-        // 페이지 정보
-        WorldcupResponse.PageDTO pageDTO = worldcupService.createPageDTOForMine(findAllDTO, user);
-        model.addAttribute("pageDTO", pageDTO);
-
-        return "mine";
-    }
-
-    @PutMapping("/s/worldcups/{id}")
-    public ResponseEntity<?> update(@PathVariable int id, @RequestBody WorldcupRequest.UpdateDTO updateDTO) {
-        worldcupService.update(id, updateDTO);
-        return ResponseEntity.ok(Resp.ok("됨"));
-    }
-
-    @DeleteMapping("/s/worldcups/{id}")
-    public ResponseEntity<?> delete(@PathVariable int id) {
-        worldcupService.delete(id);
-        return ResponseEntity.ok(Resp.ok("됨"));
-    }
-
     // 주소의 아이디는 월드컵자체(원피스 최강자전) id, 세션에 들어있는 것 >> 승자리스트, 경기리스트, 월드컵 게임 id(원피스 최강자전을 플레이 중의 id), matchNum
     @PostMapping("/worldcups/{worldcupId}/games/{worldcupGameId}")
-    public String playGame(@PathVariable("worldcupId") int worldcupId, @RequestParam("winner") int winner, @RequestParam("loser") int loser, @PathVariable("worldcupGameId") int worldcupGameId) {
+    public String playGame(@PathVariable int worldcupId, @RequestParam int winner,@PathVariable  int loser, @PathVariable int worldcupGameId) {
         List<WorldcupItem> shuffledByRoundsList = (List<WorldcupItem>) session.getAttribute("sessionShuffledByRoundsList");
         List<WorldcupItem> winnerList = (List<WorldcupItem>) session.getAttribute("sessionWinnerList");
         int matchNum = (int) session.getAttribute("sessionMatchNum");
@@ -205,5 +168,49 @@ public class WorldcupController {
         model.addAttribute("rankList", rankList);
 
         return "rank";
+    }
+
+    @GetMapping({"/main", "/"})
+    public String main(Model model, WorldcupRequest.FindAllDTO findAllDTO) {
+
+        // findAllDTO 디폴트 값은 1페이지, 사이즈는 10, 최신순
+        List<WorldcupResponse.FindAllDTO> worldcupList = worldcupService.findAllByTiltle(findAllDTO);
+        model.addAttribute("worldcupList", worldcupList);
+
+        // 페이지 정보
+        WorldcupResponse.PageDTO pageDTO = worldcupService.createPageDTO(findAllDTO);
+        model.addAttribute("pageDTO", pageDTO);
+
+        return "main";
+    }
+
+    @GetMapping("/s/worldcups/mine")
+    public String mine(Model model, WorldcupRequest.FindAllDTO findAllDTO) {
+        // TODO 로그인 기능 완성될 경우 적용
+//        User seesionUser = (User) session.getAttribute("sessionUser");
+
+        User user = User.builder().id(1).build();
+
+        // 로그인 한 유저가 생성한 월드컵 정보만 가져온다.
+        List<WorldcupResponse.FindAllDTO> worldcupList = worldcupService.findAllByTiltleAndUser(findAllDTO, user);
+        model.addAttribute("worldcupList", worldcupList);
+
+        // 페이지 정보
+        WorldcupResponse.PageDTO pageDTO = worldcupService.createPageDTOForMine(findAllDTO, user);
+        model.addAttribute("pageDTO", pageDTO);
+
+        return "mine";
+    }
+
+    @PutMapping("/s/worldcups/{worldcupId}")
+    public ResponseEntity<?> update(@PathVariable int worldcupId, @RequestBody WorldcupRequest.UpdateDTO updateDTO) {
+        worldcupService.update(worldcupId, updateDTO);
+        return ResponseEntity.ok(Resp.ok("됨"));
+    }
+
+    @DeleteMapping("/s/worldcups/{worldcupId}")
+    public ResponseEntity<?> delete(@PathVariable int worldcupId) {
+        worldcupService.delete(worldcupId);
+        return ResponseEntity.ok(Resp.ok("됨"));
     }
 }

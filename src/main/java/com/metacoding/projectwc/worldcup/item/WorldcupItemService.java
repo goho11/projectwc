@@ -43,7 +43,7 @@ public class WorldcupItemService {
         return roundList;
     }
 
-    public List<WorldcupItem> getShuffledByRounds(int round, int worldcupId) {
+    public List<WorldcupItem> getShuffledByRounds(int worldcupId, int round) {
         List<WorldcupItem> findAll = worldcupItemRepository.findByWorldcupId(worldcupId);
         Collections.shuffle(findAll);
         return findAll.subList(0, round);
