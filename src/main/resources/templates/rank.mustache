@@ -43,52 +43,13 @@
             </tr>
             </thead>
             <tbody class="common-tbody" id="tableBody">
-            {{#rankList}}
-                <tr>
-                    <td>
-                        <b>{{id}}</b>
-                    </td>
-                    <td class="common-img-container">
-                        <img src="{{imgUrl}}" alt="이미지" class="img-fluid">
-                    </td>
-                    <td>{{itemname}}</td>
-                    <td>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <div class="progress win-percent common-progress-size position-relative">
-                                <!-- 바 위에 텍스트 -->
-                                <div class="position-absolute w-100 text-center">
-                                    <span class="fs-6 fw-bold text-dark">{{champRate}}%</span>
-                                </div>
-                                <!-- 진행 바 -->
-                                <div class="progress-bar bg-danger" style="width: {{champRate}}%"></div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <div class="progress win-percent common-progress-size position-relative">
-                                <!-- 바 위에 텍스트 -->
-                                <div class="position-absolute w-100 text-center">
-                                    <span class="fs-6 fw-bold text-dark">{{winRate}}%</span>
-                                </div>
-                                <!-- 진행 바 -->
-                                <div class="progress-bar bg-warning" style="width: {{winRate}}%"></div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            {{/rankList}}
             </tbody>
         </table>
     </div>
 
     <nav>
-        <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+        <input type="hidden" id="page" value="1">
+        <ul class="pagination justify-content-center" id="page-list">
         </ul>
     </nav>
 
@@ -156,4 +117,134 @@
 
 </div>
 </body>
+<script>
+    const pageList = document.querySelector("#page-list");
+    const tbody = document.querySelector("#tableBody");
+    let page = 1;
+    let size;
+    requestFind();
+
+
+    function changePage(p) {
+        page = p;
+        requestFind();
+    }
+
+    function renderPageItem(c, p) {
+        let dom = `
+            <a href="#img-table-part" class="page-link" onclick="changePage(${p})">${c}</a>
+        `
+        let pageItem = document.createElement("li");
+        if (page === c)
+            pageItem.classList.add("active");
+        pageItem.classList.add("page-item");
+        pageItem.innerHTML = dom;
+        return pageItem;
+    }
+
+    function renderPage(totalPage) {
+        clearPageList();
+        let curPageGroup = Math.floor((page + 4) / 5) - 1;
+        let firstPage = curPageGroup * 5 + 1;
+        let lastPage = Math.min(curPageGroup * 5 + 5, totalPage);
+        if (curPageGroup !== 0) {
+            pageList.append(renderPageItem("≪", 1));
+            pageList.append(renderPageItem("<", firstPage - 1));
+        }
+        for (let i = firstPage; i <= lastPage; i++) {
+            pageList.append(renderPageItem(i, i));
+        }
+        if (curPageGroup !== Math.floor((totalPage + 4) / 5) - 1) {
+            pageList.append(renderPageItem(">", firstPage + 5));
+            pageList.append(renderPageItem("≫", totalPage));
+        }
+    }
+
+    function clearPageList() {
+        pageList.innerHTML = "";
+    }
+
+    async function requestFind() {
+        size = document.querySelector("#boxCount").value;
+        let itemname = document.querySelector("#search").value;
+        let orderOption = null;
+
+        let params = new URLSearchParams();
+
+        params.append("page", page);
+        params.append("size", size);
+        params.append("itemname", itemname);
+        if (orderOption !== null) {
+            params.append("orderOption", orderOption);
+        }
+
+        let url = "/worldcups/{{worldcupId}}/items?" + params.toString();
+
+        let response = await fetch(url);
+
+        let responseBody = await response.json();
+
+        if (responseBody.success) {
+            let items = responseBody.body.itemDTOList;
+            renderList(items);
+            let totalPage = responseBody.body.totalPage;
+            renderPage(totalPage);
+        } else {
+            alert(responseBody.message);
+        }
+    }
+
+    function renderList(items) {
+        clearTbody();
+        items.forEach(item => {
+            let rendered = renderTr(item);
+            tbody.append(rendered);
+        });
+    }
+
+    function clearTbody() {
+        tbody.innerHTML = "";
+    }
+
+    function renderTr(item) {
+        let dom = `
+                <tr>
+                    <td>
+                        <b>${item.id}</b>
+                    </td>
+                    <td class="common-img-container">
+                        <img src="${item.imgUrl}" alt="이미지" class="img-fluid">
+                    </td>
+                    <td>${item.itemname}</td>
+                    <td>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="progress win-percent common-progress-size position-relative">
+                                <!-- 바 위에 텍스트 -->
+                                <div class="position-absolute w-100 text-center">
+                                    <span class="fs-6 fw-bold text-dark">${item.champRate}%</span>
+                                </div>
+                                <!-- 진행 바 -->
+                                <div class="progress-bar bg-danger" style="width: ${item.champRate}%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="progress win-percent common-progress-size position-relative">
+                                <!-- 바 위에 텍스트 -->
+                                <div class="position-absolute w-100 text-center" >
+                                    <span class="fs-6 fw-bold text-dark">${item.winRate}%</span>
+                                </div>
+                                <!-- 진행 바 -->
+                                <div class="progress-bar bg-warning" style="width: ${item.winRate}%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+        `;
+        let tr = document.createElement("tr");
+        tr.innerHTML = dom;
+        return tr;
+    }
+</script>
 </html>

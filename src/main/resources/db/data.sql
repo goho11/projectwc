@@ -6,7 +6,7 @@ VALUES ('b@b', '$2a$10$9DEyZTarJYA5ZH303Mjv4uCwldbrWM/POnvJ30PVaYy8aQ/SxUs9K', '
 
 -- Worldcup 더미
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('월드컵 더미 데이터1', '월드컵 설명1', 1, 1, 1, now());
+VALUES ('월드컵 더미 데이터1', '월드컵 설명1', 1, 1, 16, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
 VALUES ('월드컵 더미 데이터2', '월드컵 설명2', 1, 1, 2, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
