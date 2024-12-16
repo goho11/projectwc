@@ -26,6 +26,16 @@ public class CommentRepository {
         return query.getResultList();
     }
 
+    public Integer countAllComment(Integer worldcupId) {
+        String jpql = "SELECT COUNT(c) FROM Comment c join fetch c.worldcup WHERE c.id = :worldcupId AND c.isDeleted = false";
+        return entityManager.createQuery(jpql, Integer.class)
+                .setParameter("worldcupId", worldcupId)
+                .getSingleResult()
+                .intValue();
+
+    }
+
+
     public Optional<Comment> findById(Integer id) {
         return Optional.ofNullable(entityManager.find(Comment.class, id));
     }
