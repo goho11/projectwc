@@ -6,6 +6,8 @@ import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Repository
 public class UserRepository {
@@ -14,6 +16,10 @@ public class UserRepository {
     public User save(User user) {
         entityManager.persist(user);
         return user;
+    }
+
+    public Optional<User> findById(Integer id) {
+        return Optional.ofNullable(entityManager.find(User.class, id));
     }
 
     public User findByUsername(String username) {
@@ -25,4 +31,5 @@ public class UserRepository {
             throw new Exception401("이메일 혹은 비밀번호가 일치하지 않습니다");
         }
     }
+
 }

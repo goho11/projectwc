@@ -56,6 +56,12 @@ public class User implements UserDetails {
             isDeleted = false;
     }
 
+    public void update(String nickname, String password) {
+        this.nickname = nickname;
+        if (password != null)
+            this.password = password;
+    }
+
     @Override
     public String getUsername() {
         return email;

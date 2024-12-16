@@ -1,5 +1,6 @@
 package com.metacoding.projectwc.user;
 
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -11,6 +12,9 @@ public class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Test
     public void login_test() {
@@ -34,5 +38,22 @@ public class UserRepositoryTest {
         } else {
             System.out.println("비밀번호 불일치");
         }
+    }
+
+    @Test
+    public void save_test() {
+        User user = User.builder()
+                .email("ssar@test.com")
+                .password("1234")
+                .nickname("ssar")
+                .build();
+
+        userRepository.save(user);
+
+        entityManager.clear();
+//        System.out.println("PC 캐쉬 삭제");
+        User user2 = userRepository.findById(3).orElseThrow();
+
+        System.out.println("닉네임은 : " + user2.getNickname());
     }
 }
