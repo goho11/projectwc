@@ -49,7 +49,7 @@ public class WorldcupRepository  {
     }
 
     public List<Worldcup> findAllByTitleAndUser(String searchKeyword, String sortBy, Integer offset, Integer limit, Integer userId) {
-        String jpql = "SELECT w FROM Worldcup w WHERE w.title LIKE :searchKeyword AND w.visibility = 1 AND w.isDeleted = false AND w.user.id = :userId ORDER BY w." + sortBy + " DESC";
+        String jpql = "SELECT w FROM Worldcup w WHERE w.title LIKE :searchKeyword AND w.isDeleted = false AND w.user.id = :userId ORDER BY w." + sortBy + " DESC";
         TypedQuery<Worldcup> query = entityManager.createQuery(jpql, Worldcup.class)
                 .setParameter("searchKeyword", "%" + searchKeyword + "%")
                 .setParameter("userId", userId);
