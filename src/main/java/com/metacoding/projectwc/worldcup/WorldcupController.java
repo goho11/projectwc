@@ -108,16 +108,15 @@ public class WorldcupController {
 
     // 주소의 아이디는 월드컵자체(원피스 최강자전) id, 세션에 들어있는 것 >> 승자리스트, 경기리스트, 월드컵 게임 id(원피스 최강자전을 플레이 중의 id), matchNum
     @PostMapping("/worldcups/{worldcupId}/games/{worldcupGameId}")
-    public String playGame(@PathVariable int worldcupId, @RequestParam int winner,@PathVariable  int loser, @PathVariable int worldcupGameId) {
+    public String playGame(@PathVariable int worldcupId, @RequestParam int winner, @RequestParam int loser, @PathVariable int worldcupGameId) {
         List<WorldcupItem> shuffledByRoundsList = (List<WorldcupItem>) session.getAttribute("sessionShuffledByRoundsList");
         List<WorldcupItem> winnerList = (List<WorldcupItem>) session.getAttribute("sessionWinnerList");
         int matchNum = (int) session.getAttribute("sessionMatchNum");
         WorldcupItem winnerItem = shuffledByRoundsList.get(winner);
-        WorldcupItem loserItem = shuffledByRoundsList.get(loser);
 
         winnerList.add(winnerItem); // 이긴놈 승자 리스트에 담기
         int worldcupMatchId = (int) session.getAttribute("sessionWorldcupMatchId");
-        worldcupMatchService.matchResultUpdate(worldcupMatchId, winnerItem, loserItem); // 승자 데이터 업데이트
+        worldcupMatchService.matchResultUpdate(worldcupMatchId, winnerItem); // 승자 데이터 업데이트
 
         shuffledByRoundsList.remove(1); // 경기 진행한 아이템 2개 제거
         shuffledByRoundsList.remove(0);
@@ -132,7 +131,6 @@ public class WorldcupController {
         }
 
         if (shuffledByRoundsList.size() == 1) { // 경기 리스트가 1개면 >> 부전승이 없어서 1개만 남으면 무조건 끝난거임
-            WorldcupItem worldcupItem = shuffledByRoundsList.get(0);
             worldcupGameService.completeGame(worldcupGameId, worldcupId);
             session.removeAttribute("sessionShuffledByRoundsList");
             session.removeAttribute("sessionWinnerList");
@@ -140,7 +138,6 @@ public class WorldcupController {
             session.removeAttribute("sessionWorldcupMatchId");
             session.removeAttribute("sessionTotalMatchNum");
 
-            winnerItem.championUpdate();
             session.setAttribute("sessionWinnerItem", winnerItem);
             return "redirect:/worldcups/result/" + worldcupId + "/" + worldcupGameId;
         }
@@ -151,6 +148,7 @@ public class WorldcupController {
 
         return "redirect:/worldcups/" + worldcupId + "/games/" + worldcupGameId;
     }
+
     @GetMapping("/worldcups/result/{worldcupId}/{worldcupGameId}")
     public String result(@PathVariable("worldcupId") int worldcupId, @PathVariable("worldcupGameId") int worldcupGameId, Model model) {
         WorldcupItem winnerItem = (WorldcupItem) session.getAttribute("sessionWinnerItem");

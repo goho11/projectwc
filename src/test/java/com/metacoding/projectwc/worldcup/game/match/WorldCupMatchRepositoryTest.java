@@ -51,7 +51,18 @@ public class WorldCupMatchRepositoryTest {
         int id = 1;
         WorldcupMatch worldcupMatch = worldcupMatchRepository.findById(id).get();
 
-        System.out.println(worldcupMatch.getId() );
+        System.out.println(worldcupMatch.getId());
 
+    }
+
+    @Test
+    public void findByGameId_test() {
+        int gameId = 1;
+        List<WorldcupMatch> matches = worldcupMatchRepository.findByGameId(gameId);
+        for (WorldcupMatch match : matches) {
+            System.out.println(match.getId());
+            System.out.println(match.getWorldcupItem1().getImgUrl());
+            System.out.println(match.getWorldcupItem2().getImgUrl());
+        }
     }
 }
