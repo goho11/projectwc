@@ -184,17 +184,14 @@ public class WorldcupController {
 
     @GetMapping("/s/worldcups/mine")
     public String mine(Model model, WorldcupRequest.FindAllDTO findAllDTO) {
-        // TODO 로그인 기능 완성될 경우 적용
-//        User seesionUser = (User) session.getAttribute("sessionUser");
-
-        User user = User.builder().id(1).build();
+        User seesionUser = (User) session.getAttribute("sessionUser");
 
         // 로그인 한 유저가 생성한 월드컵 정보만 가져온다.
-        List<WorldcupResponse.FindAllDTO> worldcupList = worldcupService.findAllByTiltleAndUser(findAllDTO, user);
+        List<WorldcupResponse.FindAllDTO> worldcupList = worldcupService.findAllByTiltleAndUser(findAllDTO, seesionUser);
         model.addAttribute("worldcupList", worldcupList);
 
         // 페이지 정보
-        WorldcupResponse.PageDTO pageDTO = worldcupService.createPageDTOForMine(findAllDTO, user);
+        WorldcupResponse.PageDTO pageDTO = worldcupService.createPageDTOForMine(findAllDTO, seesionUser);
         model.addAttribute("pageDTO", pageDTO);
 
         return "mine";
@@ -210,49 +207,6 @@ public class WorldcupController {
     public ResponseEntity<?> delete(@PathVariable int worldcupId) {
         worldcupService.delete(worldcupId);
         return ResponseEntity.ok(Resp.ok("됨"));
-    }
-
-    // 주소의 아이디는 월드컵자체(원피스 최강자전) id, 세션에 들어있는 것 >> 승자리스트, 경기리스트, 월드컵 게임 id(원피스 최강자전을 플레이 중의 id), matchNum
-    @PostMapping("/worldcups/{worldcupId}/games/{worldcupGameId}")
-    public String playGame(@PathVariable("worldcupId") int worldcupId, @RequestParam("winner") int winner, @PathVariable("worldcupGameId") int worldcupGameId) {
-        List<WorldcupItem> shuffledByRoundsList = (List<WorldcupItem>) session.getAttribute("sessionShuffledByRoundsList");
-        List<WorldcupItem> winnerList = (List<WorldcupItem>) session.getAttribute("sessionWinnerList");
-        int matchNum = (int) session.getAttribute("sessionMatchNum");
-        WorldcupItem winnerItem = shuffledByRoundsList.get(winner);
-
-        winnerList.add(winnerItem); // 이긴놈 승자 리스트에 담기
-        int worldcupMatchId = (int) session.getAttribute("sessionWorldcupMatchId");
-        worldcupMatchService.matchResultUpdate(worldcupMatchId, winnerItem); // 승자 데이터 업데이트
-        shuffledByRoundsList.remove(1); // 경기 진행한 아이템 2개 제거
-        shuffledByRoundsList.remove(0);
-        matchNum++;
-
-        // 다음 강으로 진행하는 코드
-        if (shuffledByRoundsList.isEmpty()) { // 경기 리스트가 비면
-            shuffledByRoundsList.addAll(winnerList); // 승자 리스트의 값을 모두 불러오고
-            winnerList.clear(); // 승자 리스트 비우기
-            session.setAttribute("sessionTotalMatchNum", shuffledByRoundsList.size() / 2); // 최대 경기수 재설정
-            matchNum = 1; // 현재 경기수 1로
-        }
-
-        if (shuffledByRoundsList.size() == 1) { // 경기 리스트가 1개면 >> 부전승이 없어서 1개만 남으면 무조건 끝난거임
-            WorldcupItem worldcupItem = shuffledByRoundsList.get(0);
-            worldcupGameService.completeGame(worldcupGameId, worldcupId);
-            session.removeAttribute("sessionShuffledByRoundsList");
-            session.removeAttribute("sessionWinnerList");
-            session.removeAttribute("sessionMatchNum");
-            session.removeAttribute("sessionWorldcupMatchId");
-            session.removeAttribute("sessionTotalMatchNum");
-
-            session.setAttribute("winnerItem", winnerItem);
-            return "redirect:/worldcups/" + worldcupId + "/result/" + worldcupGameId;
-        }
-
-        session.setAttribute("sessionShuffledByRoundsList", shuffledByRoundsList);
-        session.setAttribute("sessionWinnerList", winnerList);
-        session.setAttribute("sessionMatchNum", matchNum);
-
-        return "redirect:/worldcups/" + worldcupId + "/games/" + worldcupGameId;
     }
 
 }

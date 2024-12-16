@@ -24,11 +24,11 @@ VALUES ('월드컵 검색8', '월드컵 설명8', 1, 1, 221, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
 VALUES ('월드컵 더미 데이터9', '월드컵 설명9', 1, 1, 13, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('월드컵 더미 데이터10', '월드컵 설명10', 1, 1, 11, now());
+VALUES ('월드컵 더미 데이터10', '월드컵 설명10', 1, 2, 11, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('월드컵 더미 데이터11', '월드컵 설명11', 1, 1, 13, now());
+VALUES ('월드컵 더미 데이터11', '월드컵 설명11', 1, 2, 13, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('월드컵 더미 데이터12', '월드컵 설명12', 1, 1, 21, now());
+VALUES ('월드컵 더미 데이터12', '월드컵 설명12', 1, 2, 21, now());
 
 -- 썸네일 2개 체크를 위한 WorldcupItem
 INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id, champion_count)
