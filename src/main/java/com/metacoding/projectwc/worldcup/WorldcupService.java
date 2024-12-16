@@ -201,4 +201,9 @@ public class WorldcupService {
         Worldcup worldcupPS = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("월드컵을 찾을 수 없습니다."));
         worldcupPS.softDelete();
     }
+
+    public boolean isDeleted(int id) {
+        Worldcup worldcupPS = worldcupRepository.findById(id).orElseThrow(() -> new Exception404("월드컵을 찾을 수 없습니다."));
+        return worldcupPS.getIsDeleted();
+    }
 }

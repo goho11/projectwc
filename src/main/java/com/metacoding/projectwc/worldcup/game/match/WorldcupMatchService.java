@@ -3,6 +3,7 @@ package com.metacoding.projectwc.worldcup.game.match;
 import com.metacoding.projectwc._core.error.ex.Exception404;
 import com.metacoding.projectwc.worldcup.game.WorldcupGame;
 import com.metacoding.projectwc.worldcup.item.WorldcupItem;
+import com.metacoding.projectwc.worldcup.item.WorldcupItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import java.util.List;
 @Service
 public class WorldcupMatchService {
     private final WorldcupMatchRepository worldcupMatchRepository;
+    private final WorldcupItemRepository worldcupItemRepository;
 
     @Transactional
     public WorldcupMatchResponse.SaveWorldcupMatchDTO saveWorldcupMatch(WorldcupGame worldcupGame, int round, int matchNum, List<WorldcupItem> shuffledByRoundsList) {
@@ -30,10 +32,8 @@ public class WorldcupMatchService {
     }
 
     @Transactional
-    public void matchResultUpdate(Integer id, WorldcupItem winner, WorldcupItem loser) {
+    public void matchResultUpdate(Integer id, WorldcupItem winner) {
         WorldcupMatch worldcupMatch = worldcupMatchRepository.findById(id).orElseThrow(() -> new Exception404("없는 매치 입니다."));
-        winner.winnerUpdate();
-        loser.loserUpdate();
         worldcupMatch.update(winner.getId());
     }
 

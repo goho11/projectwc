@@ -30,7 +30,7 @@ public class UserRequest {
         private String newPassword;
 
         public String getNewPassword(PasswordEncoder passwordEncoder) {
-            if (newPassword.isEmpty())
+            if (newPassword == null || newPassword.isEmpty())
                 return null;
             String encoderPassword = passwordEncoder.encode(newPassword);
             return encoderPassword;

@@ -241,7 +241,7 @@
             params.append("orderOption", orderOption);
         }
 
-        let url = "/worldcups/{{id}}/items?" + params.toString();
+        let url = "/worldcups/{{worldcupId}}/items?" + params.toString();
 
         let response = await fetch(url);
 
@@ -316,6 +316,7 @@
     }
 
     function renderTr(item) {
+        let tr = document.createElement("tr");
         let dom = `
                 <td>
                     <b>${(page - 1) * size + dropIndex}</b>
@@ -332,20 +333,25 @@
                 </td>
                 <td>
                     <div class="d-flex align-items-center justify-content-center">
-                        <div class="progress win-percent common-progress-size">
-                            <div class="progress-bar bg-danger" style="width: ${item.champRate}%">${item.champRate}%</div>
+                        <div class="progress win-percent common-progress-size position-relative">
+                                <div class="position-absolute w-100 text-center" style="top: 50%; transform: translateY(-50%);">
+                                    <span class="fs-6 fw-bold text-dark">${item.champRate}%</span>
+                                </div>
+                            <div class="progress-bar bg-danger" style="width: ${item.champRate}%"></div>
                         </div>
                     </div>
                 </td>
                 <td>
                     <div class="d-flex align-items-center justify-content-center">
-                        <div class="progress odds-percent common-progress-size">
-                            <div class="progress-bar bg-warning" style="width: ${item.winRate}%">${item.winRate}%</div>
+                        <div class="progress odds-percent common-progress-size position-relative">
+                                <div class="position-absolute w-100 text-center" style="top: 50%; transform: translateY(-50%);">
+                                    <span class="fs-6 fw-bold text-dark">${item.winRate}%</span>
+                                </div>
+                            <div class="progress-bar bg-warning" style="width: ${item.winRate}%"></div>
                         </div>
                     </div>
                 </td>
         `;
-        let tr = document.createElement("tr");
         tr.innerHTML = dom;
         return tr;
     }
