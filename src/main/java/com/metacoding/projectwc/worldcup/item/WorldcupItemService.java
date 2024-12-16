@@ -43,11 +43,14 @@ public class WorldcupItemService {
         return roundList;
     }
 
-    public List<WorldcupItem> getShuffledByRounds(int round) {
-        List<WorldcupItem> findAll = worldcupItemRepository.findAll();
+    public List<WorldcupItem> getShuffledByRounds(int round, int worldcupId) {
+        List<WorldcupItem> findAll = worldcupItemRepository.findByWorldcupId(worldcupId);
         Collections.shuffle(findAll);
-        List<WorldcupItem> shuffled = findAll.subList(0, round);
-        return shuffled;
+        return findAll.subList(0, round);
+    }
+
+    public List<WorldcupItem> getAllItem(int worldcupId) {
+        return worldcupItemRepository.findByWorldcupId(worldcupId);
     }
 
     public int countAll(int id) {
@@ -78,5 +81,14 @@ public class WorldcupItemService {
     public void delete(int itemId) {
         WorldcupItem worldcupItemPS = worldcupItemRepository.findById(itemId).orElseThrow(() -> new APIException404("없는 월드컵 아이템입니다."));
         worldcupItemPS.softDelete();
+    }
+
+    public List<WorldcupItemResponse.RankDTO> getRankDTOList(List<WorldcupItem> allItem, int gamesCompleted) {
+        List<WorldcupItemResponse.RankDTO> rankDTOList = new ArrayList<>();
+        for (WorldcupItem worldcupItem : allItem) {
+            WorldcupItemResponse.RankDTO rankDTO = new WorldcupItemResponse.RankDTO(worldcupItem, gamesCompleted);
+            rankDTOList.add(rankDTO);
+        }
+        return rankDTOList;
     }
 }

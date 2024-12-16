@@ -33,11 +33,13 @@ public class WorldcupResponse {
         private int id;
         private String title;
         private String description;
+        private int gamesCompleted;
 
         public FindByIdDTO(Worldcup worldcup) {
             this.id = worldcup.getId();
             this.title = worldcup.getTitle();
             this.description = worldcup.getDescription();
+            this.gamesCompleted = worldcup.getGamesCompleted();
         }
     }
 

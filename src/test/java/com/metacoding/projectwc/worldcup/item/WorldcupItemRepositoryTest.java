@@ -72,7 +72,8 @@ public class WorldcupItemRepositoryTest {
 
     @Test
     public void findAll_test() {
-        List<WorldcupItem> items = worldcupItemRepository.findAll();
+        int worldcupId = 1;
+        List<WorldcupItem> items = worldcupItemRepository.findByWorldcupId(worldcupId);
         for (WorldcupItem item : items) {
             System.out.println(item.getItemname());
             System.out.println(item.getImgUrl());

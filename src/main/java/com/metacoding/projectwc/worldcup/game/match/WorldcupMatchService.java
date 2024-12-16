@@ -30,8 +30,15 @@ public class WorldcupMatchService {
     }
 
     @Transactional
-    public void winnerUpdate(Integer id, int worldcupMatchId) {
+    public void matchResultUpdate(Integer id, WorldcupItem winner, WorldcupItem loser) {
         WorldcupMatch worldcupMatch = worldcupMatchRepository.findById(id).orElseThrow(() -> new Exception404("없는 매치 입니다."));
-        worldcupMatch.update(worldcupMatchId);
+        winner.winnerUpdate();
+        loser.loserUpdate();
+        worldcupMatch.update(winner.getId());
+    }
+
+    @Transactional
+    public void loserUpdate(Integer id, WorldcupItem loser) {
+
     }
 }
