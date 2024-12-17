@@ -1,7 +1,9 @@
 package com.metacoding.projectwc._core.config;
 
+import com.metacoding.projectwc.loginlog.LoginLogService;
 import com.metacoding.projectwc.user.User;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+@RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
 
@@ -16,6 +19,8 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    private final LoginLogService loginLogService;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -35,7 +40,11 @@ public class SecurityConfig {
                                 .successHandler((request, response, authentication) -> {
                                     User user = (User) authentication.getPrincipal();
                                     HttpSession session = request.getSession();
+
                                     session.setAttribute("sessionUser", user);
+
+                                    String userAgent = request.getHeader("User-Agent");
+                                    loginLogService.save(user, userAgent);
 
                                     response.sendRedirect("/main");
                                 }))
