@@ -56,17 +56,17 @@ public class WorldcupService {
                     } else if (worldcupItems.size() == 1) {
                         worldcupItem1 = worldcupItems.get(0);
                         worldcupItem2 = WorldcupItem.builder()
-                                .itemname("해당 이미지 없음")
-                                .imgUrl("이미지 없음")
+                                .itemname("아이템 없음")
+                                .imgUrl("/img/alert.jpg")
                                 .build();
                     } else {
                         worldcupItem1 = WorldcupItem.builder()
-                                .itemname("해당 이미지 없음")
-                                .imgUrl("이미지 없음")
+                                .itemname("아이템 없음")
+                                .imgUrl("/img/alert.jpg")
                                 .build();
                         worldcupItem2 = WorldcupItem.builder()
-                                .itemname("해당 이미지 없음")
-                                .imgUrl("이미지 없음")
+                                .itemname("아이템 없음")
+                                .imgUrl("/img/alert.jpg")
                                 .build();
                     }
                     return new WorldcupResponse.FindAllDTO(worldcup, worldcupItem1, worldcupItem2);
@@ -133,17 +133,17 @@ public class WorldcupService {
                     } else if (worldcupItems.size() == 1) {
                         worldcupItem1 = worldcupItems.get(0);
                         worldcupItem2 = WorldcupItem.builder()
-                                .itemname("해당 이미지 없음")
-                                .imgUrl("이미지 없음")
+                                .itemname("아이템 없음")
+                                .imgUrl("/img/alert.jpg")
                                 .build();
                     } else {
                         worldcupItem1 = WorldcupItem.builder()
-                                .itemname("해당 이미지 없음")
-                                .imgUrl("이미지 없음")
+                                .itemname("아이템 없음")
+                                .imgUrl("/img/alert.jpg")
                                 .build();
                         worldcupItem2 = WorldcupItem.builder()
-                                .itemname("해당 이미지 없음")
-                                .imgUrl("이미지 없음")
+                                .itemname("아이템 없음")
+                                .imgUrl("/img/alert.jpg")
                                 .build();
                     }
                     return new WorldcupResponse.FindAllDTO(worldcup, worldcupItem1, worldcupItem2);
