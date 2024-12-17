@@ -18,12 +18,6 @@ public class UserRequest {
     }
 
     @Data
-    public static class LoginDTO {
-        String email;
-        String password;
-    }
-
-    @Data
     public static class UpdateDTO {
         private String nickname;
         private String password;

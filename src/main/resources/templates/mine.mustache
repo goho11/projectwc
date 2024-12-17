@@ -60,7 +60,8 @@
                 <div class="p-2">
                     <h5 class="card-title mine-card-title fw-bold">{{title}}</h5>
                     <p class="card-text mine-card-text">
-                        {{description}}
+                        {{#description}}{{description}}{{/description}}
+                        {{^description}}설명 없음{{/description}}
                     </p>
                 </div>
                 <div class="ms-2 mb-2 mine-btn-container">
@@ -68,7 +69,7 @@
                         <button class="btn hover-coler btn-outline-danger btn-sm"
                                 onclick="location.href='/worldcups/{{id}}/start-form'">시작하기
                         </button>
-                        <button class="btn hover-coler btn-outline-warning btn-sm">랭킹보기</button>
+                        <button class="btn hover-coler btn-outline-warning btn-sm" onclick="location.href='/worldcups/{{id}}/rank'">랭킹보기</button>
                     </div>
                     <div class="mine-btn-group-row">
                         <button class="btn hover-coler btn-outline-info btn-sm"

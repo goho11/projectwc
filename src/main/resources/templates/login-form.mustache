@@ -25,12 +25,17 @@
         <div class="form-group  mb-3">
             <input type="password" class="form-control" placeholder="비밀번호" required="" id="user_password" name="password" value="a">
         </div>
-        <button type="submit" class="btn w-100 mb-2 common-color-primary common-none-outline-button text-white"
+        <button type="submit" class="btn w-100 mb-3 common-color-primary common-none-outline-button text-white"
                 id="login">로그인
         </button>
-        <div id="message mb-3"></div>
         <a class="btn btn-outline-dark mb-3 w-100" href="/signup-form">계정 생성</a>
     </form>
 </div>
 </body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('error')) {
+        alert("아이디나 비밀번호가 일치하지 않습니다.")
+    }
+</script>
 </html>
