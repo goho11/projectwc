@@ -78,7 +78,7 @@
                 <!-- Modal footer -->
                 <div class="modal-body text-center">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">네, 탈퇴할게요!</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteUser()">네, 탈퇴할게요!</button>
                 </div>
 
             </div>
@@ -88,7 +88,7 @@
 </div>
 </body>
 <script>
-    let changePassword = function () {
+    function changePassword() {
         let checkBox = document.querySelector("#change-check");
         let newPassword = document.querySelector("#new-password");
         if (checkBox.checked) {
@@ -96,6 +96,30 @@
         } else {
             newPassword.disabled = true;
         }
+    }
+    async function deleteUser(){
+        let password={
+            password:document.querySelector("#password").value,
+        };
+
+        let requestBody=JSON.stringify(password);
+
+        let response=await fetch(`/s/user`,{
+            method:"DELETE",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body:requestBody
+        }) ;
+
+        let responseBody = await response.json();
+
+        if(responseBody.success ){
+            location.href="/logout";
+        }else{
+            alert(responseBody.message);
+        }
+
     }
 </script>
 </html>

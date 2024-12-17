@@ -97,4 +97,7 @@ public class User implements UserDetails {
         return true;
     }
 
+    public void softDelete() {
+        isDeleted = true;
+    }
 }

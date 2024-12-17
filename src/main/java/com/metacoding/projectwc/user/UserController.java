@@ -1,14 +1,14 @@
 package com.metacoding.projectwc.user;
 
 import com.metacoding.projectwc._core.error.ex.Exception403;
+import com.metacoding.projectwc._core.util.Resp;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -49,6 +49,12 @@ public class UserController {
         User userUpdated = userService.updateUser(user.getId(), updateDTO);
         session.setAttribute("sessionUser", userUpdated);
         return "redirect:/s/user-form";
+    }
+
+    @DeleteMapping("/s/user")
+    public ResponseEntity<?> delete(@RequestBody UserRequest.DeleteDTO deleteDTO, @AuthenticationPrincipal User user) {
+        userService.deleteUser(user.getId(), deleteDTO);
+        return ResponseEntity.ok(Resp.ok("됨"));
     }
 
 }
