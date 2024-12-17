@@ -204,7 +204,7 @@ public class WorldcupController {
 
         List<WorldcupItemResponse.RankDTO> rankList = worldcupItemService.getRankDTOList(allItem, gamesCompleted);
         model.addAttribute("rankList", rankList);
-        
+
         List<CommentResponse.FindAllDTO> commentList = commentService.findAll(worldcupId, requestPageDTO, sessionUser);
         model.addAttribute("commentList", commentList);
 
@@ -217,13 +217,9 @@ public class WorldcupController {
     @PostMapping("/worldcups/{worldcupId}/rank/save")
     public String saveComment2(@PathVariable Integer worldcupId, CommentRequest.SaveDTO saveDTO) {
         User sessionUser = (User) httpSession.getAttribute("sessionUser");
-        WorldcupItem winnerItem = (WorldcupItem) httpSession.getAttribute("sessionWinnerItem");
-        if (winnerItem == null)
-            commentService.saveComment(saveDTO, sessionUser, worldcupId, null);
-        else
-            commentService.saveComment(saveDTO, sessionUser, worldcupId, winnerItem.getItemname());
+        commentService.saveComment(saveDTO, sessionUser, worldcupId, null);
 
-        return "redirect:/worldcups/" + worldcupId+"/rank";
+        return "redirect:/worldcups/" + worldcupId + "/rank";
     }
 
     @PostMapping("/worldcups/{worldcupId}/rank/delete/{id}")
