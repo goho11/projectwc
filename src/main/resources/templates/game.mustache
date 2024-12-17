@@ -18,17 +18,18 @@
 {{#match}}
         <div class="game-item-box float-e-margins">
             <div class="game-title">
-                {{worldcupGame.worldcup.title}}&nbsp;&nbsp;&nbsp;{{round}}강&nbsp;&nbsp;&nbsp;{{modelMatchNum}}/{{#modelTotalMatchNum}}{{.}}{{/modelTotalMatchNum}}
+                {{worldcupGame.worldcup.title}}&nbsp;&nbsp;&nbsp;{{round}}강&nbsp;&nbsp;&nbsp;{{modelMatchNum}}
+                /{{#modelTotalMatchNum}}{{.}}{{/modelTotalMatchNum}}
             </div>
             <div class="game-item-box-content text-center p-0 game-bg">
-                <div id="game-left" class="game-left" data-id="0"></div>
-                <div id="game-right" class="game-right" data-id="1"></div>
+                <div id="game-left" class="game-left" data-id="0" onclick="clickLeft()"></div>
+                <div id="game-right" class="game-right" data-id="1" onclick="clickRight()"></div>
                 <div id="versus" class="game-img-versus"></div>
                 <div class="game-img-name-box">
-                    <div class="col-6 d-inline-block text-end game-padding-right">
+                    <div class="col-6 d-inline-block text-end game-padding-right" onclick="clickLeft()">
                         {{worldcupItem1.itemname}}
                     </div>
-                    <div class="col-6 d-inline-block text-start game-padding-left">
+                    <div class="col-6 d-inline-block text-start game-padding-left" onclick="clickRight()">
                         {{worldcupItem2.itemname}}
                     </div>
                 </div>
@@ -36,10 +37,10 @@
         </div>
     </div>
     </div>
-    </div>
 
     <!-- 숨겨진 폼 -->
-    <form id="gameForm" action="/worldcups/{{worldcupGame.worldcup.id}}/games/{{worldcupGame.id}}" method="POST" style="display:none;">
+    <form id="gameForm" action="/worldcups/{{worldcupGame.worldcup.id}}/games/{{worldcupGame.id}}" method="POST"
+          style="display:none;">
         <input type="hidden" name="winner" id="winner">
         <input type="hidden" name="loser" id="loser">
     </form>
@@ -52,8 +53,10 @@
         gameRight.style.backgroundImage = "url('{{worldcupItem2.imgUrl}}')";
 
         // "game-left"와 "game-right" 클릭 이벤트 처리
-        document.querySelector('#game-left').addEventListener('click', function() {
-            const winnerDataId = this.getAttribute('data-id');
+        function clickLeft() {
+            document.querySelector('#game-right').onclick = null;
+
+            const winnerDataId = document.querySelector('#game-left').getAttribute('data-id');
             const loserDataId = document.querySelector('#game-right').getAttribute('data-id');
             document.querySelector('#winner').value = winnerDataId;
             document.querySelector('#loser').value = loserDataId;
@@ -63,13 +66,16 @@
             document.querySelector('#game-right').classList.add('outside');
 
             // 애니메이션이 끝난 후 submit
-            setTimeout(function() {
+            setTimeout(function () {
+                document.querySelector('#game-right').onclick = clickRight;
                 document.querySelector('#gameForm').submit();
             }, 1000);  // 애니메이션 시간에 맞춰 1초 후 submit
-        });
+        }
 
-        document.querySelector('#game-right').addEventListener('click', function() {
-            const winnerDataId = this.getAttribute('data-id');
+        function clickRight() {
+            document.querySelector('#game-left').onclick = null;
+
+            const winnerDataId = document.querySelector('#game-right').getAttribute('data-id');
             const loserDataId = document.querySelector('#game-left').getAttribute('data-id');
             document.querySelector('#winner').value = winnerDataId;
             document.querySelector('#loser').value = loserDataId;
@@ -78,10 +84,12 @@
             document.querySelector('#game-left').classList.add('outside');
 
             // 애니메이션이 끝난 후 submit
-            setTimeout(function() {
+            setTimeout(function () {
+                document.querySelector('#game-left').onclick = clickRight;
                 document.querySelector('#gameForm').submit();
             }, 1000);  // 애니메이션 시간에 맞춰 1초 후 submit
-        });
+        }
+
     </script>
     </body>
 {{/match}}
