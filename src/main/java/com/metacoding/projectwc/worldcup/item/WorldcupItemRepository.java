@@ -24,7 +24,7 @@ public class WorldcupItemRepository {
         if (itemname != null && !itemname.isEmpty())
             stringBuilder.append(" and itemname like '%:itemname%'".replace(":itemname", itemname));
         if (orderOption != null) stringBuilder.append(" order by :orderOption".replace(":orderOption", orderOption));
-        else stringBuilder.append(" order by id desc");
+        else stringBuilder.append(" order by case when total_count = 0 THEN 0 else CAST(win_count as float) / total_count end DESC, id DESC");
         stringBuilder.append(" limit :offset, :limit".replace(":offset", String.valueOf(offset)).replace(":limit", String.valueOf(limit)));
         String sql = stringBuilder.toString();
         return entityManager.createNativeQuery(sql, WorldcupItem.class).getResultList();
