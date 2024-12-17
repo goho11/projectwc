@@ -20,8 +20,8 @@ public class WorldcupItemResponse {
             private int id;
             private String itemname;
             private String imgUrl;
-            private int champRate;
-            private int winRate;
+            private double champRate;
+            private double winRate;
 
             public itemDTO(WorldcupItem item, int gamesCompleted) {
                 this.id = item.getId();
@@ -30,11 +30,11 @@ public class WorldcupItemResponse {
                 if (gamesCompleted == 0)
                     this.champRate = 0;
                 else
-                    this.champRate = 100 * item.getChampionCount() / gamesCompleted;
+                    this.champRate = Math.round(10000.0 * item.getChampionCount() / gamesCompleted) / 100.0;
                 if (item.getTotalCount() == 0)
                     this.winRate = 0;
                 else
-                    this.winRate = 100 * item.getWinCount() / item.getTotalCount();
+                    this.winRate = Math.round(10000.0 * item.getWinCount() / item.getTotalCount()) / 100.0;
             }
         }
     }

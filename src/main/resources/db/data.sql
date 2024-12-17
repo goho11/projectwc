@@ -8,27 +8,27 @@ VALUES ('b@b', '$2a$10$9DEyZTarJYA5ZH303Mjv4uCwldbrWM/POnvJ30PVaYy8aQ/SxUs9K', '
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
 VALUES ('음식 월드컵', '맛있는 음식을 가려보자', 1, 1, 16, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('원피스 최강자 전', '원피스 캐릭터 중 누가 제일 강한가?', 1, 1, 2, now());
+VALUES ('원피스 최강자 전', '원피스 캐릭터 중 누가 제일 강한가?', 1, 1, 0, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('남자 아이돌 월드컵', '제작자 취향대로 만든 월드컵', 1, 1, 4, now());
+VALUES ('남자 아이돌 월드컵', '제작자 취향대로 만든 월드컵', 1, 1, 0, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('철권 적폐캐릭 월드컵', '그 중 최고는 놈징징', 1, 1, 11, now());
+VALUES ('철권 적폐캐릭 월드컵', '그 중 최고는 놈징징', 1, 1, 0, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('티니핑 월드컵', '핑!핑!핑!핑!', 1, 1, 13, now());
+VALUES ('티니핑 월드컵', '핑!핑!핑!핑!', 1, 1, 0, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('자동차 월드컵', '디자인만 보자. 성능 보지말고', 1, 1, 144, now());
+VALUES ('자동차 월드컵', '디자인만 보자. 성능 보지말고', 1, 1, 0, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('[무서운짤 주의] 귀신 월드컵', '귀신 무서웡', 1, 1, 11, now());
+VALUES ('[무서운짤 주의] 귀신 월드컵', '귀신 무서웡', 1, 1, 0, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('소리없는 k-pop 월드컵', '이상하다? 소리가 없는데 노래가 들려', 1, 1, 221, now());
+VALUES ('소리없는 k-pop 월드컵', '이상하다? 소리가 없는데 노래가 들려', 1, 1, 0, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('슈퍼 히어로 영화 월드컵', '개인적으로 좋아하는 영화는', 1, 1, 13, now());
+VALUES ('슈퍼 히어로 영화 월드컵', '개인적으로 좋아하는 영화는', 1, 1, 0, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('좀비 아포칼립스 무기 월드컵', '좀비 세상에서 살아남기 위한 무기', 1, 2, 11, now());
+VALUES ('좀비 아포칼립스 무기 월드컵', '좀비 세상에서 살아남기 위한 무기', 1, 2, 0, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('스폰지밥 인기 월드컵', '스폰지밥 최애 캐릭터 뽑기', 1, 2, 13, now());
+VALUES ('스폰지밥 인기 월드컵', '스폰지밥 최애 캐릭터 뽑기', 1, 2, 0, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
-VALUES ('망한 음식 월드컵', '망했네', 1, 2, 21, now());
+VALUES ('망한 음식 월드컵', '망했네', 1, 2, 0, now());
 
 -- 썸네일 2개 체크를 위한 WorldcupItem
 

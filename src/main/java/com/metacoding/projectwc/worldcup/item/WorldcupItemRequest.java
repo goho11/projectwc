@@ -36,6 +36,16 @@ public class WorldcupItemRequest {
             return itemname.trim();
         }
 
+        public String getOrderOption() {
+            if (orderOption.equals("name")) {
+                return "itemname, id desc";
+            } else if (orderOption.equals("win")) {
+                return "case when total_count = 0 THEN 0 else CAST(win_count as float) / total_count end DESC, id DESC";
+            } else {
+                return "champion_count desc, id desc";
+            }
+        }
+
         public int getOffset() {
             return (page - 1) * size;
         }

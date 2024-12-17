@@ -58,7 +58,7 @@ public class WorldcupItemRepository {
     }
 
     public List<WorldcupItem> findTwoItems(Integer id) {
-        String jpql = "SELECT w FROM WorldcupItem w WHERE w.worldcup.id = :worldcupId AND w.isDeleted = false ORDER BY w.championCount DESC";
+        String jpql = "SELECT w FROM WorldcupItem w WHERE w.worldcup.id = :worldcupId AND w.isDeleted = false ORDER BY w.championCount DESC, w.id DESC";
         TypedQuery<WorldcupItem> query = entityManager.createQuery(jpql, WorldcupItem.class);
         query.setParameter("worldcupId", id);
         query.setMaxResults(2); // 최대 결과 수를 2개로 제한
