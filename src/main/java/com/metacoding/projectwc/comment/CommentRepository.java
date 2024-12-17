@@ -15,7 +15,7 @@ public class CommentRepository {
     private final EntityManager entityManager;
 
     public List<Comment> findAll(Integer worldcupId, Integer offset, Integer limit) {
-        String jpql = "SELECT c FROM Comment c WHERE c.worldcup.id = :worldcupId AND c.isDeleted = false ORDER BY c.createdAt, c.id DESC";
+        String jpql = "SELECT c FROM Comment c WHERE c.worldcup.id = :worldcupId AND c.isDeleted = false ORDER BY c.createdAt DESC, c.id DESC";
         TypedQuery<Comment> query = entityManager.createQuery(jpql, Comment.class)
                 .setParameter("worldcupId", worldcupId);
 
@@ -31,9 +31,8 @@ public class CommentRepository {
         Long count = entityManager.createQuery(jpql, Long.class)
                 .setParameter("worldcupId", worldcupId)
                 .getSingleResult();
-        return count.intValue();}
-
-
+        return count.intValue();
+    }
 
     public Optional<Comment> findById(Integer id) {
         return Optional.ofNullable(entityManager.find(Comment.class, id));

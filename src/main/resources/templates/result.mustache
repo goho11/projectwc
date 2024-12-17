@@ -30,29 +30,31 @@
         <button type="button" class="btn btn-secondary" id="main">다른 월드컵 보기</button>
     </div>
 
+
+
     <!-- 댓글 개수 -->
     <div class="my-4">댓글 (227)</div>
     <!-- 댓글 입력, 목록 묶기 div -->
     <div class="bg-light p-4 rounded">
         <!-- 입력 -->
-        <div>
+        <form action="/result/{{worldcupId}}/save" method="post">
             <label class="form-label">닉네임</label>
-            <input type="text" id="nickname" class=" form-control mb-3">
+            <input type="text" id="nickname" name="nickname" class=" form-control mb-3">
 
             <label class="form-label">한마디 남기기</label>
-            <textarea id="comment" class="form-control common-comment-textarea mb-3" placeholder="댓글을 입력하세요"
+            <textarea id="comment" name="content" class="form-control common-comment-textarea mb-3" placeholder="댓글을 입력하세요"
                       rows="5"></textarea>
 
             <button type="submit" class="btn common-color-primary fw-bold text-white w-100 mb-4">저장하기</button>
-        </div>
+        </form>
 
         <!-- 목록 -->
         <div>
-            {{#commentList}}
 
+            {{#commentList}}
             <div class="mb-4">
                 <div class="d-flex align-item-center mb-2">
-                    <strong>{{nickname}} - ({{winnername}})</strong>
+                    <strong>{{nickname}}</strong>
                     <div class="ms-1 mt-auto me-2 small common-color-weak">{{createdAt}}</div>
                     <a href="#" class="common-delete-comment">삭제</a>
                 </div>

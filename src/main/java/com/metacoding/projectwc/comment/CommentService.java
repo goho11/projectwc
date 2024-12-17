@@ -2,6 +2,7 @@ package com.metacoding.projectwc.comment;
 import com.metacoding.projectwc._core.error.ex.Exception404;
 import com.metacoding.projectwc.user.User;
 import com.metacoding.projectwc.worldcup.Worldcup;
+import com.metacoding.projectwc.worldcup.WorldcupRepository;
 import com.metacoding.projectwc.worldcup.WorldcupRequest;
 import com.metacoding.projectwc.worldcup.WorldcupResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,12 @@ import java.util.Map;
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final WorldcupRepository worldcupRepository;
 
     @Transactional(readOnly = false)
-    public void saveComment(CommentRequest.SaveDTO saveDTO, User user, Worldcup worldcup) {
+    public void saveComment(CommentRequest.SaveDTO saveDTO, User user, Integer worldcupId) {
+        Worldcup worldcup = worldcupRepository.findById(worldcupId)
+                .orElseThrow(() -> new Exception404("월드컵을 찾을 수 없습니다."));
         commentRepository.saveComment(saveDTO.toEntity(user, worldcup));
     }
 
