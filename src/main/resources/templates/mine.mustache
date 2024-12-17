@@ -88,18 +88,15 @@
         {{#pageDTO}}
             <ul class="pagination justify-content-center">
                 <li class="page-item {{#isFirstPage}}disabled{{/isFirstPage}}">
-                    <a class="page-link" href="?page={{prevPage}}&size={{size}}&sortBy={{sortBy}}
-                    &searchKeyword={{searchKeyword}}">&lt;</a>
+                    <a class="page-link" href="?page={{prevPage}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">&lt;</a>
                 </li>
                 {{#pages}}
                     <li class="page-item {{#isCurrentPage}}active{{/isCurrentPage}}">
-                        <a class="page-link" href="?page={{number}}&size={{size}}&sortBy={{sortBy}}
-                        &searchKeyword={{searchKeyword}}">{{number}}</a>
+                        <a class="page-link" href="?page={{number}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">{{number}}</a>
                     </li>
                 {{/pages}}
                 <li class="page-item {{#isLastPage}}disabled{{/isLastPage}}">
-                    <a class="page-link" href="?page={{nextPage}}&size={{size}}&sortBy={{sortBy}}
-                    &searchKeyword={{searchKeyword}}">&gt;</a>
+                    <a class="page-link" href="?page={{nextPage}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">&gt;</a>
                 </li>
             </ul>
         {{/pageDTO}}

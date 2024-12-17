@@ -29,6 +29,19 @@ INSERT INTO worldcup_tb (title, description, visibility, user_id, games_complete
 VALUES ('월드컵 더미 데이터11', '월드컵 설명11', 1, 2, 13, now());
 INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
 VALUES ('월드컵 더미 데이터12', '월드컵 설명12', 1, 2, 21, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터13', '월드컵 설명9', 1, 1, 13, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터14', '월드컵 설명9', 1, 1, 13, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터15', '월드컵 설명9', 1, 1, 13, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터16', '월드컵 설명9', 1, 1, 13, now());
+INSERT INTO worldcup_tb (title, description, visibility, user_id, games_completed, created_at)
+VALUES ('월드컵 더미 데이터17', '월드컵 설명9', 1, 1, 13, now());
+
+
+
 
 -- 썸네일 2개 체크를 위한 WorldcupItem
 INSERT INTO worldcup_item_tb (itemname, img_url, worldcup_id, champion_count)
@@ -167,3 +180,9 @@ INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, cre
 VALUES ('댓글 내용25', '우승자이름8', '닉네임8', 1, 1, now());
 INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
 VALUES ('댓글 내용26', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('2번유저', '우승자이름8', '닉네임8', 2, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('2번유저', '우승자이름8', '닉네임8', 2, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('2번유저', '우승자이름8', '닉네임8', 2, 1, now());

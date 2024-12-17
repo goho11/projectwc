@@ -40,12 +40,17 @@ public class CommentService {
         commentRepository.deleteComment(commentId);
     }
 
-    public List<Comment> findAll(Integer worldcupId, CommentRequest.PageDTO pageDTO) {
+    public List<CommentResponse.FindAllDTO> findAll(Integer worldcupId, CommentRequest.PageDTO pageDTO, User sessionUser) {
         // 오프셋
         Integer offset = (pageDTO.getPage() - 1) * pageDTO.getSize();
 
         List<Comment> comments = commentRepository.findAll(worldcupId, offset, pageDTO.getSize());
-        return comments;
+        List<CommentResponse.FindAllDTO> findAllDTOList = comments.stream()
+                .map(comment -> {
+                    return new CommentResponse.FindAllDTO(comment, sessionUser.getId(), worldcupId);
+                })
+                .toList();
+        return findAllDTOList;
     }
 
     public CommentResponse.ResponsePageDTO createPageDTO(Integer worldcupId, CommentRequest.PageDTO requestPageDTO) {

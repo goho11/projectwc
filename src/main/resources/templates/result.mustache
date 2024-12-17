@@ -56,9 +56,11 @@
                 <div class="d-flex align-item-center mb-2">
                     <strong>{{nickname}} - ({{winnername}})</strong>
                     <div class="ms-1 mt-auto me-2 small common-color-weak">{{createdAt}}</div>
+                    {{#idEqualComment}}
                     <form action="/worldcups/result/{{worldcupId}}/{{worldcupGameId}}/delete/{{id}}" method="POST" style="display: inline;">
                         <button type="submit" class="common-delete-comment" style="background: none; border: none; color: blue; cursor: pointer;">삭제</button>
                     </form>
+                    {{/idEqualComment}}
                 </div>
                 <div>
                     {{content}}

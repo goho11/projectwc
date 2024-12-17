@@ -161,7 +161,8 @@ public class WorldcupController {
         model.addAttribute("worldcupId", worldcupId);
         model.addAttribute("worldcupGameId", worldcupGameId);
 
-        List<Comment> commentList = commentService.findAll(worldcupId, requestPageDTO);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        List<CommentResponse.FindAllDTO> commentList = commentService.findAll(worldcupId, requestPageDTO, sessionUser);
         model.addAttribute("commentList", commentList);
 
         CommentResponse.ResponsePageDTO responsePageDTO = commentService.createPageDTO(worldcupId, requestPageDTO);
@@ -170,13 +171,10 @@ public class WorldcupController {
     }
 
     @PostMapping("/worldcups/result/{worldcupId}/{worldcupGameId}/save")
-    public String saveComment(Model model, @PathVariable Integer worldcupId, @PathVariable Integer worldcupGameId, CommentRequest.SaveDTO saveDTO) {
+    public String saveComment(@PathVariable Integer worldcupId, @PathVariable Integer worldcupGameId, CommentRequest.SaveDTO saveDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-//        WorldcupItem winnerItem = (WorldcupItem) session.getAttribute("sessionWinnerItem");
-//        commentService.saveComment(saveDTO, sessionUser, worldcupId, winnerItem.getItemname());
-
-        // 테스트 할 때 세션에 winnerItem이 null 이라 아래 코드로 테스트
-        commentService.saveComment(saveDTO, sessionUser, worldcupId, "우승 아이템 이름");
+        WorldcupItem winnerItem = (WorldcupItem) session.getAttribute("sessionWinnerItem");
+        commentService.saveComment(saveDTO, sessionUser, worldcupId, winnerItem.getItemname());
 
         return "redirect:/worldcups/result/" + worldcupId + "/" + worldcupGameId;
     }
@@ -198,7 +196,8 @@ public class WorldcupController {
         List<WorldcupItemResponse.RankDTO> rankList = worldcupItemService.getRankDTOList(allItem, gamesCompleted);
         model.addAttribute("rankList", rankList);
 
-        List<Comment> commentList = commentService.findAll(worldcupId, requestPageDTO);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        List<CommentResponse.FindAllDTO> commentList = commentService.findAll(worldcupId, requestPageDTO, sessionUser);
         model.addAttribute("commentList", commentList);
 
         CommentResponse.ResponsePageDTO responsePageDTO = commentService.createPageDTO(worldcupId, requestPageDTO);
@@ -208,13 +207,10 @@ public class WorldcupController {
     }
 
     @PostMapping("/worldcups/rank/{worldcupId}/save")
-    public String saveComment2(Model model, @PathVariable Integer worldcupId, CommentRequest.SaveDTO saveDTO) {
+    public String saveComment2(@PathVariable Integer worldcupId, CommentRequest.SaveDTO saveDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-//        WorldcupItem winnerItem = (WorldcupItem) session.getAttribute("sessionWinnerItem");
-//        commentService.saveComment(saveDTO, sessionUser, worldcupId, winnerItem.getItemname());
-
-        // 테스트 할 때 세션에 winnerItem이 null 이라 아래 코드로 테스트
-        commentService.saveComment(saveDTO, sessionUser, worldcupId, "우승 아이템 이름");
+        WorldcupItem winnerItem = (WorldcupItem) session.getAttribute("sessionWinnerItem");
+        commentService.saveComment(saveDTO, sessionUser, worldcupId, winnerItem.getItemname());
 
         return "redirect:/worldcups/rank/" + worldcupId;
     }

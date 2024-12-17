@@ -1,12 +1,42 @@
 package com.metacoding.projectwc.comment;
 
+import com.metacoding.projectwc.user.User;
+import com.metacoding.projectwc.worldcup.Worldcup;
+import com.metacoding.projectwc.worldcup.item.WorldcupItem;
 import lombok.Builder;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
 public class CommentResponse {
+
+    @Data
+    public static class FindAllDTO {
+        private Integer id;
+        private String nickname;
+        private String content;
+        private String winnername;
+        private Integer userId;
+        private Integer worldcupId;
+        private Boolean idEqualComment;
+        private Timestamp createdAt;
+
+        public FindAllDTO(Comment comment, Integer userId, Integer worldcupId) {
+            this.id = comment.getId();
+            this.nickname = comment.getNickname();
+            this.content = comment.getContent();
+            this.winnername = comment.getWinnername();
+            this.userId = comment.getUser().getId();
+            this.worldcupId = worldcupId;
+            this.createdAt = comment.getCreatedAt();
+            this.idEqualComment = false;
+            if (comment.getUser().getId().equals(userId)) {
+                this.idEqualComment = true;
+            }
+        }
+    }
 
     @Data
     public static class ResponsePageDTO {
