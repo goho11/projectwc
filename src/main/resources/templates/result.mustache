@@ -13,7 +13,7 @@
 <body>
 {{> layout/navbar}}
 <div class="container my-4">
-    {{#model}}
+    {{#winnerItem}}
         <!-- 우승 이미지 -->
         <div class="container-fluid my-5">
             <h1>{{itemname}}</h1>
@@ -21,7 +21,7 @@
                 <img src="{{imgUrl}}" class="card-img" alt="Example Image">
             </div>
         </div>
-    {{/model}}
+    {{/winnerItem}}
 
     <!-- 버튼 -->
     <div class="d-flex justify-content-start gap-2 my-4">
