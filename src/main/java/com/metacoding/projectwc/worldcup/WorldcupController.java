@@ -184,17 +184,14 @@ public class WorldcupController {
 
     @GetMapping("/s/worldcups/mine")
     public String mine(Model model, WorldcupRequest.FindAllDTO findAllDTO) {
-        // TODO 로그인 기능 완성될 경우 적용
-//        User seesionUser = (User) session.getAttribute("sessionUser");
-
-        User user = User.builder().id(1).build();
+        User seesionUser = (User) session.getAttribute("sessionUser");
 
         // 로그인 한 유저가 생성한 월드컵 정보만 가져온다.
-        List<WorldcupResponse.FindAllDTO> worldcupList = worldcupService.findAllByTiltleAndUser(findAllDTO, user);
+        List<WorldcupResponse.FindAllDTO> worldcupList = worldcupService.findAllByTiltleAndUser(findAllDTO, seesionUser);
         model.addAttribute("worldcupList", worldcupList);
 
         // 페이지 정보
-        WorldcupResponse.PageDTO pageDTO = worldcupService.createPageDTOForMine(findAllDTO, user);
+        WorldcupResponse.PageDTO pageDTO = worldcupService.createPageDTOForMine(findAllDTO, seesionUser);
         model.addAttribute("pageDTO", pageDTO);
 
         return "mine";
@@ -211,4 +208,5 @@ public class WorldcupController {
         worldcupService.delete(worldcupId);
         return ResponseEntity.ok(Resp.ok("됨"));
     }
+
 }
