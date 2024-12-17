@@ -31,13 +31,14 @@ public class WorldcupItemRepositoryTest {
     @Test
     public void findByWorldcupIdAndNameOrderByOption_test() {
         // given
+        WorldcupItemRequest.FindOptionsDTO findOptionsDTO = new WorldcupItemRequest.FindOptionsDTO();
         int id = 1;
-        String itemname = "1";
-        String orderOption = "img_url asc";
+        String itemname = "";
+        findOptionsDTO.setOrderOption("name");
         int offset = 10;
         int limit = 10;
         // when
-        List<WorldcupItem> list = worldcupItemRepository.findByWorldcupIdAndNameOrderByOption(id, itemname, orderOption, offset, limit);
+        List<WorldcupItem> list = worldcupItemRepository.findByWorldcupIdAndNameOrderByOption(id, itemname, findOptionsDTO.getOrderOption(), offset, limit);
         // then
         System.out.println(list.size());
         for (WorldcupItem item : list) {
