@@ -1,9 +1,11 @@
 package com.metacoding.projectwc.user;
 
+import com.metacoding.projectwc._core.error.ex.Exception400;
 import com.metacoding.projectwc._core.error.ex.Exception401;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -14,7 +16,11 @@ public class UserRepository {
     private final EntityManager entityManager;
 
     public User save(User user) {
-        entityManager.persist(user);
+        try {
+            entityManager.persist(user);
+        } catch (ConstraintViolationException e) {
+            throw new Exception400("중복된 이메일입니다.");
+        }
         return user;
     }
 
