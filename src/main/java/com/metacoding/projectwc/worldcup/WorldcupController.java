@@ -52,8 +52,6 @@ public class WorldcupController {
         if (worldcupService.isDeleted(worldcupId))
             throw new Exception404("월드컵을 찾을 수 없습니다.");
         List<Integer> roundList = worldcupItemService.getRoundList(worldcupId);
-        if (roundList.size() < 3)
-            throw new Exception400("아이템 개수 부족으로 플레이 불가능한 월드컵입니다.");
         int allItems = worldcupItemService.countAll(worldcupId);
         WorldcupResponse.FindByIdDTO worldcup = worldcupService.findById(worldcupId);
         model.addAttribute("allItem", allItems);

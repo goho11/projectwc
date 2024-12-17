@@ -1,6 +1,7 @@
 package com.metacoding.projectwc.worldcup.item;
 
 import com.metacoding.projectwc._core.error.ex.APIException404;
+import com.metacoding.projectwc._core.error.ex.Exception400;
 import com.metacoding.projectwc._core.util.FileUtil;
 import com.metacoding.projectwc.worldcup.Worldcup;
 import com.metacoding.projectwc.worldcup.WorldcupRepository;
@@ -30,7 +31,7 @@ public class WorldcupItemService {
         List<Integer> roundList = new ArrayList<Integer>(); // '강'수를 담을 리스트
         // 3개 이하면 빈 상태로 반환
         if (countAll <= 3) {
-            return roundList;
+            throw new Exception400("아이템 개수 부족으로 플레이 불가능한 월드컵입니다.");
         }
 
         // 4개 초과면 강수 계산 해서 담아서 반환
