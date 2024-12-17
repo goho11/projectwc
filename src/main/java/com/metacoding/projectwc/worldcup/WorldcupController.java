@@ -76,12 +76,22 @@ public class WorldcupController {
         List<WorldcupItem> shuffledByRoundsList = worldcupItemService.getShuffledByRounds(worldcupId, round); // 경기 진행할 아이템 담을 리스트
         List<WorldcupItem> winnerList = new ArrayList<>(); // 승리자들을 담아 둘 리스트
 
+        removeSessionGame();
+
         httpSession.setAttribute("sessionTotalMatchNum", shuffledByRoundsList.size() / 2);
         httpSession.setAttribute("sessionShuffledByRoundsList", shuffledByRoundsList); // 아이템들 세션저장
         httpSession.setAttribute("sessionWinnerList", winnerList);
         int worldcupGameId = saveWorldcupGame.getId();
 
         return "redirect:/worldcups/" + worldcupId + "/games/" + worldcupGameId;
+    }
+
+    private void removeSessionGame() {
+        httpSession.removeAttribute("sessionShuffledByRoundsList");
+        httpSession.removeAttribute("sessionWinnerList");
+        httpSession.removeAttribute("sessionMatchNum");
+        httpSession.removeAttribute("sessionWorldcupMatchId");
+        httpSession.removeAttribute("sessionTotalMatchNum");
     }
 
     // 이제 주소 id >> 게임 id
@@ -135,11 +145,7 @@ public class WorldcupController {
 
         if (shuffledByRoundsList.size() == 1) { // 경기 리스트가 1개면 >> 부전승이 없어서 1개만 남으면 무조건 끝난거임
             worldcupGameService.completeGame(worldcupGameId, worldcupId);
-            httpSession.removeAttribute("sessionShuffledByRoundsList");
-            httpSession.removeAttribute("sessionWinnerList");
-            httpSession.removeAttribute("sessionMatchNum");
-            httpSession.removeAttribute("sessionWorldcupMatchId");
-            httpSession.removeAttribute("sessionTotalMatchNum");
+            removeSessionGame();
 
             httpSession.setAttribute("sessionWinnerItem", winnerItem);
             return "redirect:/worldcups/" + worldcupId + "/result/" + worldcupGameId;

@@ -88,9 +88,9 @@
 </div>
 </body>
 <script>
+    const checkBox = document.querySelector("#change-check");
+    const newPassword = document.querySelector("#new-password");
     function changePassword() {
-        let checkBox = document.querySelector("#change-check");
-        let newPassword = document.querySelector("#new-password");
         if (checkBox.checked) {
             newPassword.disabled = false;
         } else {

@@ -29,7 +29,7 @@
 
             <div class="d-flex align-items-center">
                 <label for="search" class="form-label me-2 mb-0">검색:</label>
-                <input type="text" id="search" class="form-control" placeholder="검색" style="width: 200px;">
+                <input type="text" id="search" class="form-control" placeholder="검색" style="width: 200px;" oninput="requestFind()">
             </div>
         </div>
         <!-- 테이블 -->
@@ -155,7 +155,7 @@
 
     function renderPageItem(c, p) {
         let dom = `
-            <a href="#img-table-part" class="page-link" onclick="changePage(${p})">${c}</a>
+            <a href="#" class="page-link" onclick="changePage(${p})">${c}</a>
         `
         let pageItem = document.createElement("li");
         if (page === c)
