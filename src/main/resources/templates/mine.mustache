@@ -60,7 +60,8 @@
                 <div class="p-2">
                     <h5 class="card-title mine-card-title fw-bold">{{title}}</h5>
                     <p class="card-text mine-card-text">
-                        {{description}}
+                        {{#description}}{{description}}{{/description}}
+                        {{^description}}설명 없음{{/description}}
                     </p>
                 </div>
                 <div class="ms-2 mb-2 mine-btn-container">
