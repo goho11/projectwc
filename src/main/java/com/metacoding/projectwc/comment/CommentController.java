@@ -31,25 +31,8 @@ public class CommentController {
 
         model.addAttribute("worldcupId", worldcupId);
 
-        //TODO winnername 일단 반영 안함
 
         return "result";
     }
 
-    @PostMapping("/result/{worldcupId}/save")
-    public String saveComment(@PathVariable Integer worldcupId, CommentRequest.SaveDTO saveDTO) {
-        User sessionUser = (User) httpSession.getAttribute("sessionUser");
-        commentService.saveComment(saveDTO, sessionUser, worldcupId);
-
-        return "redirect:/result/" + worldcupId;
-    }
-
-    @PostMapping("/result/{worldcupId}/delete/{id}")
-    public String deleteComment(@PathVariable Integer worldcupId, @PathVariable Integer id) {
-        // 논리 삭제 구현
-        User seesionUser = (User) httpSession.getAttribute("sessionUser");
-        commentService.deleteComment(seesionUser, id);
-
-        return "redirect:/result/" + worldcupId;
-    }
 }

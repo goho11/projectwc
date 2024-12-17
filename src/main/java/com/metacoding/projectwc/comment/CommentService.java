@@ -23,10 +23,10 @@ public class CommentService {
     private final WorldcupRepository worldcupRepository;
 
     @Transactional(readOnly = false)
-    public void saveComment(CommentRequest.SaveDTO saveDTO, User user, Integer worldcupId) {
+    public void saveComment(CommentRequest.SaveDTO saveDTO, User user, Integer worldcupId, String winnername) {
         Worldcup worldcup = worldcupRepository.findById(worldcupId)
                 .orElseThrow(() -> new Exception404("월드컵을 찾을 수 없습니다."));
-        commentRepository.saveComment(saveDTO.toEntity(user, worldcup));
+        commentRepository.saveComment(saveDTO.toEntity(user, worldcup, winnername));
     }
 
     @Transactional(readOnly = false)
@@ -68,6 +68,7 @@ public class CommentService {
         // 페이지 DTO 생성 및 반환
         CommentResponse.ResponsePageDTO responsePageDTO = CommentResponse.ResponsePageDTO.builder()
                 .currentPage(currentPage)
+                .totalItems(totalItems)
                 .totalPages(totalItems)
                 .size(requestPageDTO.getSize())
                 .isFirstPage(currentPage == 1)
