@@ -54,9 +54,11 @@
             {{#commentList}}
             <div class="mb-4">
                 <div class="d-flex align-item-center mb-2">
-                    <strong>{{nickname}}</strong>
+                    <strong>{{nickname}} </strong>
                     <div class="ms-1 mt-auto me-2 small common-color-weak">{{createdAt}}</div>
-                    <a href="#" class="common-delete-comment">삭제</a>
+                    <form action="/result/{{worldcupId}}/delete/{{id}}" method="POST" style="display: inline;">
+                        <button type="submit" class="common-delete-comment" style="background: none; border: none; color: blue; cursor: pointer;">삭제</button>
+                    </form>
                 </div>
                 <div>
                     {{content}}

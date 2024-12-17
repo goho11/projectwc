@@ -31,34 +31,25 @@ public class CommentController {
 
         model.addAttribute("worldcupId", worldcupId);
 
-        //TODO 위너 네임 일단 반영 안함
+        //TODO winnername 일단 반영 안함
 
         return "result";
     }
 
-    // TODO: ResponseEntity<T> 써야하나?
     @PostMapping("/result/{worldcupId}/save")
     public String saveComment(@PathVariable Integer worldcupId, CommentRequest.SaveDTO saveDTO) {
         User sessionUser = (User) httpSession.getAttribute("sessionUser");
         commentService.saveComment(saveDTO, sessionUser, worldcupId);
 
-        // TODO 무슨 화면으로?
         return "redirect:/result/" + worldcupId;
     }
 
-    @PostMapping("/rank/{worldcupId}/delete")
-    public String deleteComment() {
+    @PostMapping("/result/{worldcupId}/delete/{id}")
+    public String deleteComment(@PathVariable Integer worldcupId, @PathVariable Integer id) {
         // 논리 삭제 구현
-        // TODO 로그인 기능 완성될 경우 적용
-//        User seesionUser = (User) session.getAttribute("sessionUser");
-        User user = User.builder().id(1).build();
+        User seesionUser = (User) httpSession.getAttribute("sessionUser");
+        commentService.deleteComment(seesionUser, id);
 
-        // TODO 월드컵 정보는 어디서 받나?
-        Worldcup worldcup = Worldcup.builder().id(1).build();
-
-        commentService.deleteComment(user, worldcup);
-
-        // TODO 무슨 화면으로?
-        return "redirect:/";
+        return "redirect:/result/" + worldcupId;
     }
 }
