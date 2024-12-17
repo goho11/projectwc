@@ -64,8 +64,9 @@
     <!-- 댓글 입력, 목록 묶기 div -->
     <div class="bg-light p-4 rounded">
         <!-- 입력 -->
-        <form action="/worldcups/rank/{{worldcupId}}/save" method="post">
+        <form action="/worldcups/{{worldcupId}}/rank/save" method="post">
             <label class="form-label">닉네임</label>
+
             <input type="text" id="nickname" name="nickname" class=" form-control mb-3" value="{{sessionUser.nickname}}">
 
             <label class="form-label">한마디 남기기</label>
@@ -80,10 +81,10 @@
             {{#commentList}}
                 <div class="mb-4">
                     <div class="d-flex align-item-center mb-2">
-                        <strong>{{nickname}} - ({{winnername}})</strong>
+                        <strong>{{nickname}}{{#winnername}} - ({{winnername}}){{/winnername}}</strong>
                         <div class="ms-1 mt-auto me-2 small common-color-weak">{{createdAt}}</div>
                         {{#idEqualComment}}
-                            <form action="/worldcups/result/{{worldcupId}}/{{worldcupGameId}}/delete/{{id}}" method="POST" style="display: inline;">
+                            <form action="/worldcups/{{worldcupId}}/rank/delete/{{id}}" method="POST" style="display: inline;">
                                 <button type="submit" class="common-delete-comment" style="background: none; border: none; color: blue; cursor: pointer;">삭제</button>
                             </form>
                         {{/idEqualComment}}
