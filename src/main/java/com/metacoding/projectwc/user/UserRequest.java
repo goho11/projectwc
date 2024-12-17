@@ -30,10 +30,16 @@ public class UserRequest {
         private String newPassword;
 
         public String getNewPassword(PasswordEncoder passwordEncoder) {
-            if (newPassword == null || newPassword.isEmpty())
+            if (newPassword == null || newPassword.isEmpty()) {
                 return null;
-            String encoderPassword = passwordEncoder.encode(newPassword);
-            return encoderPassword;
+            }
+            return passwordEncoder.encode(newPassword);
         }
     }
+
+    @Data
+    public static class DeleteDTO {
+        private String password;
+    }
+
 }
