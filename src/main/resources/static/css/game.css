@@ -9,21 +9,24 @@
     background-size: contain;
     position: relative; /* position 유지 */
     transition: transform 1s ease-in-out;  /* transform으로만 위치 이동 애니메이션 */
+    cursor: pointer;
 }
 
 .game-left {
-    background-image: url('/img/vertlong.png');
+    background-image: url('/img/alert.png');
     background-position: right center;
     z-index: 1;
 }
 
 .game-right {
-    background-image: url('/img/horizolong.png');
+    background-image: url('/img/alert.png');
     background-position: left center;
     left: 50%;  /* left 유지 */
     top: -100%;  /* top 유지 */
     z-index: 2;
 }
+
+
 
 /* 화면 밖으로 이동 */
 .game-left.outside {
@@ -69,6 +72,7 @@
     color: white;
     font-size: calc(3 * (1vw + 1vh - 1vmin));
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    cursor: pointer;
 }
 
 
