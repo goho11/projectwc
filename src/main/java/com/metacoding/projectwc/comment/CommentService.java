@@ -23,10 +23,10 @@ public class CommentService {
     private final WorldcupRepository worldcupRepository;
 
     @Transactional(readOnly = false)
-    public void saveComment(CommentRequest.SaveDTO saveDTO, User user, Integer worldcupId) {
+    public void saveComment(CommentRequest.SaveDTO saveDTO, User user, Integer worldcupId, String winnername) {
         Worldcup worldcup = worldcupRepository.findById(worldcupId)
                 .orElseThrow(() -> new Exception404("월드컵을 찾을 수 없습니다."));
-        commentRepository.saveComment(saveDTO.toEntity(user, worldcup));
+        commentRepository.saveComment(saveDTO.toEntity(user, worldcup, winnername));
     }
 
     @Transactional(readOnly = false)
@@ -40,12 +40,17 @@ public class CommentService {
         commentRepository.deleteComment(commentId);
     }
 
-    public List<Comment> findAll(Integer worldcupId, CommentRequest.PageDTO pageDTO) {
+    public List<CommentResponse.FindAllDTO> findAll(Integer worldcupId, CommentRequest.PageDTO pageDTO, User sessionUser) {
         // 오프셋
         Integer offset = (pageDTO.getPage() - 1) * pageDTO.getSize();
 
         List<Comment> comments = commentRepository.findAll(worldcupId, offset, pageDTO.getSize());
-        return comments;
+        List<CommentResponse.FindAllDTO> findAllDTOList = comments.stream()
+                .map(comment -> {
+                    return new CommentResponse.FindAllDTO(comment, sessionUser.getId(), worldcupId);
+                })
+                .toList();
+        return findAllDTOList;
     }
 
     public CommentResponse.ResponsePageDTO createPageDTO(Integer worldcupId, CommentRequest.PageDTO requestPageDTO) {
@@ -68,6 +73,7 @@ public class CommentService {
         // 페이지 DTO 생성 및 반환
         CommentResponse.ResponsePageDTO responsePageDTO = CommentResponse.ResponsePageDTO.builder()
                 .currentPage(currentPage)
+                .totalItems(totalItems)
                 .totalPages(totalItems)
                 .size(requestPageDTO.getSize())
                 .isFirstPage(currentPage == 1)

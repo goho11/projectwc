@@ -60,59 +60,60 @@
     </div>
 
     <!-- 댓글 개수 -->
-    <div class="my-4">댓글 (227)</div>
+    <div class="my-4">댓글 ({{responsePageDTO.totalItems}})</div>
     <!-- 댓글 입력, 목록 묶기 div -->
     <div class="bg-light p-4 rounded">
         <!-- 입력 -->
-        <div>
-            <label for="username" class="form-label">닉네임</label>
-            <input type="text" id="nickname" class="form-control mb-3">
+        <form action="/worldcups/rank/{{worldcupId}}/save" method="post">
+            <label class="form-label">닉네임</label>
+            <input type="text" id="nickname" name="nickname" class=" form-control mb-3" value="{{sessionUser.nickname}}">
 
-            <label for="rank-reply" class="form-label">한마디 남기기</label>
-            <textarea id="comment" class="form-control common-comment-textarea mb-3" placeholder="댓글을 입력하세요"
+            <label class="form-label">한마디 남기기</label>
+            <textarea id="comment" name="content" class="form-control common-comment-textarea mb-3" placeholder="댓글을 입력하세요"
                       rows="5"></textarea>
 
             <button type="submit" class="btn common-color-primary fw-bold text-white w-100 mb-4">저장하기</button>
-        </div>
+        </form>
 
         <!-- 목록 -->
         <div>
-            <div class="mb-4">
-                <div class="d-flex align-item-center mb-2">
-                    <strong>익명</strong> - <span class="text-muted">(우승자명)</span>
-                    <div class="ms-1 mt-auto me-2 small common-color-weak">24.12.12 10:15:23</div>
-                    <a href="#" class="common-delete-comment">삭제</a>
-                </div>
-                <div>논리를 작다 그 학교를 너의 우대가 안으라고 쓸쓸하다. 골을 산 힘입던 없다 어떻은 이러하다 들어선 검거 그래도 자연스럽다. 공군도 단 분이어 자욱하고 때의 말이 예속시키다.
-                    단체의 있을 그런 그녀가 매달린다. 이러할 놀라게, 최종적 2,860,000달러 내 준 대부분에 그대로 태어나다. 놀라아 그날 시작될 참상이라, 그 듣는, 연구가, 듯하여 각자를
-                    바르거라. 900,000원 연속적과 감성적에게로 하다 아니다.
-                </div>
-            </div>
+            {{#commentList}}
+                <div class="mb-4">
+                    <div class="d-flex align-item-center mb-2">
+                        <strong>{{nickname}} - ({{winnername}})</strong>
+                        <div class="ms-1 mt-auto me-2 small common-color-weak">{{createdAt}}</div>
+                        {{#idEqualComment}}
+                            <form action="/worldcups/result/{{worldcupId}}/{{worldcupGameId}}/delete/{{id}}" method="POST" style="display: inline;">
+                                <button type="submit" class="common-delete-comment" style="background: none; border: none; color: blue; cursor: pointer;">삭제</button>
+                            </form>
+                        {{/idEqualComment}}
 
-            <div class="mb-4">
-                <div class="d-flex align-item-center mb-2">
-                    <strong>익명</strong> - <span class="text-muted">(우승자명)</span>
-                    <div class="ms-1 mt-auto me-2 small common-color-weak">24.12.12 10:15:23</div>
-                    <a href="#" class="common-delete-comment">삭제</a>
+                    </div>
+                    <div>
+                        {{content}}
+                    </div>
                 </div>
-                <div>논리를 작다 그 학교를 너의 우대가 안으라고 쓸쓸하다. 골을 산 힘입던 없다 어떻은 이러하다 들어선 검거 그래도 자연스럽다. 공군도 단 분이어 자욱하고 때의 말이 예속시키다.
-                    단체의 있을 그런 그녀가 매달린다. 이러할 놀라게, 최종적 2,860,000달러 내 준 대부분에 그대로 태어나다. 놀라아 그날 시작될 참상이라, 그 듣는, 연구가, 듯하여 각자를
-                    바르거라. 900,000원 연속적과 감성적에게로 하다 아니다.
-                </div>
-            </div>
-            <!-- 더 보기 버튼 -->
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-                </ul>
-            </nav>
-            <!--            <button class="btn common-color-primary text-white w-100 mt-2">20개 더 보기</button>-->
+
+            {{/commentList}}
+
         </div>
 
+        <!-- 더 보기 버튼 -->
+        {{#responsePageDTO}}
+            <ul class="pagination justify-content-center">
+                <li class="page-item {{#isFirstPage}}disabled{{/isFirstPage}}">
+                    <a class="page-link" href="?page={{prevPage}}&size={{size}}">&lt;</a>
+                </li>
+                {{#pages}}
+                    <li class="page-item {{#isCurrentPage}}active{{/isCurrentPage}}">
+                        <a class="page-link" href="?page={{number}}&size={{size}}">{{number}}</a>
+                    </li>
+                {{/pages}}
+                <li class="page-item {{#isLastPage}}disabled{{/isLastPage}}">
+                    <a class="page-link" href="?page={{nextPage}}&size={{size}}">&gt;</a>
+                </li>
+            </ul>
+        {{/responsePageDTO}}
     </div>
 
 </div>

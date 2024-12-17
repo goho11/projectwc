@@ -3,6 +3,10 @@ package com.metacoding.projectwc.worldcup;
 import com.metacoding.projectwc._core.error.ex.Exception400;
 import com.metacoding.projectwc._core.error.ex.Exception404;
 import com.metacoding.projectwc._core.util.Resp;
+import com.metacoding.projectwc.comment.Comment;
+import com.metacoding.projectwc.comment.CommentRequest;
+import com.metacoding.projectwc.comment.CommentResponse;
+import com.metacoding.projectwc.comment.CommentService;
 import com.metacoding.projectwc.user.User;
 import com.metacoding.projectwc.user.User;
 import com.metacoding.projectwc.worldcup.game.WorldcupGame;
@@ -30,6 +34,7 @@ public class WorldcupController {
     private final WorldcupService worldcupService;
     private final WorldcupGameService worldcupGameService;
     private final WorldcupMatchService worldcupMatchService;
+    private final CommentService commentService;
     private final HttpSession session;
 
     @GetMapping("/s/worldcups/new-worldcup")
@@ -150,22 +155,73 @@ public class WorldcupController {
     }
 
     @GetMapping("/worldcups/result/{worldcupId}/{worldcupGameId}")
-    public String result(@PathVariable("worldcupId") int worldcupId, @PathVariable("worldcupGameId") int worldcupGameId, Model model) {
+    public String result(@PathVariable("worldcupId") int worldcupId, @PathVariable("worldcupGameId") int worldcupGameId, Model model, CommentRequest.PageDTO requestPageDTO) {
         WorldcupItem winnerItem = (WorldcupItem) session.getAttribute("sessionWinnerItem");
         model.addAttribute("winnerItem", winnerItem);
         model.addAttribute("worldcupId", worldcupId);
+        model.addAttribute("worldcupGameId", worldcupGameId);
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        List<CommentResponse.FindAllDTO> commentList = commentService.findAll(worldcupId, requestPageDTO, sessionUser);
+        model.addAttribute("commentList", commentList);
+
+        CommentResponse.ResponsePageDTO responsePageDTO = commentService.createPageDTO(worldcupId, requestPageDTO);
+        model.addAttribute("responsePageDTO", responsePageDTO);
         return "result";
     }
 
+    @PostMapping("/worldcups/result/{worldcupId}/{worldcupGameId}/save")
+    public String saveComment(@PathVariable Integer worldcupId, @PathVariable Integer worldcupGameId, CommentRequest.SaveDTO saveDTO) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        WorldcupItem winnerItem = (WorldcupItem) session.getAttribute("sessionWinnerItem");
+        commentService.saveComment(saveDTO, sessionUser, worldcupId, winnerItem.getItemname());
+
+        return "redirect:/worldcups/result/" + worldcupId + "/" + worldcupGameId;
+    }
+
+    @PostMapping("/worldcups/result/{worldcupId}/{worldcupGameId}/delete/{id}")
+    public String deleteComment(@PathVariable Integer worldcupId, @PathVariable Integer id, @PathVariable Integer worldcupGameId) {
+        // 논리 삭제 구현
+        User seesionUser = (User) session.getAttribute("sessionUser");
+        commentService.deleteComment(seesionUser, id);
+
+        return "redirect:/worldcups/result/" + worldcupId + "/" + worldcupGameId;
+    }
+
     @GetMapping("/worldcups/rank/{worldcupId}")
-    public String rank(@PathVariable("worldcupId") int worldcupId, Model model) {
+    public String rank(@PathVariable("worldcupId") int worldcupId, Model model, CommentRequest.PageDTO requestPageDTO) {
         List<WorldcupItem> allItem = worldcupItemService.getAllItem(worldcupId);
         int gamesCompleted = worldcupService.findById(worldcupId).getGamesCompleted();
 
         List<WorldcupItemResponse.RankDTO> rankList = worldcupItemService.getRankDTOList(allItem, gamesCompleted);
         model.addAttribute("rankList", rankList);
 
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        List<CommentResponse.FindAllDTO> commentList = commentService.findAll(worldcupId, requestPageDTO, sessionUser);
+        model.addAttribute("commentList", commentList);
+
+        CommentResponse.ResponsePageDTO responsePageDTO = commentService.createPageDTO(worldcupId, requestPageDTO);
+        model.addAttribute("responsePageDTO", responsePageDTO);
+
         return "rank";
+    }
+
+    @PostMapping("/worldcups/rank/{worldcupId}/save")
+    public String saveComment2(@PathVariable Integer worldcupId, CommentRequest.SaveDTO saveDTO) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        WorldcupItem winnerItem = (WorldcupItem) session.getAttribute("sessionWinnerItem");
+        commentService.saveComment(saveDTO, sessionUser, worldcupId, winnerItem.getItemname());
+
+        return "redirect:/worldcups/rank/" + worldcupId;
+    }
+
+    @PostMapping("/worldcups/rank/{worldcupId}/delete/{id}")
+    public String deleteComment2(@PathVariable Integer worldcupId, @PathVariable Integer id) {
+        // 논리 삭제 구현
+        User seesionUser = (User) session.getAttribute("sessionUser");
+        commentService.deleteComment(seesionUser, id);
+
+        return "redirect:/worldcups/rank/" + worldcupId;
     }
 
     @GetMapping({"/main", "/"})
