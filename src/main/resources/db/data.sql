@@ -131,3 +131,39 @@ INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, cre
 VALUES ('댓글 내용7', '우승자이름7', '닉네임7', 1, 2, now());
 INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
 VALUES ('댓글 내용8', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용9', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용10', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용11', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용12', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용13', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용14', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용15', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용16', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용17', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용18', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용19', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용20', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용21', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용22', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용23', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용24', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용25', '우승자이름8', '닉네임8', 1, 1, now());
+INSERT INTO comment_tb (content, winnername, nickname, user_id, worldcup_id, created_at)
+VALUES ('댓글 내용26', '우승자이름8', '닉네임8', 1, 1, now());

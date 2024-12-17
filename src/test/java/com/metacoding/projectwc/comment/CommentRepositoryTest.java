@@ -108,4 +108,18 @@ public class CommentRepositoryTest {
         System.out.println("코멘트 삭제 여부: " + comment2.getIsDeleted());
 
     }
+
+    @Test
+    public void countAllComment_test() {
+        Integer i = commentRepository.countAllComment(1);
+        System.out.println("코멘트 숫자는: " + i);
+    }
+
+    @Test
+    public void findAll2_test() {
+        List<Comment> commentList = commentRepository.findAll(2, 0, 5);
+
+        System.out.println("코멘트 숫자는: " + commentList.size());
+
+    }
 }
