@@ -8,4 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class LoginLogRepository {
     private final EntityManager entityManager;
+
+    public LoginLog save(LoginLog loginLog) {
+        entityManager.persist(loginLog);
+        return loginLog;
+    }
 }
