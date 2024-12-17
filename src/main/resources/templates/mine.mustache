@@ -23,18 +23,14 @@
         <div class="d-flex align-items-center" id="top-bar">
             {{#pageDTO}}
                 <div class="btn-group">
-                    <button onclick="location.href='?page={{currentPage}}&size={{size}}
-                    &sortBy=Popularity&searchKeyword={{searchKeyword}}'" type="button" class="btn common-color-primary
-                    text-white">인기순</button>
-                    <button onclick="location.href='?page={{currentPage}}&size={{size}}
-                    &sortBy=Latest&searchKeyword={{searchKeyword}}'" type="button" class="btn border-1 border
-                    border-start-0">최신순</button>
+                    <button id="popularityButton" onclick="sortBy('Popularity')" type="button" class="btn common-color-primary text-white">인기순</button>
+                    <button id="latestButton" onclick="sortBy('Latest')" type="button" class="btn border-1 border border-start-0">최신순</button>
                 </div>
+
                 <div class="ms-4 d-flex align-items-center flex-grow-1">
                     <input type="text" class="form-control flex-grow-1" id="searchKeyword"
-                           placeholder="월드컵 제목으로 검색하세요." name="searchKeyword">
-                    <button onclick="updateSearch()" type="button" id="searchButton"
-                            class="btn border-0 common-color-primary text-white"
+                           placeholder="월드컵 제목으로 검색하세요." name="searchKeyword" value="{{searchKeyword}}">
+                    <button onclick="updateSearch()" type="button" id="searchButton" class="btn border-0 common-color-primary text-white"
                             style="white-space: nowrap;">검색
                     </button>
                 </div>
@@ -65,9 +61,6 @@
                     <h5 class="card-title mine-card-title fw-bold">{{title}}</h5>
                     <p class="card-text mine-card-text">
                         {{description}}
-                        게임완료횟수: {{gamesCompleted}}
-                        썸네일1: {{itemname1}}
-                        썸네일2: {{itemname2}}
                     </p>
                 </div>
                 <div class="ms-2 mb-2 mine-btn-container">
@@ -115,6 +108,7 @@
 </div>
 </body>
 <script>
+    // 검색 기능 구현하는 fuction
     function updateSearch() {
         const searchKeyword = document.getElementById('searchKeyword').value;
         const urlParams = new URLSearchParams(window.location.search);
@@ -122,16 +116,35 @@
         window.location.href = '?' + urlParams.toString();
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    // 엔터 눌러도 검색 되게 하는 거
+    document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('searchKeyword');
         const searchButton = document.getElementById('searchButton');
 
-        searchInput.addEventListener('keypress', function (event) {
+        searchInput.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
                 searchButton.click();
             }
         });
+        // 현재 정렬 기준에 따라 버튼 스타일 설정
+        const urlParams = new URLSearchParams(window.location.search);
+        const sortBy = urlParams.get('sortBy') || 'Popularity'; // 기본값 'Popularity'
+
+        const popularityButton = document.getElementById('popularityButton');
+        const latestButton = document.getElementById('latestButton');
+
+        if (sortBy === 'Popularity') {
+            popularityButton.classList.add('common-color-primary', 'text-white');
+            popularityButton.classList.remove('border', 'border-start-0');
+            latestButton.classList.remove('common-color-primary', 'text-white');
+            latestButton.classList.add('border', 'border-start-0');
+        } else {
+            latestButton.classList.add('common-color-primary', 'text-white');
+            latestButton.classList.remove('border', 'border-start-0');
+            popularityButton.classList.remove('common-color-primary', 'text-white');
+            popularityButton.classList.add('border', 'border-start-0');
+        }
     });
 
     async function deleteWorldcup(id) {
@@ -146,6 +159,12 @@
         } else {
             alert(responseBody.message);
         }
+    }
+
+    function sortBy(sortBy) {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('sortBy', sortBy);
+        window.location.href = '?' + urlParams.toString();
     }
 </script>
 </html>
