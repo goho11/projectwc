@@ -58,15 +58,8 @@
                 <div class="p-2">
                     <h5 class="card-title main-card-title fw-bold">{{title}}</h5>
                     <p class="card-text main-card-text">
-<<<<<<< HEAD
                         {{#description}}{{description}}{{/description}}
                         {{^description}}설명 없음{{/description}}
-=======
-                        {{description}}
-<<<<<<< HEAD
->>>>>>> d4e6556 ([fix]검색 후 input 태그에 검색 단어 남아있게 + 최신순 누르면 파랗게)
-=======
->>>>>>> 37973ccce3ec30f3e8db277e4640c4ce2b990947
                     </p>
                 </div>
                 <div class="ms-2 mb-2 main-btn-container">
@@ -84,18 +77,15 @@
         {{#pageDTO}}
             <ul class="pagination justify-content-center">
                 <li class="page-item {{#isFirstPage}}disabled{{/isFirstPage}}">
-                    <a class="page-link" href="?page={{prevPage}}&size={{size}}&sortBy={{sortBy}}
-                    &searchKeyword={{searchKeyword}}">&lt;</a>
+                    <a class="page-link" href="?page={{prevPage}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">&lt;</a>
                 </li>
                 {{#pages}}
                     <li class="page-item {{#isCurrentPage}}active{{/isCurrentPage}}">
-                        <a class="page-link" href="?page={{number}}&size={{size}}&sortBy={{sortBy}}
-                        &searchKeyword={{searchKeyword}}">{{number}}</a>
+                        <a class="page-link" href="?page={{number}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">{{number}}</a>
                     </li>
                 {{/pages}}
                 <li class="page-item {{#isLastPage}}disabled{{/isLastPage}}">
-                    <a class="page-link" href="?page={{nextPage}}&size={{size}}&sortBy={{sortBy}}
-                    &searchKeyword={{searchKeyword}}">&gt;</a>
+                    <a class="page-link" href="?page={{nextPage}}&size={{size}}&sortBy={{sortBy}}&searchKeyword={{searchKeyword}}">&gt;</a>
                 </li>
             </ul>
         {{/pageDTO}}
@@ -150,11 +140,6 @@
         window.location.href = '?' + urlParams.toString();
     }
 </script>
-
-<<<<<<< HEAD
->>>>>>> d4e6556 ([fix]검색 후 input 태그에 검색 단어 남아있게 + 최신순 누르면 파랗게)
-=======
->>>>>>> 37973ccce3ec30f3e8db277e4640c4ce2b990947
 </html>
 
 
