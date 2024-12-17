@@ -11,6 +11,7 @@ public class CommentResponse {
     @Data
     public static class ResponsePageDTO {
         private Integer currentPage;
+        private Integer totalItems;
         private Integer totalPages;
         private Integer size;
 
@@ -22,8 +23,9 @@ public class CommentResponse {
         private List<Map<String, Object>> pages;
 
         @Builder
-        public ResponsePageDTO(Integer currentPage, Integer totalPages, Integer size, boolean isFirstPage, boolean isLastPage, Integer prevPage, Integer nextPage, List<Map<String, Object>> pages) {
+        public ResponsePageDTO(Integer currentPage, Integer totalPages, Integer totalItems, Integer size, boolean isFirstPage, boolean isLastPage, Integer prevPage, Integer nextPage, List<Map<String, Object>> pages) {
             this.currentPage = currentPage;
+            this.totalItems = totalItems;
             this.totalPages = totalPages;
             this.size = size;
             this.isFirstPage = isFirstPage;

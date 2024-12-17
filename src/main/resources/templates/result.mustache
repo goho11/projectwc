@@ -33,13 +33,13 @@
 
 
     <!-- 댓글 개수 -->
-    <div class="my-4">댓글 (227)</div>
+    <div class="my-4">댓글 ({{responsePageDTO.totalItems}})</div>
     <!-- 댓글 입력, 목록 묶기 div -->
     <div class="bg-light p-4 rounded">
         <!-- 입력 -->
-        <form action="/result/{{worldcupId}}/save" method="post">
+        <form action="/worldcups/result/{{worldcupId}}/{{worldcupGameId}}/save" method="post">
             <label class="form-label">닉네임</label>
-            <input type="text" id="nickname" name="nickname" class=" form-control mb-3">
+            <input type="text" id="nickname" name="nickname" class=" form-control mb-3" value="{{sessionUser.nickname}}">
 
             <label class="form-label">한마디 남기기</label>
             <textarea id="comment" name="content" class="form-control common-comment-textarea mb-3" placeholder="댓글을 입력하세요"
@@ -54,9 +54,9 @@
             {{#commentList}}
             <div class="mb-4">
                 <div class="d-flex align-item-center mb-2">
-                    <strong>{{nickname}} </strong>
+                    <strong>{{nickname}} - ({{winnername}})</strong>
                     <div class="ms-1 mt-auto me-2 small common-color-weak">{{createdAt}}</div>
-                    <form action="/result/{{worldcupId}}/delete/{{id}}" method="POST" style="display: inline;">
+                    <form action="/worldcups/result/{{worldcupId}}/{{worldcupGameId}}/delete/{{id}}" method="POST" style="display: inline;">
                         <button type="submit" class="common-delete-comment" style="background: none; border: none; color: blue; cursor: pointer;">삭제</button>
                     </form>
                 </div>
@@ -86,6 +86,7 @@
             </ul>
         {{/responsePageDTO}}
     </div>
+
 </div>
 </body>
 <script>

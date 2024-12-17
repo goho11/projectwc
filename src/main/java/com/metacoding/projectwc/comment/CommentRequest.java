@@ -16,9 +16,8 @@ public class CommentRequest {
     public static class SaveDTO {
         private String nickname;
         private String content;
-        private String winnername;
 
-        public Comment toEntity(User user, Worldcup worldcup) {
+        public Comment toEntity(User user, Worldcup worldcup, String winnername) {
             Comment comment = Comment.builder()
                     .nickname(nickname)
                     .content(content)
