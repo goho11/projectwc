@@ -78,7 +78,9 @@
                 <!-- Modal footer -->
                 <div class="modal-body text-center">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteUser()">네, 탈퇴할게요!</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteUser()">네,
+                        탈퇴할게요!
+                    </button>
                 </div>
 
             </div>
@@ -88,8 +90,13 @@
 </div>
 </body>
 <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('success')) {
+        alert("회원 정보 수정 완료")
+    }
     const checkBox = document.querySelector("#change-check");
     const newPassword = document.querySelector("#new-password");
+
     function changePassword() {
         if (checkBox.checked) {
             newPassword.disabled = false;
@@ -97,29 +104,29 @@
             newPassword.disabled = true;
         }
     }
-    async function deleteUser(){
-        let password={
-            password:document.querySelector("#password").value,
+
+    async function deleteUser() {
+        let password = {
+            password: document.querySelector("#password").value,
         };
 
-        let requestBody=JSON.stringify(password);
+        let requestBody = JSON.stringify(password);
 
-        let response=await fetch(`/s/user`,{
-            method:"DELETE",
+        let response = await fetch(`/s/user`, {
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
             },
-            body:requestBody
-        }) ;
+            body: requestBody
+        });
 
         let responseBody = await response.json();
 
-        if(responseBody.success ){
-            location.href="/logout";
-        }else{
+        if (responseBody.success) {
+            location.href = "/logout";
+        } else {
             alert(responseBody.message);
         }
-
     }
 </script>
 </html>
