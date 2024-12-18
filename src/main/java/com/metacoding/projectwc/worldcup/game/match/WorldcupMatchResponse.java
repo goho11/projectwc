@@ -13,7 +13,7 @@ public class WorldcupMatchResponse {
         private WorldcupItem worldcupItem1;
         private WorldcupItem worldcupItem2;
         private Integer matchNum;
-        private Integer round;
+        private String round;
 
         public SaveWorldcupMatchDTO(WorldcupMatch match) {
             this.id = match.getId();
@@ -21,7 +21,13 @@ public class WorldcupMatchResponse {
             this.worldcupItem1 = match.getWorldcupItem1();
             this.worldcupItem2 = match.getWorldcupItem2();
             this.matchNum = match.getMatchNum();
-            this.round = match.getRound();
+            this.round = match.getRound() + "강";
+            if (match.getRound() == 4) {
+                this.round = "준결승";
+            }
+            if (match.getRound() == 2) {
+                this.round = "결승";
+            }
         }
     }
 }
