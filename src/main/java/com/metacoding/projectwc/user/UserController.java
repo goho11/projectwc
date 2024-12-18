@@ -49,7 +49,7 @@ public class UserController {
         }
         User userUpdated = userService.updateUser(user.getId(), updateDTO);
         session.setAttribute("sessionUser", userUpdated);
-        return "redirect:/s/user-form";
+        return "redirect:/s/user-form?success";
     }
 
     @DeleteMapping("/s/user")
