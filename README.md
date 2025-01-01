@@ -85,7 +85,6 @@ https://github.com/user-attachments/assets/bf41954b-0794-49dc-a8c0-cf4de64ad952
 ![랭킹 화면](https://github.com/user-attachments/assets/ec218b12-5c88-4ca5-8467-a38e116f710a)
 
 ## 3. 담당 업무
-# 여기서부턴 알아서 작성
 - 이학석(팀장) 
 	- 프로젝트 세팅 및 관리, 월드컵 만들기 구현, 테스트 및 오류 수정 
 - 이강호 
